@@ -17,8 +17,7 @@ import loader = bindbc.loader.sharedlib;
 import tools.log;
 
 
-// This is an interface into OpenGL and GLFW
-
+/// This is a "singleton" interface object into OpenGL and GLFW
 class Window {
 
     // Sort of a variation on singleton, create more than one window and OpenGL context and it crashes.
