@@ -16,7 +16,6 @@ import loader = bindbc.loader.sharedlib;
 // This is an import that allows us to print debug info.
 import tools.log;
 
-
 /// This is a "singleton" interface object into OpenGL and GLFW
 class Window {
 
