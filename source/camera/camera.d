@@ -45,9 +45,9 @@ class Camera {
     void setObjectMatrix(Vector3d offset, Vector3d rotation, Vector3d scale) {
         objectMatrix.identity()
             .translate(-position.x + offset.x, -position.y + offset.y, -position.z + offset.z)
-            .rotateX(Math.toRadians(rotation.x))
-            .rotateY(Math.toRadians(rotation.y))
-            .rotateZ(Math.toRadians(rotation.z))
+            .rotateX(math.toRadians(rotation.x))
+            .rotateY(math.toRadians(rotation.y))
+            .rotateZ(math.toRadians(rotation.z))
             .scale(scale);
         float[16] floatBuffer = objectMatrix.getFloatArray();
         glUniformMatrix4fv(getShader("main").getUniform("objectMatrix"),1, GL_FALSE, floatBuffer.ptr);
@@ -65,8 +65,8 @@ class Camera {
         GameShader mainShader = getShader("main");
         cameraMatrix.identity()
             .perspective(FOV, aspectRatio, Z_NEAR, Z_FAR)
-            .rotateX(Math.toRadians(rotation.x))
-            .rotateY(Math.toRadians(rotation.y));
+            .rotateX(math.toRadians(rotation.x))
+            .rotateY(math.toRadians(rotation.y));
         float[16] floatBuffer = cameraMatrix.getFloatArray();
         glUniformMatrix4fv(mainShader.getUniform("cameraMatrix"),1, GL_FALSE, floatBuffer.ptr);
     }
@@ -99,12 +99,12 @@ class Camera {
 
     void movePosition(Vector3d positionModification) {
         if ( positionModification.z != 0 ) {
-            position.x += -Math.sin(Math.toRadians(rotation.y)) * positionModification.z;
-            position.z += Math.cos(Math.toRadians(rotation.y)) * positionModification.z;
+            position.x += -math.sin(math.toRadians(rotation.y)) * positionModification.z;
+            position.z += math.cos(math.toRadians(rotation.y)) * positionModification.z;
         }
         if ( positionModification.x != 0) {
-            position.x += -Math.sin(Math.toRadians(rotation.y - 90)) * positionModification.x;
-            position.z += Math.cos(Math.toRadians(rotation.y - 90)) * positionModification.x;
+            position.x += -math.sin(math.toRadians(rotation.y - 90)) * positionModification.x;
+            position.z += math.cos(math.toRadians(rotation.y - 90)) * positionModification.x;
         }
         position.y += positionModification.y;
     }
