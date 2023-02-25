@@ -24,6 +24,7 @@ void main()
         window.pollEvents();
     }
 
+    //* Clean up all reference pointers.
     Texture.destroyWindowContext();
     Mesh.destroyWindowContext();
     Camera.destroyWindowContext();
