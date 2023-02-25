@@ -1,10 +1,11 @@
 module window.window;
 
 import std.stdio;
+import std.conv;
 import bindbc.opengl;
 import bindbc.glfw;
 import vector_2i;
-import std.conv;
+import vector_2d;
 
 // This is a special import. We only want to extract the loader from this module.
 import loader = bindbc.loader.sharedlib;
