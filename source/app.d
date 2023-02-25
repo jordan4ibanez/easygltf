@@ -4,5 +4,7 @@ import window.window;
 void main()
 {
     // Window controls OpenGL and GLFW
-	Window window = new Window();
+	Window window = new Window("easygltf prototyping").initialize;
+
+    window.initialize;
 }
