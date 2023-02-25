@@ -267,4 +267,9 @@ class Mesh {
             writeln("Mesh ", this.vao, " has rendered successfully ");
         }
     }
+
+    // This injects and holds the pointer to the Window object.
+    void insertWindow(Window window) {
+        this.window = window;
+    }
 }
