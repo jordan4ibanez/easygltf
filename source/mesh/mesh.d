@@ -2,6 +2,7 @@ module mesh.mesh;
 
 import std.stdio;
 import bindbc.opengl;
+import texture.texture;
 import window.window;
 import vector_3d;
 
@@ -21,8 +22,9 @@ class Mesh {
     GLuint cbo = 0; // Colors vertex buffer object
     GLuint indexCount = 0;
     
-    // Holds the texture id
-    GLuint textureID = 0;
+    
+    private Texture texture = null;
+
 
     this(immutable float[] vertices, 
         immutable int[] indices, 
