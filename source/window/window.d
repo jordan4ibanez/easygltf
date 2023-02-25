@@ -26,6 +26,7 @@ class Window {
     private static string glVersion;
 
     // GLFW fields
+    private static string windowTitle;
     private static Vector2i windowSize;
     
     private static  GLFWwindow* window = null;
@@ -39,6 +40,15 @@ class Window {
     private static double deltaAccumulator = 0.0;
     private static int fpsCounter = 0;
     private static int FPS = 0;
+    
+    this(string windowTitle) {
+        this.windowTitle = windowTitle;
+    }
+
+    Window initialize() {
+        writeln("hello there");
+        return this;
+    }
 
     //* ======== GLFW Tools ========
 
@@ -153,20 +163,20 @@ class Window {
     }
 
     // Gets the primary monitor's size and halfs it automatically
-    bool initializeWindow(string name){   
+    private bool initializeWindow(){   
         // -1, -1 indicates that it will automatically interpret as half window size
-        return initializeGLFWComponents(name, -1, -1, false);
+        return initializeGLFWComponents(this.windowTitle, -1, -1, false);
     }
 
     // Allows for predefined window size
-    bool initializeWindow(string name, int windowSizeX, int windowSizeY){   
-        return initializeGLFWComponents(name, windowSizeX, windowSizeY, false);
+    bool initializeWindow(int windowSizeX, int windowSizeY){   
+        return initializeGLFWComponents(this.windowTitle, windowSizeX, windowSizeY, false);
     }
 
     // Automatically half sizes, then full screens it
-    bool initializeWindow(string name, bool fullScreen){   
+    bool initializeWindow(bool fullScreen){   
         // -1, -1 indicates that it will automatically interpret as half window size
-        return initializeGLFWComponents(name, -1, -1, fullScreen);
+        return initializeGLFWComponents(this.windowTitle, -1, -1, fullScreen);
     }
 
     // Window talks directly to GLFW
