@@ -1,6 +1,7 @@
 import std.stdio;
+import window.window;
 
 void main()
 {
-	writeln("Hello, world!");
+	Window window = new Window();
 }
