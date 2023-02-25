@@ -17,8 +17,23 @@ import tools.log;
 
 class Window {
 
-    string glVersion;
-    Vector2i windowSize;
+    // OpenGL fields
+    private string glVersion;
+
+    // GLFW fields
+    private Vector2i windowSize;
+    
+    private GLFWwindow* window = null;
+    private GLFWmonitor* monitor = null;
+    private GLFWvidmode videoMode;
+    private bool fullscreen = false;
+    // 0 none, 1 normal vsync, 2 double buffered
+    private byte vsync = 1;
+
+    // These 3 functions calculate the FPS
+    private double deltaAccumulator = 0.0;
+    private int fpsCounter = 0;
+    private int FPS = 0;
 
 
 
