@@ -496,6 +496,12 @@ class Window {
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
+    void clear(float intensity) {
+        clearColor = Vector3d(intensity);
+        glClearColor(clearColor.x,clearColor.y,clearColor.z,1);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+
     void clear(float r, float g, float b) {
         clearColor = Vector3d(r,g,b);
         glClearColor(clearColor.x,clearColor.y,clearColor.z,1);
