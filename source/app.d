@@ -20,5 +20,7 @@ void main()
         window.pollEvents();
     }
 
+    Mesh.destroyWindowContext();
+
     window.destroy();
 }

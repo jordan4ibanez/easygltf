@@ -8,7 +8,7 @@ import vector_3d;
 class Mesh {
 
     // Window context pointer.
-    private static Window window;
+    private static Window window = null;
 
     private static bool debugEnabled = true;
 
@@ -271,6 +271,13 @@ class Mesh {
 
     // This injects and holds the pointer to the Window object.
     public static void assignWindowContext(Window window) {
+        if (this.window !is null) {
+            throw new Exception("Tried to assign a window context to mesh more than once!");
+        }
         this.window = window;
+    }
+    // Prevents a circular reference.
+    public static void destroyWindowContext() {
+        this.window = null;
     }
 }
