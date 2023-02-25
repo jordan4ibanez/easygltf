@@ -293,4 +293,16 @@ class Mesh {
     public static void destroyWindowContext() {
         this.window = null;
     }
+
+    // This injects and holds the pointer to the Camera object.
+    public static void createCameraContext(Camera camera) {
+        if (this.camera !is null) {
+            throw new Exception("Tried to assign a camera context to mesh more than once!");
+        }
+        this.camera = camera;
+    }
+    // Prevents a circular reference.
+    public static void destroyCameraContext() {
+        this.camera = null;
+    }
 }
