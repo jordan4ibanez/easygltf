@@ -7,9 +7,10 @@ import vector_3d;
 
 class Mesh {
 
-    private static bool debugEnabled = true;
-
+    // Window context pointer.
     private static Window window;
+
+    private static bool debugEnabled = true;
 
     private bool exists = false;
 
@@ -29,7 +30,7 @@ class Mesh {
         immutable float[] colors, 
         immutable string textureName ) {
 
-        this.textureID = getTexture(textureName);
+        //! this.textureID = getTexture(textureName);
 
         // Existence lock
         this.exists = true;
@@ -205,13 +206,13 @@ class Mesh {
             return;
         }
 
-        getShader("main").setUniformI("textureSampler", 0);
-        getShader("main").setUniformF("light", light);
+        //! getShader("main").setUniformI("textureSampler", 0);
+        //! getShader("main").setUniformF("light", light);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, this.textureID);
 
-        Camera.setObjectMatrix(offset, rotation, scale);
+        //! Camera.setObjectMatrix(offset, rotation, scale);
 
         glBindVertexArray(this.vao);
         // glDrawArrays(GL_TRIANGLES, 0, this.indexCount);
@@ -243,7 +244,7 @@ class Mesh {
         // glActiveTexture(GL_TEXTURE0);
         // glBindTexture(GL_TEXTURE_2D, this.textureID);
 
-        Camera.setObjectMatrix(offset, rotation, scale);
+        //! Camera.setObjectMatrix(offset, rotation, scale);
 
         if (culling) {
             // Let's get some weird behavior to show it
@@ -269,7 +270,7 @@ class Mesh {
     }
 
     // This injects and holds the pointer to the Window object.
-    void insertWindow(Window window) {
+    public static void assignWindowContext(Window window) {
         this.window = window;
     }
 }
