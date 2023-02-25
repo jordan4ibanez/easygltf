@@ -47,11 +47,20 @@ class Window {
 
     Window initialize() {
         checkLock();
+
+        if (!initializeGLFW()) {
+            throw new Exception("GLFW failed");
+        }
+
+        if (!initializeOpenGL()) {
+
+        }
+
         return this;
     }
 
     // This checks the lock state and WILL crash the program if more than one exist
-    void checkLock(){
+    private void checkLock() {
         if (locked) {
             throw new Exception("More than one window was created!");
         }
@@ -60,7 +69,7 @@ class Window {
 
     //* ======== GLFW Tools ========
 
-    // Returns true if there was an error
+    // Returns success state 
     private bool initializeGLFW() {
 
         GLFWSupport returnedError;
@@ -94,10 +103,10 @@ class Window {
                 "ABORTING!");
             }
             writeln("-------------------------");
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     nothrow
