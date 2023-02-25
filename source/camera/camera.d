@@ -58,7 +58,7 @@ class Camera {
             .rotateZ(math.toRadians(rotation.z))
             .scale(scale);
         float[16] floatBuffer = objectMatrix.getFloatArray();
-        glUniformMatrix4fv(getShader("main").getUniform("objectMatrix"), 1, GL_FALSE, floatBuffer.ptr);
+        //! glUniformMatrix4fv(getShader("main").getUniform("objectMatrix"), 1, GL_FALSE, floatBuffer.ptr);
     }
 
     /*
@@ -70,13 +70,13 @@ class Camera {
     */
     void updateCameraMatrix() {
         double aspectRatio = window.getAspectRatio();
-        GameShader mainShader = getShader("main");
-        cameraMatrix.identity()
-            .perspective(FOV, aspectRatio, Z_NEAR, Z_FAR)
-            .rotateX(math.toRadians(rotation.x))
-            .rotateY(math.toRadians(rotation.y));
-        float[16] floatBuffer = cameraMatrix.getFloatArray();
-        glUniformMatrix4fv(mainShader.getUniform("cameraMatrix"),1, GL_FALSE, floatBuffer.ptr);
+        //! GameShader mainShader = getShader("main");
+        //! cameraMatrix.identity()
+        //!     .perspective(FOV, aspectRatio, Z_NEAR, Z_FAR)
+        //!     .rotateX(math.toRadians(rotation.x))
+        //!     .rotateY(math.toRadians(rotation.y));
+        //! float[16] floatBuffer = cameraMatrix.getFloatArray();
+        //! glUniformMatrix4fv(mainShader.getUniform("cameraMatrix"),1, GL_FALSE, floatBuffer.ptr);
     }
 
     // It is extremely important to clear the buffer bit!
@@ -145,10 +145,14 @@ class Camera {
         return rotation;
     }
 
-    void assignWindowContext(Window window) {
+    static void assignWindowContext(Window window) {
         if (this.window !is null) {
             throw new Exception("Tried to assign the window context more than once!");
         }
         this.window = window;
+    }
+
+    static void destroyWindowContext() {
+        this.window = null;
     }
 }
