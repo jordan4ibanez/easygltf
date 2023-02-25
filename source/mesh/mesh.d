@@ -2,6 +2,7 @@ module mesh.mesh;
 
 import std.stdio;
 import bindbc.opengl;
+import camera.camera;
 import texture.texture;
 import window.window;
 import vector_3d;
@@ -10,6 +11,9 @@ class Mesh {
 
     // Window context pointer.
     private static Window window = null;
+
+    // Camera context pointer;
+    private static Camera camera = null;
 
     private static bool debugEnabled = true;
 
