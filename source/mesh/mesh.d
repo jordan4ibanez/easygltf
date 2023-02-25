@@ -37,9 +37,9 @@ class Mesh {
         immutable int[] indices, 
         immutable float[] textureCoordinates, 
         immutable float[] colors, 
-        immutable string textureName ) {
+        immutable string textureLocation ) {
 
-        this.texture = new Texture(textureName);
+        this.texture = new Texture(textureLocation);
 
         // Existence lock
         this.exists = true;

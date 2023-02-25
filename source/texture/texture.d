@@ -17,9 +17,9 @@ class Texture {
     private GLuint width = 0;
     private GLuint height = 0;
 
-    this(string textureName) {
+    this(string textureLocation) {
 
-        TrueColorImage tempImageObject = readPng(textureName).getAsTrueColorImage();
+        TrueColorImage tempImageObject = readPng(textureLocation).getAsTrueColorImage();
 
         this.width = tempImageObject.width();
         this.height = tempImageObject.height();
