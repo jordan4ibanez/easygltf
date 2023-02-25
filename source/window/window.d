@@ -23,24 +23,24 @@ class Window {
     static private bool locked = false;
 
     // OpenGL fields
-    private static string glVersion;
-    private static Vector3d clearColor;
+    private string glVersion;
+    private Vector3d clearColor;
 
     // GLFW fields
-    private static string windowTitle;
-    private static Vector2i windowSize;
+    private string windowTitle;
+    private Vector2i windowSize;
     
-    private static  GLFWwindow* window = null;
-    private static GLFWmonitor* monitor = null;
-    private static GLFWvidmode videoMode;
-    private static bool fullscreen = false;
+    private  GLFWwindow* window = null;
+    private GLFWmonitor* monitor = null;
+    private GLFWvidmode videoMode;
+    private bool fullscreen = false;
     // 0 none, 1 normal vsync, 2 double buffered
-    private static byte vsync = 1;
+    private byte vsync = 1;
 
     // These 3 functions calculate the FPS
-    private static double deltaAccumulator = 0.0;
-    private static int fpsCounter = 0;
-    private static int FPS = 0;
+    private double deltaAccumulator = 0.0;
+    private int fpsCounter = 0;
+    private int FPS = 0;
     
     this(string windowTitle) {
         this.windowTitle = windowTitle;
