@@ -18,23 +18,26 @@ import tools.log;
 
 class Window {
 
+    // Sort of a variation on singleton, create more than one window and OpenGL context and it crashes.
+    static private bool exists = false;
+
     // OpenGL fields
-    private string glVersion;
+    private static string glVersion;
 
     // GLFW fields
-    private Vector2i windowSize;
+    private static Vector2i windowSize;
     
-    private GLFWwindow* window = null;
-    private GLFWmonitor* monitor = null;
-    private GLFWvidmode videoMode;
-    private bool fullscreen = false;
+    private static  GLFWwindow* window = null;
+    private static GLFWmonitor* monitor = null;
+    private static GLFWvidmode videoMode;
+    private static bool fullscreen = false;
     // 0 none, 1 normal vsync, 2 double buffered
-    private byte vsync = 1;
+    private static byte vsync = 1;
 
     // These 3 functions calculate the FPS
-    private double deltaAccumulator = 0.0;
-    private int fpsCounter = 0;
-    private int FPS = 0;
+    private static double deltaAccumulator = 0.0;
+    private static int fpsCounter = 0;
+    private static int FPS = 0;
 
     //* ======== GLFW Tools ========
 
@@ -80,24 +83,24 @@ class Window {
 
     nothrow
     static extern(C) void myframeBufferSizeCallback(GLFWwindow* theWindow, int x, int y) {
-        size.x = x;
-        size.y = y;
+        this.windowSize.x = x;
+        this.windowSize.y = y;
         glViewport(0,0,x,y);
     }
-    nothrow
-    static extern(C) void externalKeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods){
-        // This is the best hack ever, or the worst
-        try {
-        Keyboard.keyCallback(key,scancode,action,mods);
-        } catch(Exception e){nothrowWriteln(e);}
-    }
+    // nothrow
+    // static extern(C) void externalKeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods){
+    //     // This is the best hack ever, or the worst
+    //     try {
+    //     Keyboard.keyCallback(key,scancode,action,mods);
+    //     } catch(Exception e){nothrowWriteln(e);}
+    // }
 
-    nothrow
-    static extern(C) void externalcursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
-        try {
-            Mouse.mouseCallback(Vector2d(xpos, ypos));
-        } catch(Exception e){nothrowWriteln(e);}
-    }
+    // nothrow
+    // static extern(C) void externalcursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
+    //     try {
+    //         Mouse.mouseCallback(Vector2d(xpos, ypos));
+    //     } catch(Exception e){nothrowWriteln(e);}
+    // }
 
     // Internally handles interfacing to C
     bool shouldClose() {
@@ -110,7 +113,7 @@ class Window {
     }
 
     Vector2i getSize() {
-        return size;
+        return windowSize;
     }
 
     void destroy() {
@@ -118,7 +121,7 @@ class Window {
     }
 
     double getAspectRatio() {
-        return cast(double)size.x / cast(double)size.y;
+        return cast(double)windowSize.x / cast(double)windowSize.y;
     }
 
     void pollEvents() {
