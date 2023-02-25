@@ -129,7 +129,7 @@ class Mesh {
         // Unbind vao just in case
         glBindVertexArray(0);
 
-        GLenum glErrorInfo = getAndClearGLErrors();
+        GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR IN A MESH CONSTRUCTOR");
@@ -184,7 +184,7 @@ class Mesh {
 
         
 
-        GLenum glErrorInfo = getAndClearGLErrors();
+        GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR IN A MESH DESTRUCTOR");
@@ -217,7 +217,7 @@ class Mesh {
         // glDrawArrays(GL_TRIANGLES, 0, this.indexCount);
         glDrawElements(GL_TRIANGLES, this.indexCount, GL_UNSIGNED_INT, cast(const(void)*)0);
         
-        GLenum glErrorInfo = getAndClearGLErrors();
+        GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR IN A MESH RENDER");
@@ -258,7 +258,7 @@ class Mesh {
         // glDrawArrays(GL_TRIANGLES, 0, this.indexCount);
         glDrawElements(GL_TRIANGLES, this.indexCount, GL_UNSIGNED_INT, cast(const(void)*)0);
         
-        GLenum glErrorInfo = getAndClearGLErrors();
+        GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR IN A MESH RENDER");
