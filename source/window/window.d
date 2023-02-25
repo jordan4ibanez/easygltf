@@ -253,10 +253,10 @@ class Window {
         // Monitor information & full screening & halfscreening
 
         // Automatically half the monitor size
-        // if (halfScreenAuto) {
-        //     writeln("automatically half sizing the window");
-        //     setHalfSizeInternal();
-        // }
+        if (halfScreenAuto) {
+            writeln("automatically half sizing the window");
+            setHalfSizeInternal();
+        }
 
         // Automatically fullscreen, this is a bolt on
         // if (fullScreenAuto) {
@@ -322,35 +322,35 @@ class Window {
     //     fullscreen = true;
     // }
 
-    // private void setHalfSizeInternal() {
+    private void setHalfSizeInternal() {
 
-    //     updateVideoMode();
+        updateVideoMode();
         
-    //     // Divide by 2 to get a "perfectly" half sized window
-    //     int windowSizeX = videoMode.width  / 2;
-    //     int windowSizeY = videoMode.height / 2;
+        // Divide by 2 to get a "perfectly" half sized window
+        int windowSizeX = videoMode.width  / 2;
+        int windowSizeY = videoMode.height / 2;
 
-    //     // Divide by 4 to get a "perfectly" centered window
-    //     int windowPositionX = videoMode.width  / 4;
-    //     int windowPositionY = videoMode.height / 4;
+        // Divide by 4 to get a "perfectly" centered window
+        int windowPositionX = videoMode.width  / 4;
+        int windowPositionY = videoMode.height / 4;
 
-    //     glfwSetWindowMonitor(
-    //         window,
-    //         null,
-    //         windowPositionX,
-    //         windowPositionY,
-    //         windowSizeX,
-    //         windowSizeY,
-    //         videoMode.refreshRate // Windows cares about this for some reason
-    //     );
+        glfwSetWindowMonitor(
+            window,
+            null,
+            windowPositionX,
+            windowPositionY,
+            windowSizeX,
+            windowSizeY,
+            videoMode.refreshRate // Windows cares about this for some reason
+        );
 
-    //     glfwSwapInterval(vsync);
+        glfwSwapInterval(vsync);
 
-    //     centerMouse();
-    //     stopMouseJolt();
+        // centerMouse();
+        // stopMouseJolt();
 
-    //     fullscreen = false;
-    // }
+        fullscreen = false;
+    }
 
     // void lockMouse() {
     //     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
