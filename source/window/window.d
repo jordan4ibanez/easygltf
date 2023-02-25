@@ -3,6 +3,8 @@ module window.window;
 import std.stdio;
 import bindbc.opengl;
 import bindbc.glfw;
+import vector_2i;
+import std.conv;
 
 // This is a special import. We only want to extract the loader from this module.
 import loader = bindbc.loader.sharedlib;
@@ -16,6 +18,7 @@ import tools.log;
 class Window {
 
     string glVersion;
+    Vector2i windowSize;
     
     /// Initializes OpenGL
     bool initializeOpenGL() {
@@ -68,7 +71,7 @@ class Window {
         // Wipe the error buffer completely
         getAndClearGLErrors();
         
-        Vector2i windowSize = Window.getSize();
+        // Vector2i windowSize = Window.getSize();
 
         glViewport(0, 0, windowSize.x, windowSize.y);
 
