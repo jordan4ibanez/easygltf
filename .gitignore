@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/easygltf
+easygltf.so
+easygltf.dylib
+easygltf.dll
+easygltf.a
+easygltf.lib
+easygltf-test-*
+*.exe
+*.o
+*.obj
+*.lst
