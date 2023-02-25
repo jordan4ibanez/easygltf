@@ -7,6 +7,7 @@ import bindbc.opengl;
 import bindbc.glfw;
 import vector_2i;
 import vector_2d;
+import vector_3d;
 import delta_time;
 
 // This is a special import. We only want to extract the loader from this module.
@@ -25,6 +26,7 @@ class Window {
 
     // OpenGL fields
     private static string glVersion;
+    private static Vector3d clearColor;
 
     // GLFW fields
     private static string windowTitle;
@@ -491,6 +493,23 @@ class Window {
         char[] charArray = raw.dup[2..raw.length];
         return "OpenGL " ~ charArray[0] ~ "." ~ charArray[1];
     }
+
+    void clear() {
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+
+    void clear(float r, float g, float b) {
+        clearColor = Vector3d(r,g,b);
+        glClearColor(clearColor.x,clearColor.y,clearColor.z,1);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+
+    void clear(Vector3d rgb) {
+        clearColor = rgb;
+        glClearColor(clearColor.x,clearColor.y,clearColor.z,1);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+
 
     //! ===== End OpenGL Tools =====
 
