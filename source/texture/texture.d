@@ -12,7 +12,7 @@ class Texture {
     private static Window window;
 
     private static const bool debugEnabled = true;
-        
+
     private GLuint id = 0;    
     private GLuint width = 0;
     private GLuint height = 0;
@@ -52,6 +52,10 @@ class Texture {
 
             throw new Exception("Failed to load texture!");
         }
+    }
+
+    GLuint getId() {
+        return this.id;
     }
 
     void cleanUp() {
