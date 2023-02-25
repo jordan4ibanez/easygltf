@@ -1,6 +1,7 @@
 import std.stdio;
 import window.window;
 import mesh.mesh;
+import camera.camera;
 
 void main()
 {
@@ -9,6 +10,7 @@ void main()
 
     //* Allow direct message passing through reference pointers. Reduces verbosity.
     Mesh.assignWindowContext(window);
+    Camera.assignWindowContext(window);
 
 
     while (!window.shouldClose()) {
@@ -21,6 +23,7 @@ void main()
     }
 
     Mesh.destroyWindowContext();
+    Camera.destroyWindowContext();
 
     window.destroy();
 }
