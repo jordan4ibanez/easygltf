@@ -2,6 +2,7 @@ module window.window;
 
 import std.stdio;
 import std.conv;
+import std.string;
 import bindbc.opengl;
 import bindbc.glfw;
 import vector_2i;
@@ -53,7 +54,7 @@ class Window {
         }
 
         if (!initializeOpenGL()) {
-
+            throw new Exception("OpenGL failed");
         }
 
         return this;
@@ -70,7 +71,7 @@ class Window {
     //* ======== GLFW Tools ========
 
     // Returns success state 
-    private bool initializeGLFW() {
+    private bool initializeGLFWComponents() {
 
         GLFWSupport returnedError;
         
@@ -180,33 +181,33 @@ class Window {
     }
 
     // Gets the primary monitor's size and halfs it automatically
-    private bool initializeWindow(){   
-        // -1, -1 indicates that it will automatically interpret as half window size
-        return initializeGLFWComponents(this.windowTitle, -1, -1, false);
-    }
+    // private bool initializeWindow(){   
+    //     // -1, -1 indicates that it will automatically interpret as half window size
+    //     return initializeGLFW(-1, -1, false);
+    // }
 
-    // Allows for predefined window size
-    bool initializeWindow(int windowSizeX, int windowSizeY){   
-        return initializeGLFWComponents(this.windowTitle, windowSizeX, windowSizeY, false);
-    }
+    // // Allows for predefined window size
+    // bool initializeWindow(int windowSizeX, int windowSizeY){   
+    //     return initializeGLFW(this.windowTitle, windowSizeX, windowSizeY, false);
+    // }
 
-    // Automatically half sizes, then full screens it
-    bool initializeWindow(bool fullScreen){   
-        // -1, -1 indicates that it will automatically interpret as half window size
-        return initializeGLFWComponents(this.windowTitle, -1, -1, fullScreen);
-    }
+    // // Automatically half sizes, then full screens it
+    // bool initializeWindow(bool fullScreen){   
+    //     // -1, -1 indicates that it will automatically interpret as half window size
+    //     return initializeGLFW(this.windowTitle, -1, -1, fullScreen);
+    // }
 
     // Window talks directly to GLFW
-    private bool initializeGLFWComponents(string name, int windowSizeX, int windowSizeY, bool fullScreenAuto) {
+    private bool initializeGLFW(int windowSizeX = -1, int windowSizeY = -1, bool fullScreenAuto = false) {
 
         // Something fails to load
-        if (initializeGLFW()) {
-            return true;
+        if (!initializeGLFWComponents()) {
+            return false;
         }
 
         // Something scary fails to load
         if (!glfwInit()) {
-            return true;
+            return false;
         }
 
         // Minimum version is 4.1 (July 26, 2010)
@@ -230,14 +231,14 @@ class Window {
         }
 
         // Create a window on the primary monitor
-        window = glfwCreateWindow(windowSizeX, windowSizeY, name.ptr, null, null);
+        window = glfwCreateWindow(windowSizeX, windowSizeY, this.windowTitle.toStringz, null, null);
 
         // Something even scarier fails to load
         if (!window || window == null) {
             writeln("WINDOW FAILED TO OPEN!\n",
             "ABORTING!");
             glfwTerminate();
-            return true;
+            return false;
         }
 
         // In the future, get array of monitor pointers with: GLFWmonitor** monitors = glfwGetMonitors(&count);
@@ -278,7 +279,7 @@ class Window {
         glfwGetWindowSize(window,&windowSize.x, &windowSize.y);    
 
         // No error :)
-        return false;
+        return true;
     }
 
     private void updateVideoMode() {
@@ -392,7 +393,7 @@ class Window {
 
     //* ======= OpenGL Tools =======
     
-    /// Initializes OpenGL
+    /// Returns success
     private bool initializeOpenGL() {
         /**
         Compare the return value of loadGL with the global `glSupport` constant to determine if the version of GLFW
@@ -432,12 +433,12 @@ class Window {
             // A hypothetical message box function
             writeln(msg);
             writeln("ABORTING");
-            return true;
+            return false;
         }
 
         if (!isOpenGLLoaded()) {
             writeln("GL FAILED TO LOAD!!");
-            return true;
+            return false;
         }
 
         // Wipe the error buffer completely
@@ -462,9 +463,10 @@ class Window {
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR IN GL INIT");
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     GLenum getAndClearGLErrors(){
