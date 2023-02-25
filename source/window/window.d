@@ -20,7 +20,7 @@ import tools.log;
 class Window {
 
     // Sort of a variation on singleton, create more than one window and OpenGL context and it crashes.
-    static private bool exists = false;
+    static private bool locked = false;
 
     // OpenGL fields
     private static string glVersion;
@@ -46,8 +46,16 @@ class Window {
     }
 
     Window initialize() {
-        writeln("hello there");
+        checkLock();
         return this;
+    }
+
+    // This checks the lock state and WILL crash the program if more than one exist
+    void checkLock(){
+        if (locked) {
+            throw new Exception("More than one window was created!");
+        }
+        locked = true;
     }
 
     //* ======== GLFW Tools ========
