@@ -39,7 +39,7 @@ class Mesh {
         immutable float[] colors, 
         immutable string textureName ) {
 
-        //! this.textureID = getTexture(textureName);
+        this.texture = new Texture(textureName);
 
         // Existence lock
         this.exists = true;
@@ -219,7 +219,7 @@ class Mesh {
         //! getShader("main").setUniformF("light", light);
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, this.textureID);
+        glBindTexture(GL_TEXTURE_2D, this.texture.getId);
 
         //! Camera.setObjectMatrix(offset, rotation, scale);
 
@@ -250,8 +250,8 @@ class Mesh {
         // getShader("main").setUniformI("textureSampler", 0);
         // getShader("main").setUniformF("light", light);
 
-        // glActiveTexture(GL_TEXTURE0);
-        // glBindTexture(GL_TEXTURE_2D, this.textureID);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, this.texture.getId);
 
         //! Camera.setObjectMatrix(offset, rotation, scale);
 
