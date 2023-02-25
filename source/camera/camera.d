@@ -1,10 +1,14 @@
 module camera.camera;
 
+import vector_3d;
+import matrix_4d;
+import math;
+
 class Camera {
-    
+
     // There can only be one camera in the game, this is it
 
-    private double FOV = Math.toRadians(60.0);
+    private double FOV = math.toRadians(60.0);
 
     // Never set this to 0 :P
     // ALSO never set this too low!! You get float errors!
