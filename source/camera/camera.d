@@ -8,6 +8,7 @@ import math;
 class Camera {
 
     // There can only be one camera in the game, this is it
+    private static bool locked = false;
 
     private double FOV = math.toRadians(60.0);
 
@@ -23,6 +24,13 @@ class Camera {
     // Set at x:0, y:0 z:1 so I can see the "center of the 4d world"
     private Vector3d position = Vector3d(0,0,0);
     private Vector3d rotation = Vector3d(0,0,0); 
+
+    this() {
+        if (locked) {
+            throw new Exception("Tried to add more than one camera!");
+        }
+        locked = true;
+    }
 
     Matrix4d getCameraMatrix() {
         return cameraMatrix;
