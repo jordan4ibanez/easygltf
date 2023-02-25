@@ -3,6 +3,8 @@ module texture.texture;
 import std.stdio;
 import bindbc.opengl;
 import window.window;
+import color;
+import png;
 
 class Texture {
 
@@ -16,8 +18,8 @@ class Texture {
     private GLuint height = 0;
 
     this(string textureName) {
-        
-        TrueColorImage tempImageObject = loadImageFromFile(textureName).getAsTrueColorImage();
+
+        TrueColorImage tempImageObject = readPng(textureName).getAsTrueColorImage();
 
         this.width = tempImageObject.width();
         this.height = tempImageObject.height();
