@@ -145,14 +145,14 @@ class Camera {
         return rotation;
     }
 
-    static void assignWindowContext(Window window) {
+    public static void createWindowContext(Window window) {
         if (this.window !is null) {
             throw new Exception("Tried to assign the window context more than once!");
         }
         this.window = window;
     }
 
-    static void destroyWindowContext() {
+    public static void destroyWindowContext() {
         this.window = null;
     }
 }

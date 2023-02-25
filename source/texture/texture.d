@@ -60,7 +60,7 @@ class Texture {
     }
 
     // This injects and holds the pointer to the Window object.
-    public static void assignWindowContext(Window window) {
+    public static void createWindowContext(Window window) {
         if (this.window !is null) {
             throw new Exception("Tried to assign a window context to mesh more than once!");
         }
