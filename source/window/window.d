@@ -35,10 +35,52 @@ class Window {
     private int fpsCounter = 0;
     private int FPS = 0;
 
-    // ======== GLFW Tools ========
+    //* ======== GLFW Tools ========
 
+    // Returns true if there was an error
+    private bool initializeGLFW() {
 
-    // ======= OpenGL Tools =======
+        GLFWSupport returnedError;
+        
+        version(Windows) {
+            returnedError = loadGLFW("libs/glfw3.dll");
+        } else {
+            // Linux,FreeBSD, OpenBSD, macOSX, haiku, etc
+            returnedError = loadGLFW();
+        }
+
+        if(returnedError != glfwSupport) {
+            writeln("ERROR IN glfw_interface.d");
+            writeln("---------- DIRECT DEBUG ERROR ---------------");
+            // Log the direct error info
+            foreach(info; loader.errors) {
+                logCError(info.error, info.message);
+            }
+            writeln("---------------------------------------------");
+            writeln("------------ FUZZY SUGGESTION ---------------");
+            // Log fuzzy error info with suggestion
+            if(returnedError == GLFWSupport.noLibrary) {
+                writeln("The GLFW shared library failed to load!\n",
+                "Is GLFW installed correctly?\n\n",
+                "ABORTING!");
+            }
+            else if(GLFWSupport.badLibrary) {
+                writeln("One or more symbols failed to load.\n",
+                "The likely cause is that the shared library is for a lower\n",
+                "version than bindbc-glfw was configured to load (via GLFW_31, GLFW_32 etc.\n\n",
+                "ABORTING!");
+            }
+            writeln("-------------------------");
+            return true;
+        }
+
+        return false;
+    }
+
+    //! ====== End GLFW Tools ======
+    
+
+    //* ======= OpenGL Tools =======
     
     /// Initializes OpenGL
     private bool initializeOpenGL() {
@@ -135,5 +177,7 @@ class Window {
         char[] charArray = raw.dup[2..raw.length];
         return "OpenGL " ~ charArray[0] ~ "." ~ charArray[1];
     }
+
+    //! ===== End OpenGL Tools =====
 
 }
