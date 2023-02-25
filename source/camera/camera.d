@@ -1,5 +1,6 @@
 module camera.camera;
 
+import bindbc.opengl;
 import vector_3d;
 import matrix_4d;
 import math;
@@ -69,10 +70,6 @@ class Camera {
             .rotateY(math.toRadians(rotation.y));
         float[16] floatBuffer = cameraMatrix.getFloatArray();
         glUniformMatrix4fv(mainShader.getUniform("cameraMatrix"),1, GL_FALSE, floatBuffer.ptr);
-    }
-
-    void clear() {    
-        glClear(GL_COLOR_BUFFER_BIT);
     }
 
     // It is extremely important to clear the buffer bit!
