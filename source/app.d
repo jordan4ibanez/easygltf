@@ -15,4 +15,5 @@ void main()
         window.pollEvents();
     }
 
+    window.destroy();
 }
