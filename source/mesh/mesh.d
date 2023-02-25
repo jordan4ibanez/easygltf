@@ -15,11 +15,18 @@ class Mesh {
 
     private bool exists = false;
 
-    GLuint vao = 0; // Vertex array object - Main object
-    GLuint pbo = 0; // Positions vertex buffer object
-    GLuint tbo = 0; // Texture positions vertex buffer object
-    GLuint ibo = 0; // Indices vertex buffer object
-    GLuint cbo = 0; // Colors vertex buffer object
+    // Vertex array object - Main object
+    GLuint vao = 0;
+    // Positions vertex buffer object
+    GLuint pbo = 0;
+    // Texture positions vertex buffer object
+    GLuint tbo = 0;
+    // Indices vertex buffer object
+    GLuint ibo = 0;
+    // Colors vertex buffer object
+    GLuint cbo = 0;
+    // Indices count, not sure why this is stored in this class?
+    // Todo: Figure out why this is.
     GLuint indexCount = 0;
     
     
