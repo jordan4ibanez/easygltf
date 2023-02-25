@@ -9,6 +9,8 @@ void main()
 
     while (!window.shouldClose()) {
         writeln("hi there");
+
+        window.pollEvents();
     }
 
 }
