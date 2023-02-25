@@ -28,7 +28,7 @@ class Window {
 
     // GLFW fields
     private string windowTitle;
-    private Vector2i windowSize;
+    static private Vector2i windowSize;
     
     private  GLFWwindow* window = null;
     private GLFWmonitor* monitor = null;
