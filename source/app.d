@@ -1,6 +1,7 @@
 import std.stdio;
 import window.window;
 import mesh.mesh;
+import texture.texture;
 import camera.camera;
 
 void main()
@@ -9,8 +10,9 @@ void main()
 	Window window = new Window("easygltf prototyping").initialize;
 
     //* Allow direct message passing through reference pointers. Reduces verbosity.
-    Mesh.assignWindowContext(window);
-    Camera.assignWindowContext(window);
+    Mesh.createWindowContext(window);
+    Camera.createWindowContext(window);
+    Texture.createWindowContext(window);
 
 
     while (!window.shouldClose()) {
@@ -22,6 +24,7 @@ void main()
         window.pollEvents();
     }
 
+    Texture.destroyWindowContext();
     Mesh.destroyWindowContext();
     Camera.destroyWindowContext();
 
