@@ -3,6 +3,10 @@
 		"jordan4ibanez"
 	],
 	"copyright": "Copyright © 2023, jordan4ibanez",
+	"dependencies": {
+		"bindbc-glfw": "~>1.0.1",
+		"bindbc-opengl": "~>1.0.4"
+	},
 	"description": "A D library that makes working with GLTF easier.",
 	"license": "MIT",
 	"name": "easygltf"
