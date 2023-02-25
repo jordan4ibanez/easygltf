@@ -19,9 +19,13 @@ class Window {
 
     string glVersion;
     Vector2i windowSize;
+
+
+
+    // ======= GL Tools =======
     
     /// Initializes OpenGL
-    bool initializeOpenGL() {
+    private bool initializeOpenGL() {
         /**
         Compare the return value of loadGL with the global `glSupport` constant to determine if the version of GLFW
         configured at compile time is the version that was loaded.
