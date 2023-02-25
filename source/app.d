@@ -8,8 +8,10 @@ void main()
 
 
     while (!window.shouldClose()) {
+        window.clear(1,1,1);
         writeln("hi there");
 
+        window.swapBuffers();
         window.pollEvents();
     }
 
