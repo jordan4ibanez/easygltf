@@ -2,11 +2,14 @@ module mesh.mesh;
 
 import std.stdio;
 import bindbc.opengl;
+import window.window;
 import vector_3d;
 
 class Mesh {
 
     private static bool debugEnabled = true;
+
+    private static Window window;
 
     private bool exists = false;
 
