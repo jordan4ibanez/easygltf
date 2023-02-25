@@ -35,9 +35,10 @@ class Window {
     private int fpsCounter = 0;
     private int FPS = 0;
 
+    // ======== GLFW Tools ========
 
 
-    // ======= GL Tools =======
+    // ======= OpenGL Tools =======
     
     /// Initializes OpenGL
     private bool initializeOpenGL() {
