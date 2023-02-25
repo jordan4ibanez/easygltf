@@ -1,6 +1,7 @@
 module camera.camera;
 
 import bindbc.opengl;
+import window.window;
 import vector_3d;
 import matrix_4d;
 import math;
@@ -9,6 +10,8 @@ class Camera {
 
     // There can only be one camera in the game, this is it
     private static bool locked = false;
+
+    private static Window window = null;
 
     private double FOV = math.toRadians(60.0);
 
@@ -55,7 +58,7 @@ class Camera {
             .rotateZ(math.toRadians(rotation.z))
             .scale(scale);
         float[16] floatBuffer = objectMatrix.getFloatArray();
-        glUniformMatrix4fv(getShader("main").getUniform("objectMatrix"),1, GL_FALSE, floatBuffer.ptr);
+        glUniformMatrix4fv(getShader("main").getUniform("objectMatrix"), 1, GL_FALSE, floatBuffer.ptr);
     }
 
     /*
@@ -66,7 +69,7 @@ class Camera {
     3. It updates GLSL so it can work with it
     */
     void updateCameraMatrix() {
-        aspectRatio = Window.getAspectRatio();
+        double aspectRatio = window.getAspectRatio();
         GameShader mainShader = getShader("main");
         cameraMatrix.identity()
             .perspective(FOV, aspectRatio, Z_NEAR, Z_FAR)
@@ -79,11 +82,6 @@ class Camera {
     // It is extremely important to clear the buffer bit!
     void clearDepthBuffer() {
         glClear(GL_DEPTH_BUFFER_BIT);
-    }
-
-    void setClearColor(double r, double g, double b) {
-        clearColor = Vector3d(r,g,b);
-        glClearColor(clearColor.x,clearColor.y,clearColor.z,1);
     }
 
     void setFOV(double newFOV) {
@@ -147,4 +145,10 @@ class Camera {
         return rotation;
     }
 
+    void assignWindowContext(Window window) {
+        if (this.window !is null) {
+            throw new Exception("Tried to assign the window context more than once!");
+        }
+        this.window = window;
+    }
 }
