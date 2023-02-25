@@ -6,6 +6,7 @@ import bindbc.opengl;
 import bindbc.glfw;
 import vector_2i;
 import vector_2d;
+import delta_time;
 
 // This is a special import. We only want to extract the loader from this module.
 import loader = bindbc.loader.sharedlib;
@@ -224,22 +225,22 @@ class Window {
         // Monitor information & full screening & halfscreening
 
         // Automatically half the monitor size
-        if (halfScreenAuto) {
-            writeln("automatically half sizing the window");
-            setHalfSizeInternal();
-        }
+        // if (halfScreenAuto) {
+        //     writeln("automatically half sizing the window");
+        //     setHalfSizeInternal();
+        // }
 
         // Automatically fullscreen, this is a bolt on
-        if (fullScreenAuto) {
-            writeln("automatically fullscreening the window");
-            setFullScreenInternal();
-        }
+        // if (fullScreenAuto) {
+        //     writeln("automatically fullscreening the window");
+        //     setFullScreenInternal();
+        // }
 
         glfwSetFramebufferSizeCallback(window, &myframeBufferSizeCallback);
 
-        glfwSetKeyCallback(window, &externalKeyCallBack);
+        // glfwSetKeyCallback(window, &this.externalKeyCallBack);
 
-        glfwSetCursorPosCallback(window, &externalcursorPositionCallback);    
+        // glfwSetCursorPosCallback(window, &externalcursorPositionCallback);    
         
         glfwMakeContextCurrent(window);
 
@@ -247,7 +248,7 @@ class Window {
         // We must set it again, even though it is automated in fullscreen/halfsize
         glfwSwapInterval(vsync);
 
-        glfwGetWindowSize(window,&size.x, &size.y);    
+        glfwGetWindowSize(window,&windowSize.x, &windowSize.y);    
 
         // No error :)
         return false;
@@ -260,88 +261,88 @@ class Window {
         videoMode = *mode;
     }
 
-    void toggleFullScreen() {
-        if (fullscreen) {
-            setHalfSizeInternal();
-        } else {
-            setFullScreenInternal();
-        }
-    }
+    // void toggleFullScreen() {
+    //     if (fullscreen) {
+    //         setHalfSizeInternal();
+    //     } else {
+    //         setFullScreenInternal();
+    //     }
+    // }
 
     bool isFullScreen() {
         return fullscreen;
     }
 
-    private void setFullScreenInternal() {
-        updateVideoMode();    
+    // private void setFullScreenInternal() {
+    //     updateVideoMode();    
 
-        glfwSetWindowMonitor(
-            window,
-            monitor,
-            0,
-            0,
-            videoMode.width,
-            videoMode.height,
-            videoMode.refreshRate
-        );
+    //     glfwSetWindowMonitor(
+    //         window,
+    //         monitor,
+    //         0,
+    //         0,
+    //         videoMode.width,
+    //         videoMode.height,
+    //         videoMode.refreshRate
+    //     );
 
-        glfwSwapInterval(vsync);
+    //     glfwSwapInterval(vsync);
 
-        centerMouse();
-        stopMouseJolt();
+    //     centerMouse();
+    //     stopMouseJolt();
 
-        fullscreen = true;
-    }
+    //     fullscreen = true;
+    // }
 
-    private void setHalfSizeInternal() {
+    // private void setHalfSizeInternal() {
 
-        updateVideoMode();
+    //     updateVideoMode();
         
-        // Divide by 2 to get a "perfectly" half sized window
-        int windowSizeX = videoMode.width  / 2;
-        int windowSizeY = videoMode.height / 2;
+    //     // Divide by 2 to get a "perfectly" half sized window
+    //     int windowSizeX = videoMode.width  / 2;
+    //     int windowSizeY = videoMode.height / 2;
 
-        // Divide by 4 to get a "perfectly" centered window
-        int windowPositionX = videoMode.width  / 4;
-        int windowPositionY = videoMode.height / 4;
+    //     // Divide by 4 to get a "perfectly" centered window
+    //     int windowPositionX = videoMode.width  / 4;
+    //     int windowPositionY = videoMode.height / 4;
 
-        glfwSetWindowMonitor(
-            window,
-            null,
-            windowPositionX,
-            windowPositionY,
-            windowSizeX,
-            windowSizeY,
-            videoMode.refreshRate // Windows cares about this for some reason
-        );
+    //     glfwSetWindowMonitor(
+    //         window,
+    //         null,
+    //         windowPositionX,
+    //         windowPositionY,
+    //         windowSizeX,
+    //         windowSizeY,
+    //         videoMode.refreshRate // Windows cares about this for some reason
+    //     );
 
-        glfwSwapInterval(vsync);
+    //     glfwSwapInterval(vsync);
 
-        centerMouse();
-        stopMouseJolt();
+    //     centerMouse();
+    //     stopMouseJolt();
 
-        fullscreen = false;
-    }
+    //     fullscreen = false;
+    // }
 
-    void lockMouse() {
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        centerMouse();
-        stopMouseJolt();
-    }
+    // void lockMouse() {
+    //     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //     centerMouse();
+    //     stopMouseJolt();
+    // }
 
-    void unlockMouse() {
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        centerMouse();
-        stopMouseJolt();
-    }
+    // void unlockMouse() {
+    //     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    //     centerMouse();
+    //     stopMouseJolt();
+    // }
 
     void setMousePosition(double x, double y) {
         glfwSetCursorPos(window, x, y);
     }
 
     Vector2d centerMouse() {
-        double x = size.x / 2.0;
-        double y = size.y / 2.0;
+        double x = windowSize.x / 2.0;
+        double y = windowSize.y / 2.0;
         glfwSetCursorPos(
             window,
             x,
@@ -350,9 +351,9 @@ class Window {
         return Vector2d(x,y);
     }
 
-    void stopMouseJolt(){
-        Mouse.setOldPosition(Vector2d(size.x / 2.0, size.y / 2.0));
-    }
+    // void stopMouseJolt(){
+    //     Mouse.setOldPosition(Vector2d(size.x / 2.0, size.y / 2.0));
+    // }
 
     void setVsync(ubyte value) {
         vsync = value;
