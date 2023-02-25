@@ -83,7 +83,7 @@ class Window {
         }
 
         if(returnedError != glfwSupport) {
-            writeln("ERROR IN glfw_interface.d");
+            writeln("ERROR IN GLFW!");
             writeln("---------- DIRECT DEBUG ERROR ---------------");
             // Log the direct error info
             foreach(info; loader.errors) {
@@ -401,13 +401,15 @@ class Window {
         */
         GLSupport ret = loadOpenGL();
 
+        writeln(ret);
+
         this.glVersion = translateGLVersionName(ret);
 
         writeln("The current supported context is: ", this.glVersion);
 
         // Minimum version is GL 4.1 (July 26, 2010)
         if(ret < GLSupport.gl41) {
-            writeln("ERROR IN gl_interface.d");
+            writeln("ERROR IN OpenGL");
             // Log the error info
             foreach(info; loader.errors) {
                 /*
