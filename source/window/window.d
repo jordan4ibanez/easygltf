@@ -45,7 +45,7 @@ class Window {
         version(Windows) {
             returnedError = loadGLFW("libs/glfw3.dll");
         } else {
-            // Linux,FreeBSD, OpenBSD, macOSX, haiku, etc
+            // Linux,FreeBSD, OpenBSD, Mac OS, haiku, etc
             returnedError = loadGLFW();
         }
 
