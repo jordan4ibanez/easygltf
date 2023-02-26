@@ -11,10 +11,6 @@ import easygltf.easygltf;
 void main()
 {
 
-    writeln("hello world");
-
-    EasyGLTF gltf = new EasyGLTF("models/cube.gltf");
-
     
     // Window controls OpenGL and GLFW
 	Window window = new Window("easygltf prototyping").initialize;
@@ -64,6 +60,10 @@ void main()
     //     0.0f, 0.0f, 0.5f,
     //     0.0f, 0.5f, 0.5f,
     // ];
+
+    EasyGLTF gltf = new EasyGLTF("models/cube.gltf");
+    
+    const GLMesh m
 
     Mesh debugMesh = new Mesh(vertices, indices, textureCoordinates, "textures/debug.png");
 
