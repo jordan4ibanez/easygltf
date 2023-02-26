@@ -62,7 +62,7 @@ void main()
 
     float rotation = 180.0;
 
-    while (!window.shouldClose()) {
+    while (window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
