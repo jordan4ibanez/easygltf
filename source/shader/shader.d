@@ -167,10 +167,6 @@ class Shader {
         glDeleteProgram(this.shaderProgram);
 
         writeln("Deleted shader: ", this.name);
-
-        // Remove the program from game memory
-        container.remove(this.name);
-    
     }
 
     // This injects and holds the pointer to the Window object.
