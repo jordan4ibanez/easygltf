@@ -2,7 +2,6 @@ module easygltf.easygltf;
 
 import std.stdio;
 import tinygltf;
-import arsd.mangle;
 
 /// Stores all OpenGL raw data.
 class GLMesh {
@@ -49,7 +48,7 @@ class EasyGLTF {
 
     void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
         // Run the chain
-        const int accessorId = primitive.indices;
+        const int accessorId = primitive.attributes["TEXCOORD_0"];
         const Accessor accessor = model.accessors[accessorId];
         const BufferView bufferView = model.bufferViews[accessor.bufferView];
         const Buffer buffer = model.buffers[bufferView.buffer];
@@ -141,7 +140,17 @@ private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     return *(cast(T*)rawData.ptr);
 }
 
+// Agnostic array type (vector2)
+//Todo: turn this into template reader from the component type
+private float[2] readVector2f(const BufferOffset readFrom) {
+	return[
+		rawReadPrimitive!float(readFrom),
+		rawReadPrimitive!float(BufferOffset(readFrom, float.sizeof)),
+    ];
+}
 
+// Agnostic array type (vector3)
+//Todo: turn this into template reader from the component type
 private float[3] readVector3f(const BufferOffset readFrom) {
 	return[
 		rawReadPrimitive!float(readFrom),
