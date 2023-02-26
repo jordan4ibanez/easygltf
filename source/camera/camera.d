@@ -1,6 +1,7 @@
 module camera.camera;
 
 import bindbc.opengl;
+import shader.shader;
 import window.window;
 import vector_3d;
 import matrix_4d;
@@ -11,7 +12,12 @@ class Camera {
     // There can only be one camera in the game, this is it
     private static bool locked = false;
 
+    // Window context pointer.
     private static Window window = null;
+
+    // Shader context pointer.
+    private static Shader shader = null;
+
 
     private double FOV = math.toRadians(60.0);
 
@@ -58,7 +64,7 @@ class Camera {
             .rotateZ(math.toRadians(rotation.z))
             .scale(scale);
         float[16] floatBuffer = objectMatrix.getFloatArray();
-        //! glUniformMatrix4fv(getShader("main").getUniform("objectMatrix"), 1, GL_FALSE, floatBuffer.ptr);
+        glUniformMatrix4fv(shader.getUniform("objectMatrix"), 1, GL_FALSE, floatBuffer.ptr);
     }
 
     /*
@@ -154,5 +160,16 @@ class Camera {
 
     public static void destroyWindowContext() {
         this.window = null;
+    }
+
+    public static void createShaderContext(Shader shader) {
+        if (this.shader !is null) {
+            throw new Exception("Tried to assign the shader context more than once!");
+        }
+        this.shader = shader;
+    }
+
+    public static void destroyShaderContext() {
+        this.shader = null;
     }
 }
