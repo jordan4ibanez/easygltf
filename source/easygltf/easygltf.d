@@ -11,14 +11,17 @@ import tinygltf;
 
 /// Stores all OpenGL raw data.
 class GLMesh {
+
     string name;
-    float[] vertexPositions;
-    int[] indices;
-    float[] textureCoordinates;
+
+    private float[] vertexPositions;
+    private int[] indices;
+    private float[] textureCoordinates;
 
     this(string name) {
         this.name = name;
     }
+
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
