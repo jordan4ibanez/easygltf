@@ -62,7 +62,6 @@ class EasyGLTF {
         writeln(accessor.count);
 
         for (int i = 0; i < accessor.count; i++) {
-            writeln("thing: ", i);
             thisMesh.indices ~= cast(int)readPrimitive(accessor, BufferOffset(buffer.data, byteOffset + (byteStride * i)));
         }
     }
@@ -126,12 +125,9 @@ private struct BufferOffset {
 private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     ubyte[T.sizeof] rawData;
     for (int i = 0; i < T.sizeof; i++) {
-        writeln("literal: ", i);
         rawData[i] = readFrom.at(i);
     }
-    T test = *(cast(T*)rawData.ptr);
-    writeln(test);
-    return test;
+    return *(cast(T*)rawData.ptr);
 }
 
 
