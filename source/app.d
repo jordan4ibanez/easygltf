@@ -71,11 +71,15 @@ void main()
     while (!window.shouldClose()) {
 
         glUseProgram(shader.getShaderProgram);
-        
+
         window.clear(0);
         camera.updateCameraMatrix();
 
-        debugMesh.render(Vector3d(0), Vector3d(0), Vector3d(1), 1);
+        debugMesh.render(
+            Vector3d(-1,0,0), // Translation
+            Vector3d(0), // Rotation
+            Vector3d(1), // Scale
+        1);
 
         window.swapBuffers();
         window.pollEvents();
