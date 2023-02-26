@@ -42,21 +42,21 @@ void main()
     Mesh.createShaderContext(shader);
 
     // Debug model
-    float[] vertices = [
-        0.5f,  0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f,
-    ];
-    int[] indices = [
-        0, 1, 3, 3, 1, 2,
-    ];
-    float[] textureCoordinates = [
-        0, 0,
-        0, 1,
-        1, 1,
-        1, 0
-    ];
+    // float[] vertices = [
+    //     0.5f,  0.5f, 0.0f,
+    //     0.5f, -0.5f, 0.0f,
+    //     -0.5f, -0.5f, 0.0f,
+    //     -0.5f,  0.5f, 0.0f,
+    // ];
+    // int[] indices = [
+    //     0, 1, 3, 3, 1, 2,
+    // ];
+    // float[] textureCoordinates = [
+    //     0, 0,
+    //     0, 1,
+    //     1, 1,
+    //     1, 0
+    // ];
     // Very fancy
     // float[] colors = [
     //     0.5f, 0.0f, 0.0f,
