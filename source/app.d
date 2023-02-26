@@ -25,6 +25,33 @@ void main()
     // Shader controls GLSL
     Shader shader = new Shader("base", "shaders/vertex.vs", "shaders/fragment.fs");
 
+    // Debug model
+    float[] vertices = [
+        -0.5f,  0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f,
+    ];
+    int[] indices = [
+        0, 1, 3, 3, 1, 2,
+    ];
+    float[] textureCoordinates = [
+        0, 0,
+        0, 1,
+        1, 1,
+        1, 0
+    ];
+    // Very fancy
+    float[] colors = [
+        0.5f, 0.0f, 0.0f,
+        0.0f, 0.5f, 0.0f,
+        0.0f, 0.0f, 0.5f,
+        0.0f, 0.5f, 0.5f,
+    ];
+
+    Mesh debugMesh = new Mesh(vertices, indices, textureCoordinates, colors, "textures/debug.png");
+
+
     while (!window.shouldClose()) {
         window.clear(0);
 
