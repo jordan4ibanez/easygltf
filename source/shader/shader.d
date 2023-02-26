@@ -1,9 +1,14 @@
 module shader.shader;
 
 import std.stdio;
+import std.file;
 import bindbc.opengl;
+import window.window;
 
 class Shader {
+
+    // Window context pointer.
+    private static Window window;
 
     private string name;
 
@@ -13,11 +18,55 @@ class Shader {
 
     private uint[string] uniforms;
 
-    this(string name, uint vertexShader, uint fragmentShader, uint shaderProgram) {
+    this(string name,
+        string vertexShaderCodeLocation,
+        string fragmentShaderCodeLocation,
+        string[] uniforms = []) {
+    
         this.name = name;
-        this.vertexShader = vertexShader;
-        this.fragmentShader = fragmentShader;
-        this.shaderProgram = shaderProgram;
+
+        // The game cannot run without shaders, allow this to crash program
+        string vertexShaderCode = cast(string)read(vertexShaderLocation);
+        string fragmentShaderCode = cast(string)read(fragmentShaderLocation);
+
+        this.vertexShader = compileShader(shaderName, vertexShaderCode, GL_VERTEX_SHADER);
+        this.fragmentShader = compileShader(shaderName, fragmentShaderCode, GL_FRAGMENT_SHADER);
+
+        this.shaderProgram = glCreateProgram();
+
+        glAttachShader(shaderProgram, vertexShader);
+        glAttachShader(shaderProgram, fragmentShader);
+
+        glLinkProgram(shaderProgram);
+
+        int success;
+        // Default value is SPACE instead of garbage
+        char[512] infoLog = (' ');
+        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+
+        if (!success) {
+            glGetProgramInfoLog(shaderProgram, 512, null, infoLog.ptr);
+            writeln(infoLog);
+
+            throw new Exception("Error creating shader program!");
+        }
+
+        
+
+        writeln("GL Shader Program with ID ", shaderProgram, " successfully linked!");
+
+        // GameShader thisShader = GameShader(shaderName,vertexShader,fragmentShader, shaderProgram);
+
+        // foreach (string uniformName; uniforms) {
+        //     thisShader.createUniform(uniformName);
+        //     GLenum glErrorInfo = window.getAndClearGLErrors();
+        //     if (glErrorInfo != GL_NO_ERROR) {
+        //         writeln("GL ERROR: ", glErrorInfo);
+        //         writeln("ERROR CREATING UNIFORM: ", uniformName);
+        //         // More needed crashes!
+        //         assert(true == false);
+        //     }
+        // }
     }
 
     void createUniform(string uniformName) {
@@ -32,7 +81,7 @@ class Shader {
     void setUniformI(string uniformName, GLuint value) {
         glUniform1i(uniforms[uniformName], value);
         
-        GLenum glErrorInfo = getAndClearGLErrors();
+        GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR CREATING UNIFORM: ", uniformName);
@@ -45,7 +94,7 @@ class Shader {
     void setUniformF(string uniformName, GLfloat value) {
         glUniform1f(uniforms[uniformName], value);
         
-        GLenum glErrorInfo = getAndClearGLErrors();
+        GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
             writeln("ERROR CREATING UNIFORM: ", uniformName);
@@ -104,64 +153,6 @@ class Shader {
         return shader;
     }
 
-
-    void createShaderProgram(
-        string shaderName,
-        string vertexShaderLocation,
-        string fragmentShaderLocation,
-        string[] uniforms
-        ) {
-
-        // The game cannot run without shaders, allow this to crash program
-        string vertexShaderCode = cast(string)read(vertexShaderLocation);
-        string fragmentShaderCode = cast(string)read(fragmentShaderLocation);
-
-        uint vertexShader = compileShader(shaderName, vertexShaderCode, GL_VERTEX_SHADER);
-        uint fragmentShader = compileShader(shaderName, fragmentShaderCode, GL_FRAGMENT_SHADER);
-
-        uint shaderProgram = glCreateProgram();
-        glAttachShader(shaderProgram, vertexShader);
-        glAttachShader(shaderProgram, fragmentShader);
-
-        glLinkProgram(shaderProgram);
-
-        int success;
-        // Default value is SPACE instead of garbage
-        char[512] infoLog = (' ');
-        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-
-        if (!success) {
-            glGetProgramInfoLog(shaderProgram, 512, null, infoLog.ptr);
-            writeln(infoLog);
-
-            writeln("FREEZING PROGRAM TO ALLOW DIAGNOSTICS!");
-
-            while(true) {
-                
-            }
-        }
-
-        
-
-        writeln("GL Shader Program with ID ", shaderProgram, " successfully linked!");
-
-        GameShader thisShader = GameShader(shaderName,vertexShader,fragmentShader, shaderProgram);
-
-        foreach (string uniformName; uniforms) {
-            thisShader.createUniform(uniformName);
-            GLenum glErrorInfo = getAndClearGLErrors();
-            if (glErrorInfo != GL_NO_ERROR) {
-                writeln("GL ERROR: ", glErrorInfo);
-                writeln("ERROR CREATING UNIFORM: ", uniformName);
-                // More needed crashes!
-                assert(true == false);
-            }
-        }
-        
-
-        container[shaderName] = thisShader;
-    }
-
     void deleteShaders() {
         foreach (GameShader thisShader; container) {
 
@@ -181,5 +172,17 @@ class Shader {
             // Remove the program from game memory
             container.remove(thisShader.name);
         }
+    }
+
+    // This injects and holds the pointer to the Window object.
+    public static void createWindowContext(Window window) {
+        if (this.window !is null) {
+            throw new Exception("Tried to assign a window context to mesh more than once!");
+        }
+        this.window = window;
+    }
+    // Prevents a circular reference.
+    public static void destroyWindowContext() {
+        this.window = null;
     }
 }
