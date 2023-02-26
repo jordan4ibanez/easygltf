@@ -64,6 +64,14 @@ class EasyGLTF {
         const int byteOffset = getByteOffset(accessor, bufferView);
         // Calculate the byte stride
         const int byteStride = accessor.byteStride(bufferView);
+
+        for (int i = 0; i < accessor.count; i++) {
+            float[2] textureCoordinate = readVector2f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
+            
+            foreach (xz; textureCoordinate) {
+                thisMesh.textureCoordinates ~= xz;
+            }
+        }
     }
 
     void extractIndices(Model model, GLMesh thisMesh, Primitive primitive) {
