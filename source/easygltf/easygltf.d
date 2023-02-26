@@ -3,11 +3,18 @@ module easygltf.easygltf;
 import std.stdio;
 import tinygltf;
 
+/**
+//Todo: Implementation note:
+//Todo: Maybe promote floats to doubles?
+//Todo: Doubles can be demoted, but initial value as float cannot regain precision.
+*/
+
 /// Stores all OpenGL raw data.
 class GLMesh {
     string name;
     float[] vertexPositions;
     int[] indices;
+    float[]
 
     this(string name) {
         this.name = name;
