@@ -60,7 +60,7 @@ class EasyGLTF {
             // OpenGL expects a raw stream of data in one array, so that's why this is raw.
             // Note: You could bolt on a counter to do things to the values. But make sure it starts at
             // 1 so you can modulo 3!
-            
+
 
         }
     }
@@ -94,10 +94,19 @@ private struct BufferOffset {
 
 }
 
-private auto rawReadPrimitive(T)(const BufferOffset readFrom) {
+private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     ubyte[] rawData;
     for (int i = 0; i < T.sizeof; i++) {
-         rawData[] ~= readFrom.at(i);
+        rawData ~= readFrom.at(i);
     }
-    return cast(T)test;
+    return *(cast(T*)rawData.ptr);
+}
+
+float[3] readVec3DF(BufferOffset readFrom)
+{
+	return[
+		rawReadPrimitive!float(readFrom),
+		rawReadPrimitive!float(BufferOffset(readFrom, float.sizeof)),
+		rawReadPrimitive!float(BufferOffset(readFrom, 2 * float.sizeof))
+    ];
 }
