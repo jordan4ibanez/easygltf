@@ -73,6 +73,7 @@ void main()
         glUseProgram(shader.getShaderProgram);
 
         window.clear(0);
+        camera.setRotation(Vector3d(0,1,0));
         camera.updateCameraMatrix();
 
         debugMesh.render(
