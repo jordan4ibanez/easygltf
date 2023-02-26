@@ -63,3 +63,11 @@ class EasyGLTF {
         return cast(int)(accessor.byteOffset + bufferView.byteOffset);
     }
 }
+
+auto rawReadPrimitive(T)(T readFrom) {
+    ubyte[] rawData;
+    foreach (data; readFrom[0..T.sizeof]) {
+        rawData[] ~= data;
+    }
+    return cast(T)test;
+}
