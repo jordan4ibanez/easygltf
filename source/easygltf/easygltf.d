@@ -22,6 +22,22 @@ class GLMesh {
         this.name = name;
     }
 
+    // Convert these into a hard slice so no garbage data gets included.
+
+    /// Gets the vertex positions as a hard array.
+    auto getVertexPositions() {
+        return vertexPositions[0..vertexPositions.length];
+    }
+        
+    /// Gets the indices as a hard array.
+    auto getIndices() {
+        return indices[0..indices.length];
+    }
+
+    /// Gets the texture coordinates as a hard array.
+    auto getTextureCoordinates() {
+        return textureCoordinates[0..textureCoordinates.length];
+    }
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
