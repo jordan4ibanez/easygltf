@@ -3,6 +3,7 @@ module mesh.mesh;
 import std.stdio;
 import bindbc.opengl;
 import camera.camera;
+import shader.shader;
 import texture.texture;
 import window.window;
 import vector_3d;
@@ -11,6 +12,9 @@ class Mesh {
 
     // Window context pointer.
     private static Window window = null;
+
+    // Shader context pointer.
+    private static Shader shader = null;
 
     // Camera context pointer;
     private static Camera camera = null;
@@ -251,7 +255,7 @@ class Mesh {
             return;
         }
 
-        // getShader("main").setUniformI("textureSampler", 0);
+        shader.setUniformI("textureSampler", 0);
         // getShader("main").setUniformF("light", light);
 
         glActiveTexture(GL_TEXTURE0);
@@ -304,5 +308,16 @@ class Mesh {
     // Prevents a circular reference.
     public static void destroyCameraContext() {
         this.camera = null;
+    }
+
+    public static void createShaderContext(Shader shader) {
+        if (this.shader !is null) {
+            throw new Exception("Tried to assign the shader context more than once!");
+        }
+        this.shader = shader;
+    }
+
+    public static void destroyShaderContext() {
+        this.shader = null;
     }
 }
