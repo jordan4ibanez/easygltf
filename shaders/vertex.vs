@@ -10,9 +10,10 @@ out vec3 outputColor;
 uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
 
-void main()
-{
+void main() {
+
     gl_Position = cameraMatrix * objectMatrix * vec4(position, 1.0);
     outputTextureCoordinate = textureCoordinate;
     outputColor = color;
+
 }
