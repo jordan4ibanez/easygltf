@@ -76,13 +76,14 @@ class Camera {
     */
     void updateCameraMatrix() {
         double aspectRatio = window.getAspectRatio();
-        //! GameShader mainShader = getShader("main");
-        //! cameraMatrix.identity()
-        //!     .perspective(FOV, aspectRatio, Z_NEAR, Z_FAR)
-        //!     .rotateX(math.toRadians(rotation.x))
-        //!     .rotateY(math.toRadians(rotation.y));
-        //! float[16] floatBuffer = cameraMatrix.getFloatArray();
-        //! glUniformMatrix4fv(mainShader.getUniform("cameraMatrix"),1, GL_FALSE, floatBuffer.ptr);
+        
+        cameraMatrix.identity()
+            .perspective(FOV, aspectRatio, Z_NEAR, Z_FAR)
+            .rotateX(math.toRadians(rotation.x))
+            .rotateY(math.toRadians(rotation.y));
+        float[16] floatBuffer = cameraMatrix.getFloatArray();
+
+        glUniformMatrix4fv(shader.getUniform("cameraMatrix"),1, GL_FALSE, floatBuffer.ptr);
     }
 
     // It is extremely important to clear the buffer bit!
