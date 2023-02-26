@@ -69,6 +69,8 @@ void main()
 
 
     while (!window.shouldClose()) {
+        
+        window.pollEvents();
 
         glUseProgram(shader.getShaderProgram);
 
@@ -84,7 +86,6 @@ void main()
         1);
 
         window.swapBuffers();
-        window.pollEvents();
     }
 
     Mesh.destroyShaderContext();
