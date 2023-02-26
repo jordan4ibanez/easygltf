@@ -25,17 +25,17 @@ class GLMesh {
     // Convert these into a hard slice so no garbage data gets included.
 
     /// Gets the vertex positions as a hard array.
-    auto getVertexPositions() {
+    auto getVertexPositions() const {
         return vertexPositions[0..vertexPositions.length];
     }
         
     /// Gets the indices as a hard array.
-    auto getIndices() {
+    auto getIndices() const {
         return indices[0..indices.length];
     }
 
     /// Gets the texture coordinates as a hard array.
-    auto getTextureCoordinates() {
+    auto getTextureCoordinates() const {
         return textureCoordinates[0..textureCoordinates.length];
     }
 }
