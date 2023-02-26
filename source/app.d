@@ -13,7 +13,7 @@ void main()
 
     writeln("hello world");
 
-    EasyGLTF gltf = new EasyGLTF("test");
+    EasyGLTF gltf = new EasyGLTF("models/cube.gltf");
 
 
     //! OpenGL test project starts here.
