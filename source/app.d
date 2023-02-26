@@ -3,6 +3,7 @@ import window.window;
 import mesh.mesh;
 import texture.texture;
 import camera.camera;
+import shader.shader;
 
 void main()
 {
@@ -13,17 +14,21 @@ void main()
     Mesh.createWindowContext(window);
     Camera.createWindowContext(window);
     Texture.createWindowContext(window);
+    Shader.createWindowContext(window);
 
     // Camera controls view point and mathematical
     Camera camera = new Camera();
 
     //* Allow direct message passing through reference pointers. Reduces verbosity.
     Mesh.createCameraContext(camera);
+    
+    // Shader controls GLSL
+    Shader shader = new Shader("hi", "null", "null");
 
     while (!window.shouldClose()) {
         window.clear(0);
 
-        
+
 
 
         window.swapBuffers();
@@ -33,6 +38,7 @@ void main()
     //* Clean up all reference pointers.
     Mesh.destroyCameraContext();
 
+    Shader.destroyWindowContext();
     Texture.destroyWindowContext();
     Mesh.destroyWindowContext();
     Camera.destroyWindowContext();
