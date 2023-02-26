@@ -59,9 +59,9 @@ class Camera {
     void setObjectMatrix(Vector3d offset, Vector3d rotation, Vector3d scale) {
         objectMatrix.identity()
             .translate(-position.x + offset.x, -position.y + offset.y, -position.z + offset.z)
-            .rotateX(math.toRadians(rotation.x))
-            .rotateY(math.toRadians(rotation.y))
-            .rotateZ(math.toRadians(rotation.z))
+            .rotateX(math.toRadians(-rotation.x))
+            .rotateY(math.toRadians(-rotation.y))
+            .rotateZ(math.toRadians(-rotation.z))
             .scale(scale);
         float[16] floatBuffer = objectMatrix.getFloatArray();
         glUniformMatrix4fv(shader.getUniform("objectMatrix"), 1, GL_FALSE, floatBuffer.ptr);
