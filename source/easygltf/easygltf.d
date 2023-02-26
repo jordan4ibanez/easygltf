@@ -41,7 +41,7 @@ class EasyGLTF {
                 this.extractIndices(model, thisMesh, primitive);
             }
 
-            write(thisMesh.indices);
+            writeln(thisMesh.indices);
 
             glMeshes ~= thisMesh;
         }
@@ -58,8 +58,6 @@ class EasyGLTF {
         const int byteOffset = getByteOffset(accessor, bufferView);
         // Calculate the byte stride
         const int byteStride = accessor.byteStride(bufferView);
-
-        writeln(accessor.count);
 
         for (int i = 0; i < accessor.count; i++) {
             thisMesh.indices ~= cast(int)readPrimitive(accessor, BufferOffset(buffer.data, byteOffset + (byteStride * i)));
