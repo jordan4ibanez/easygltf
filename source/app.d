@@ -1,4 +1,5 @@
 import std.stdio;
+import bindbc.opengl;
 import window.window;
 import mesh.mesh;
 import texture.texture;
@@ -68,6 +69,9 @@ void main()
 
 
     while (!window.shouldClose()) {
+
+        glUseProgram(shader.getShaderProgram);
+        
         window.clear(0);
         camera.updateCameraMatrix();
 
