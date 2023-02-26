@@ -64,13 +64,6 @@ class Shader {
 
         foreach (string uniformName; uniforms) {
             this.createUniform(uniformName);
-            GLenum glErrorInfo = window.getAndClearGLErrors();
-            if (glErrorInfo != GL_NO_ERROR) {
-                writeln("GL ERROR: ", glErrorInfo);
-                writeln("ERROR CREATING UNIFORM: ", uniformName);
-                // More needed crashes!
-                assert(true == false);
-            }
         }
     }
 
@@ -78,7 +71,17 @@ class Shader {
         GLint location = glGetUniformLocation(this.shaderProgram, uniformName.ptr);
         writeln("uniform ", uniformName, " is at id ", location);
         // Do not allow out of bounds
-        assert(location >= 0);
+        if (location < 0) {
+            throw new Exception("OpenGL uniform is out of bounds!");
+        }
+        GLenum glErrorInfo = window.getAndClearGLErrors();
+        if (glErrorInfo != GL_NO_ERROR) {
+            writeln("GL ERROR: ", glErrorInfo);
+            writeln("ERROR CREATING UNIFORM: ", uniformName);
+            // More needed crashes!
+            throw new Exception("Failed to create shader uniform!");
+        }
+
         uniforms[uniformName] = location;
     }
 
