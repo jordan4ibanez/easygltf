@@ -15,8 +15,7 @@ void main()
 
     EasyGLTF gltf = new EasyGLTF("models/cube.gltf");
 
-
-    ! OpenGL test project starts here.
+    
     // Window controls OpenGL and GLFW
 	Window window = new Window("easygltf prototyping").initialize;
 
@@ -70,7 +69,7 @@ void main()
 
     float rotation = 180.0;
 
-    while (window.shouldClose()) {
+    while (!window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
