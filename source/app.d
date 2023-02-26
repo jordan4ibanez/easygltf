@@ -4,6 +4,7 @@ import mesh.mesh;
 import texture.texture;
 import camera.camera;
 import shader.shader;
+import vector_3d;
 
 void main()
 {
@@ -24,8 +25,20 @@ void main()
     
     // Shader controls GLSL
     Shader shader = new Shader("base", "shaders/vertex.vs", "shaders/fragment.fs");
+    shader.createUniform("cameraMatrix");
+    shader.createUniform("objectMatrix");
+    shader.createUniform("textureSampler");
+    
+    
+    /*
+        "",
+        "",
+        "",
+    ""
+    */
 
     Camera.createShaderContext(shader);
+    Mesh.createShaderContext(shader);
 
     // Debug model
     float[] vertices = [
@@ -58,12 +71,13 @@ void main()
         window.clear(0);
         camera.updateCameraMatrix();
 
-
+        debugMesh.render(Vector3d(0), Vector3d(0), Vector3d(1), 1);
 
         window.swapBuffers();
         window.pollEvents();
     }
 
+    Mesh.destroyShaderContext();
     Camera.destroyShaderContext();
 
     shader.deleteShader();
