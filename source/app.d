@@ -80,7 +80,7 @@ void main()
         camera.updateCameraMatrix();
 
         debugMesh.render(
-            Vector3d(1,0,0), // Translation
+            Vector3d(0,0,-1), // Translation
             Vector3d(0), // Rotation
             Vector3d(1), // Scale
         1);
