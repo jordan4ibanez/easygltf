@@ -43,11 +43,24 @@ class EasyGLTF {
     }
 
     void extractVertexPositions(Model model, GLMesh thisMesh, Primitive primitive) {
+
+        // Run the chain
         const int accessorId = primitive.attributes["POSITION"];
         const Accessor accessor = model.accessors[accessorId];
         const BufferView bufferView = model.bufferViews[accessor.bufferView];
         const Buffer buffer = model.buffers[bufferView.buffer];
 
+        // Calculate the byte offset.
+        const int byteOffset = getByteOffset(accessor, bufferView);
+        // Calculate the byte stride
+        
 
+
+
+    }
+
+
+    int getByteOffset(Accessor accessor, BufferView bufferView) {
+        return accessor.byteOffset + bufferView.byteOffset;
     }
 }
