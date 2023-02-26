@@ -229,7 +229,7 @@ class Mesh {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, this.texture.getId);
 
-        //! Camera.setObjectMatrix(offset, rotation, scale);
+        camera.setObjectMatrix(offset, rotation, scale);
 
         glBindVertexArray(this.vao);
         // glDrawArrays(GL_TRIANGLES, 0, this.indexCount);
