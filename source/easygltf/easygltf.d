@@ -107,6 +107,7 @@ class EasyGLTF {
     }
 }
 
+// Buffer offset is a look into the buffer at a certain point in the data array.
 private struct BufferOffset {
 
     private const ubyte[] bufferData;
