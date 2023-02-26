@@ -59,7 +59,7 @@ class EasyGLTF {
             // This is counted as Vector3 so 0,1,2 is one position, 3,4,5 is the next, etc.
             // OpenGL expects a raw stream of data in one array, so that's why this is raw.
             // Feel free to modify this to your hearts content.
-            // float[3] vertexPosition = 
+            float[3] vertexPosition = readVector3f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
 
         }
     }
@@ -71,11 +71,11 @@ class EasyGLTF {
 
 private struct BufferOffset {
 
-    private ubyte[] bufferData;
-    private int offset;
+    private const ubyte[] bufferData;
+    private const int offset;
 
     /// Construct a buffer offset raw. It is the baseline buffer data.
-    this(ubyte[] bufferData, const int offset) {
+    this(const ubyte[] bufferData, const int offset) {
         this.bufferData = bufferData;
         this.offset = offset;
     }
@@ -101,7 +101,7 @@ private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     return *(cast(T*)rawData.ptr);
 }
 
-float[3] readVec3DF(BufferOffset readFrom)
+float[3] readVector3f(const BufferOffset readFrom)
 {
 	return[
 		rawReadPrimitive!float(readFrom),
