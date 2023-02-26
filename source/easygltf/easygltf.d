@@ -36,6 +36,8 @@ class EasyGLTF {
 
             foreach (primitive; mesh.primitives) {
                 this.extractVertexPositions(model, thisMesh, primitive);
+                
+                // writeln(model.accessors[primitive.indices].count);
             }
 
             glMeshes ~= thisMesh;
@@ -59,7 +61,10 @@ class EasyGLTF {
             // This is counted as Vector3 so 0,1,2 is one position, 3,4,5 is the next, etc.
             // OpenGL expects a raw stream of data in one array, so that's why this is raw.
             // Feel free to modify this to your hearts content.
+            writeln(i + 1);
             float[3] vertexPosition = readVector3f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
+
+            writeln(vertexPosition);
 
         }
     }
@@ -93,6 +98,7 @@ private struct BufferOffset {
 
 }
 
+/// Extracts raw data from the buffer ubyte[] and converts it into T (type: float, double, int, etc)
 private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     ubyte[T.sizeof] rawData;
     for (int i = 0; i < T.sizeof; i++) {
@@ -101,8 +107,8 @@ private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     return *(cast(T*)rawData.ptr);
 }
 
-float[3] readVector3f(const BufferOffset readFrom)
-{
+
+float[3] readVector3f(const BufferOffset readFrom) {
 	return[
 		rawReadPrimitive!float(readFrom),
 		rawReadPrimitive!float(BufferOffset(readFrom, float.sizeof)),
