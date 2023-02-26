@@ -4,14 +4,21 @@ import std.stdio;
 import tinygltf;
 
 /// Stores all OpenGL raw data.
-class Mesh {
+class GLMesh {
+    string name;
 
+    this(string name) {
+        this.name = name;
+    }
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
 class EasyGLTF {
 
-    Model model;
+    private Model model;
+
+    /// Stores the raw mesh data for you to work with.
+    GLMesh[] glMeshes;
 
     this(string fileLocation, bool debugInfo = false) {
 
@@ -24,7 +31,14 @@ class EasyGLTF {
 
         // Now automatically decode the decoded model. Turns it into raw OpenGL data that you can utilize easily.
         foreach (mesh; model.meshes) {
-            writeln(mesh.name);
+
+            GLMesh thisMesh =  new GLMesh(mesh.name);
+
+            foreach (primitive; mesh.primitives) {
+                
+            }
+
+            glMeshes ~= thisMesh;
         }
     }
 
