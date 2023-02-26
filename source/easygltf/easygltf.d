@@ -135,7 +135,7 @@ private auto rawReadPrimitive(T)(BufferOffset readFrom) {
 }
 
 
-float[3] readVector3f(const BufferOffset readFrom) {
+private float[3] readVector3f(const BufferOffset readFrom) {
 	return[
 		rawReadPrimitive!float(readFrom),
 		rawReadPrimitive!float(BufferOffset(readFrom, float.sizeof)),
@@ -145,7 +145,7 @@ float[3] readVector3f(const BufferOffset readFrom) {
 
 // These values become promoted or demoted into whatever def type they are in
 // These values corrispond with tinygltf::TINYGLTF_COMPONENT_TYPE
-double readPrimitive(const Accessor accessor, const BufferOffset readFrom) {
+private double readPrimitive(const Accessor accessor, const BufferOffset readFrom) {
     switch(accessor.componentType) {
         case (5120): {
             return rawReadPrimitive!byte(readFrom);
