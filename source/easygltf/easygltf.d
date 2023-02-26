@@ -64,7 +64,31 @@ class EasyGLTF {
     }
 }
 
-auto rawReadPrimitive(T)(T readFrom) {
+private struct BufferOffset {
+
+    private ubyte[] bufferData;
+    private int offset;
+
+    /// Construct a buffer offset raw. It is the baseline buffer data.
+    this(ubyte[] bufferData, const int offset) {
+        this.bufferData = bufferData;
+        this.offset = offset;
+    }
+
+    /// Construct a buffer offset INSIDE another buffer offset. It allows things like vectors, matrices, etc to be read.
+    this(BufferOffset otherBufferOffset, const int offset) {
+        this.bufferData = otherBufferOffset.bufferData;
+        this.offset = offset + otherBufferOffset.offset;
+    }
+
+    /// Getter for raw data within the buffer data. Remember: These can be chained, so that's why this is a custom getter.
+    ubyte at(const int offset) {
+        return bufferData[this.offset + offset];
+    }
+
+}
+
+private auto rawReadPrimitive(T)(T readFrom) {
     ubyte[] rawData;
     foreach (data; readFrom[0..T.sizeof]) {
         rawData[] ~= data;
