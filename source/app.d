@@ -25,6 +25,8 @@ void main()
     // Shader controls GLSL
     Shader shader = new Shader("base", "shaders/vertex.vs", "shaders/fragment.fs");
 
+    Camera.createShaderContext(shader);
+
     // Debug model
     float[] vertices = [
         -0.5f,  0.5f, 0.0f,
@@ -54,13 +56,15 @@ void main()
 
     while (!window.shouldClose()) {
         window.clear(0);
-
+        camera.updateCameraMatrix();
 
 
 
         window.swapBuffers();
         window.pollEvents();
     }
+
+    Camera.destroyShaderContext();
 
     shader.deleteShader();
 
