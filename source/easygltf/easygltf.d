@@ -59,7 +59,7 @@ class EasyGLTF {
             // This is counted as Vector3 so 0,1,2 is one position, 3,4,5 is the next, etc.
             // OpenGL expects a raw stream of data in one array, so that's why this is raw.
             // Feel free to modify this to your hearts content.
-            float[3] vertexPosition = 
+            // float[3] vertexPosition = 
 
         }
     }
@@ -94,9 +94,9 @@ private struct BufferOffset {
 }
 
 private auto rawReadPrimitive(T)(BufferOffset readFrom) {
-    ubyte[] rawData;
+    ubyte[T.sizeof] rawData;
     for (int i = 0; i < T.sizeof; i++) {
-        rawData ~= readFrom.at(i);
+        rawData[i] = readFrom.at(i);
     }
     return *(cast(T*)rawData.ptr);
 }
