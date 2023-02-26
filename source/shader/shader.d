@@ -25,7 +25,14 @@ class Shader {
     
         this.name = name;
 
-        // The game cannot run without shaders, allow this to crash program
+        // The game cannot run without shaders, bail out
+        if (!exists(vertexShaderCodeLocation)) {
+            throw new Exception("Vertex shader code does not exist!");
+        }
+        if (!exists(fragmentShaderCodeLocation)) {
+            throw new Exception("Fragment shader code does not exist!");
+        }
+
         string vertexShaderCode = cast(string)read(vertexShaderCodeLocation);
         string fragmentShaderCode = cast(string)read(fragmentShaderCodeLocation);
 
@@ -55,18 +62,16 @@ class Shader {
 
         writeln("GL Shader Program with ID ", shaderProgram, " successfully linked!");
 
-        // GameShader thisShader = GameShader(shaderName,vertexShader,fragmentShader, shaderProgram);
-
-        // foreach (string uniformName; uniforms) {
-        //     thisShader.createUniform(uniformName);
-        //     GLenum glErrorInfo = window.getAndClearGLErrors();
-        //     if (glErrorInfo != GL_NO_ERROR) {
-        //         writeln("GL ERROR: ", glErrorInfo);
-        //         writeln("ERROR CREATING UNIFORM: ", uniformName);
-        //         // More needed crashes!
-        //         assert(true == false);
-        //     }
-        // }
+        foreach (string uniformName; uniforms) {
+            this.createUniform(uniformName);
+            GLenum glErrorInfo = window.getAndClearGLErrors();
+            if (glErrorInfo != GL_NO_ERROR) {
+                writeln("GL ERROR: ", glErrorInfo);
+                writeln("ERROR CREATING UNIFORM: ", uniformName);
+                // More needed crashes!
+                assert(true == false);
+            }
+        }
     }
 
     void createUniform(string uniformName) {
