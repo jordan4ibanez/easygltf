@@ -29,14 +29,7 @@ void main()
     shader.createUniform("cameraMatrix");
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
-    
-    
-    /*
-        "",
-        "",
-        "",
-    ""
-    */
+ 
 
     Camera.createShaderContext(shader);
     Mesh.createShaderContext(shader);
