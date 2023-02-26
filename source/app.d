@@ -23,7 +23,7 @@ void main()
     Mesh.createCameraContext(camera);
     
     // Shader controls GLSL
-    Shader shader = new Shader("hi", "null", "null");
+    Shader shader = new Shader("base", "null", "null");
 
     while (!window.shouldClose()) {
         window.clear(0);
@@ -34,6 +34,8 @@ void main()
         window.swapBuffers();
         window.pollEvents();
     }
+
+    shader.deleteShader();
 
     //* Clean up all reference pointers.
     Mesh.destroyCameraContext();
