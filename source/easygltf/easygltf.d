@@ -14,7 +14,7 @@ class GLMesh {
     string name;
     float[] vertexPositions;
     int[] indices;
-    float[]
+    float[] textureCoordinates;
 
     this(string name) {
         this.name = name;
