@@ -2,6 +2,7 @@ module easygltf.easygltf;
 
 import std.stdio;
 import tinygltf;
+import arsd.mangle;
 
 /// Stores all OpenGL raw data.
 class GLMesh {
@@ -39,12 +40,15 @@ class EasyGLTF {
             foreach (primitive; mesh.primitives) {
                 this.extractVertexPositions(model, thisMesh, primitive);
                 this.extractIndices(model, thisMesh, primitive);
+                this.extractTextureCoordinates(model, thisMesh, primitive);
             }
-
-            writeln(thisMesh.indices);
 
             glMeshes ~= thisMesh;
         }
+    }
+
+    void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
+
     }
 
     void extractIndices(Model model, GLMesh thisMesh, Primitive primitive) {
