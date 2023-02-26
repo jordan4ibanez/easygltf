@@ -23,7 +23,7 @@ void main()
     Mesh.createCameraContext(camera);
     
     // Shader controls GLSL
-    Shader shader = new Shader("base", "null", "null");
+    Shader shader = new Shader("base", "shaders/vertex.vs", "shaders/fragment.fs");
 
     while (!window.shouldClose()) {
         window.clear(0);
