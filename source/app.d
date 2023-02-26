@@ -62,8 +62,8 @@ void main()
     // ];
 
     EasyGLTF gltf = new EasyGLTF("models/cube.gltf");
-    
-    const GLMesh m
+
+    const GLMesh meshData = gltf.glMeshes[0];
 
     Mesh debugMesh = new Mesh(vertices, indices, textureCoordinates, "textures/debug.png");
 
