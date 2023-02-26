@@ -48,7 +48,16 @@ class EasyGLTF {
     }
 
     void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
+        // Run the chain
+        const int accessorId = primitive.indices;
+        const Accessor accessor = model.accessors[accessorId];
+        const BufferView bufferView = model.bufferViews[accessor.bufferView];
+        const Buffer buffer = model.buffers[bufferView.buffer];
 
+        // Calculate the byte offset.
+        const int byteOffset = getByteOffset(accessor, bufferView);
+        // Calculate the byte stride
+        const int byteStride = accessor.byteStride(bufferView);
     }
 
     void extractIndices(Model model, GLMesh thisMesh, Primitive primitive) {
