@@ -1,10 +1,10 @@
 import std.stdio;
 import bindbc.opengl;
-import window.window;
-import mesh.mesh;
-import texture.texture;
 import camera.camera;
+import mesh.mesh;
 import shader.shader;
+import texture.texture;
+import window.window;
 import vector_3d;
 
 void main()
