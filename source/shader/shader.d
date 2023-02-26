@@ -58,8 +58,6 @@ class Shader {
             throw new Exception("Error creating shader program!");
         }
 
-        
-
         writeln("GL Shader Program with ID ", shaderProgram, " successfully linked!");
 
         foreach (string uniformName; uniforms) {
@@ -90,12 +88,12 @@ class Shader {
         glUniform1i(uniforms[uniformName], value);
         
         GLenum glErrorInfo = window.getAndClearGLErrors();
+
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
-            writeln("ERROR CREATING UNIFORM: ", uniformName);
             // This absolutely needs to crash, there's no way
             // the game can continue without shaders
-            assert(true == false);
+            throw new Exception("Error setting shader uniform: " ~ uniformName);
         }
     }
 
@@ -105,14 +103,17 @@ class Shader {
         GLenum glErrorInfo = window.getAndClearGLErrors();
         if (glErrorInfo != GL_NO_ERROR) {
             writeln("GL ERROR: ", glErrorInfo);
-            writeln("ERROR CREATING UNIFORM: ", uniformName);
             // This needs to crash too! Game needs shaders!
-            assert(true == false);
+            throw new Exception("Error setting shader uniform: " ~ uniformName);
         }
     }
 
     uint getUniform(string uniformName) {
         return uniforms[uniformName];
+    }
+
+    uint getShaderProgram() {
+        return this.shaderProgram;
     }
 
     // Automates shader compilation
