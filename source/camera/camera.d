@@ -143,11 +143,13 @@ class Camera {
         rotationLimiter();
     }
 
+    // Sets rotation in degrees
     void setRotation(Vector3d newRotation) {
         rotation = newRotation;
         rotationLimiter();
     }
 
+    // Gets rotation in degrees
     Vector3d getRotation() {
         return rotation;
     }
