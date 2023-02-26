@@ -65,7 +65,7 @@ void main()
 
     const GLMesh meshData = gltf.glMeshes[0];
 
-    Mesh debugMesh = new Mesh(vertices, indices, textureCoordinates, "textures/debug.png");
+    Mesh debugMesh = new Mesh(meshData.getVertexPositions(), meshData.getIndices(), meshData.getTextureCoordinates(), "textures/debug.png");
 
     float rotation = 180.0;
 
