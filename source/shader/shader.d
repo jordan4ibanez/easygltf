@@ -26,11 +26,11 @@ class Shader {
         this.name = name;
 
         // The game cannot run without shaders, allow this to crash program
-        string vertexShaderCode = cast(string)read(vertexShaderLocation);
-        string fragmentShaderCode = cast(string)read(fragmentShaderLocation);
+        string vertexShaderCode = cast(string)read(vertexShaderCodeLocation);
+        string fragmentShaderCode = cast(string)read(fragmentShaderCodeLocation);
 
-        this.vertexShader = compileShader(shaderName, vertexShaderCode, GL_VERTEX_SHADER);
-        this.fragmentShader = compileShader(shaderName, fragmentShaderCode, GL_FRAGMENT_SHADER);
+        this.vertexShader = compileShader(name, vertexShaderCode, GL_VERTEX_SHADER);
+        this.fragmentShader = compileShader(name, fragmentShaderCode, GL_FRAGMENT_SHADER);
 
         this.shaderProgram = glCreateProgram();
 
@@ -153,25 +153,24 @@ class Shader {
         return shader;
     }
 
-    void deleteShaders() {
-        foreach (GameShader thisShader; container) {
+    void deleteShader() {
 
-            // Detach shaders from program
-            glDetachShader(thisShader.shaderProgram, thisShader.vertexShader);
-            glDetachShader(thisShader.shaderProgram, thisShader.fragmentShader);
+        // Detach shaders from program
+        glDetachShader(this.shaderProgram, this.vertexShader);
+        glDetachShader(this.shaderProgram, this.fragmentShader);
 
-            // Delete shaders
-            glDeleteShader(thisShader.vertexShader);
-            glDeleteShader(thisShader.fragmentShader);
+        // Delete shaders
+        glDeleteShader(this.vertexShader);
+        glDeleteShader(this.fragmentShader);
 
-            // Delete the program
-            glDeleteProgram(thisShader.shaderProgram);
+        // Delete the program
+        glDeleteProgram(this.shaderProgram);
 
-            writeln("Deleted shader: ", thisShader.name);
+        writeln("Deleted shader: ", this.name);
 
-            // Remove the program from game memory
-            container.remove(thisShader.name);
-        }
+        // Remove the program from game memory
+        container.remove(this.name);
+    
     }
 
     // This injects and holds the pointer to the Window object.
