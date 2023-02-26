@@ -32,7 +32,7 @@ class Mesh {
     // Indices vertex buffer object
     GLuint ibo = 0;
     // Colors vertex buffer object
-    GLuint cbo = 0;
+    // GLuint cbo = 0;
     // Indices count, not sure why this is stored in this class?
     // Todo: Figure out why this is.
     GLuint indexCount = 0;
@@ -44,7 +44,7 @@ class Mesh {
     this(const float[] vertices, 
         const int[] indices, 
         const float[] textureCoordinates, 
-        const float[] colors, 
+        // const float[] colors, 
         const string textureLocation ) {
 
         this.texture = new Texture(textureLocation);
@@ -108,25 +108,25 @@ class Mesh {
 
         // Colors VBO
 
-        glGenBuffers(1, &this.cbo);
-        glBindBuffer(GL_ARRAY_BUFFER, this.cbo);
+        // glGenBuffers(1, &this.cbo);
+        // glBindBuffer(GL_ARRAY_BUFFER, this.cbo);
 
-        glBufferData(
-            GL_ARRAY_BUFFER,
-            colors.length * float.sizeof,
-            colors.ptr,
-            GL_STATIC_DRAW
-        );
+        // glBufferData(
+        //     GL_ARRAY_BUFFER,
+        //     colors.length * float.sizeof,
+        //     colors.ptr,
+        //     GL_STATIC_DRAW
+        // );
 
-        glVertexAttribPointer(
-            2,
-            3,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            cast(const(void)*)0
-        );
-        glEnableVertexAttribArray(2); 
+        // glVertexAttribPointer(
+        //     2,
+        //     3,
+        //     GL_FLOAT,
+        //     GL_FALSE,
+        //     0,
+        //     cast(const(void)*)0
+        // );
+        // glEnableVertexAttribArray(2); 
 
 
         // Indices VBO
@@ -187,8 +187,8 @@ class Mesh {
         assert (glIsBuffer(this.tbo) == GL_FALSE);
 
         // Delete the colors vbo
-        glDeleteBuffers(1, &this.cbo);
-        assert (glIsBuffer(this.cbo) == GL_FALSE);
+        // glDeleteBuffers(1, &this.cbo);
+        // assert (glIsBuffer(this.cbo) == GL_FALSE);
 
         // Delete the indices vbo
         glDeleteBuffers(1, &this.ibo);

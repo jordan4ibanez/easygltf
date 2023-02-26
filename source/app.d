@@ -58,14 +58,14 @@ void main()
         1, 0
     ];
     // Very fancy
-    float[] colors = [
-        0.5f, 0.0f, 0.0f,
-        0.0f, 0.5f, 0.0f,
-        0.0f, 0.0f, 0.5f,
-        0.0f, 0.5f, 0.5f,
-    ];
+    // float[] colors = [
+    //     0.5f, 0.0f, 0.0f,
+    //     0.0f, 0.5f, 0.0f,
+    //     0.0f, 0.0f, 0.5f,
+    //     0.0f, 0.5f, 0.5f,
+    // ];
 
-    Mesh debugMesh = new Mesh(vertices, indices, textureCoordinates, colors, "textures/debug.png");
+    Mesh debugMesh = new Mesh(vertices, indices, textureCoordinates, "textures/debug.png");
 
 
     while (!window.shouldClose()) {
