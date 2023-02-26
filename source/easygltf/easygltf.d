@@ -29,18 +29,25 @@ class EasyGLTF {
             throw new Exception("Failed to load model " ~ fileLocation ~ "!");
         }
 
-        // Now automatically decode the decoded model. Turns it into raw OpenGL data that you can utilize easily.
+        // Now automatically decode the decoded model. Turns it into raw OpenGL data that you can easily utilize.
         foreach (mesh; model.meshes) {
 
             GLMesh thisMesh =  new GLMesh(mesh.name);
 
             foreach (primitive; mesh.primitives) {
-                
+                this.extractVertexPositions(model, thisMesh, primitive);
             }
 
             glMeshes ~= thisMesh;
         }
     }
 
+    void extractVertexPositions(Model model, GLMesh thisMesh, Primitive primitive) {
+        const int accessorId = primitive.attributes["POSITION"];
+        const Accessor accessor = model.accessors[accessorId];
+        const BufferView bufferView = model.bufferViews[accessor.bufferView];
+        const Buffer buffer = model.buffers[bufferView.buffer];
 
+
+    }
 }
