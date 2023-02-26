@@ -6,11 +6,14 @@ import shader.shader;
 import texture.texture;
 import window.window;
 import vector_3d;
+import easygltf.easygltf;
 
 void main()
 {
 
     writeln("hello world");
+
+    EasyGLTF gltf = new EasyGLTF("test");
 
 
     //! OpenGL test project starts here.
