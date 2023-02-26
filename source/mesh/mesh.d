@@ -37,11 +37,11 @@ class Mesh {
     private Texture texture = null;
 
 
-    this(immutable float[] vertices, 
-        immutable int[] indices, 
-        immutable float[] textureCoordinates, 
-        immutable float[] colors, 
-        immutable string textureLocation ) {
+    this(const float[] vertices, 
+        const int[] indices, 
+        const float[] textureCoordinates, 
+        const float[] colors, 
+        const string textureLocation ) {
 
         this.texture = new Texture(textureLocation);
 
