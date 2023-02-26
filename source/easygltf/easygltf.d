@@ -58,9 +58,8 @@ class EasyGLTF {
         for (int i = 0; i < accessor.count; i++) {
             // This is counted as Vector3 so 0,1,2 is one position, 3,4,5 is the next, etc.
             // OpenGL expects a raw stream of data in one array, so that's why this is raw.
-            // Note: You could bolt on a counter to do things to the values. But make sure it starts at
-            // 1 so you can modulo 3!
-
+            // Feel free to modify this to your hearts content.
+            float[3] vertexPosition = 
 
         }
     }
