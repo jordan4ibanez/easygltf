@@ -451,9 +451,9 @@ class Window {
         glViewport(0, 0, windowSize.x, windowSize.y);
 
         // Enable backface culling
-        // glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
         // Disable backface culling
-        glDisable(GL_CULL_FACE);
+        // glDisable(GL_CULL_FACE);
 
         // Alpha color blending
         glEnable(GL_BLEND);
