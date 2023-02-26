@@ -14,10 +14,14 @@ void main()
     Camera.createWindowContext(window);
     Texture.createWindowContext(window);
 
+    // Camera controls view point and mathematical
+    Camera camera = new Camera();
+
+    //* Allow direct message passing through reference pointers. Reduces verbosity.
+    Mesh.createCameraContext(camera);
 
     while (!window.shouldClose()) {
-        window.clear(1,1,1);
-
+        window.clear(0);
 
 
         window.swapBuffers();
@@ -25,6 +29,8 @@ void main()
     }
 
     //* Clean up all reference pointers.
+    Mesh.destroyCameraContext();
+
     Texture.destroyWindowContext();
     Mesh.destroyWindowContext();
     Camera.destroyWindowContext();
