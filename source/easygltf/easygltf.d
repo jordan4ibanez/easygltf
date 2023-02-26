@@ -88,10 +88,10 @@ private struct BufferOffset {
 
 }
 
-private auto rawReadPrimitive(T)(T readFrom) {
+private auto rawReadPrimitive(T)(const BufferOffset readFrom) {
     ubyte[] rawData;
-    foreach (data; readFrom[0..T.sizeof]) {
-        rawData[] ~= data;
+    for (int i = 0; i < T.sizeof; i++) {
+         rawData[] ~= readFrom.at(i);
     }
     return cast(T)test;
 }
