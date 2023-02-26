@@ -72,12 +72,13 @@ void main()
 
         glUseProgram(shader.getShaderProgram);
 
-        window.clear(0);
-        camera.setRotation(Vector3d(0,1,0));
+        window.clear(1);
+        camera.clearDepthBuffer();
+        camera.setRotation(Vector3d(0,0,-1));
         camera.updateCameraMatrix();
 
         debugMesh.render(
-            Vector3d(-1,0,0), // Translation
+            Vector3d(1,0,0), // Translation
             Vector3d(0), // Rotation
             Vector3d(1), // Scale
         1);
