@@ -23,6 +23,8 @@ void main()
     while (!window.shouldClose()) {
         window.clear(0);
 
+        
+
 
         window.swapBuffers();
         window.pollEvents();
