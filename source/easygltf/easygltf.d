@@ -6,6 +6,7 @@ import tinygltf;
 /// Stores all OpenGL raw data.
 class GLMesh {
     string name;
+    float[] vertexPositions;
 
     this(string name) {
         this.name = name;
@@ -61,10 +62,11 @@ class EasyGLTF {
             // This is counted as Vector3 so 0,1,2 is one position, 3,4,5 is the next, etc.
             // OpenGL expects a raw stream of data in one array, so that's why this is raw.
             // Feel free to modify this to your hearts content.
-            writeln(i + 1);
             float[3] vertexPosition = readVector3f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
 
-            writeln(vertexPosition);
+            foreach (xyz; vertexPosition) {
+                thisMesh.vertexPositions ~= xyz;
+            }
 
         }
     }
