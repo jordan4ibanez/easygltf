@@ -7,6 +7,7 @@ import tinygltf;
 class GLMesh {
     string name;
     float[] vertexPositions;
+    int[] indices;
 
     this(string name) {
         this.name = name;
@@ -37,11 +38,32 @@ class EasyGLTF {
 
             foreach (primitive; mesh.primitives) {
                 this.extractVertexPositions(model, thisMesh, primitive);
-                
-                // writeln(model.accessors[primitive.indices].count);
+                this.extractIndices(model, thisMesh, primitive);
             }
 
+            write(thisMesh.indices);
+
             glMeshes ~= thisMesh;
+        }
+    }
+
+    void extractIndices(Model model, GLMesh thisMesh, Primitive primitive) {
+        // Run the chain
+        const int accessorId = primitive.indices;
+        const Accessor accessor = model.accessors[accessorId];
+        const BufferView bufferView = model.bufferViews[accessor.bufferView];
+        const Buffer buffer = model.buffers[bufferView.buffer];
+
+        // Calculate the byte offset.
+        const int byteOffset = getByteOffset(accessor, bufferView);
+        // Calculate the byte stride
+        const int byteStride = accessor.byteStride(bufferView);
+
+        writeln(accessor.count);
+
+        for (int i = 0; i < accessor.count; i++) {
+            writeln("thing: ", i);
+            thisMesh.indices ~= cast(int)readPrimitive(accessor, BufferOffset(buffer.data, byteOffset + (byteStride * i)));
         }
     }
 
@@ -104,9 +126,12 @@ private struct BufferOffset {
 private auto rawReadPrimitive(T)(BufferOffset readFrom) {
     ubyte[T.sizeof] rawData;
     for (int i = 0; i < T.sizeof; i++) {
+        writeln("literal: ", i);
         rawData[i] = readFrom.at(i);
     }
-    return *(cast(T*)rawData.ptr);
+    T test = *(cast(T*)rawData.ptr);
+    writeln(test);
+    return test;
 }
 
 
@@ -116,4 +141,36 @@ float[3] readVector3f(const BufferOffset readFrom) {
 		rawReadPrimitive!float(BufferOffset(readFrom, float.sizeof)),
 		rawReadPrimitive!float(BufferOffset(readFrom, 2 * float.sizeof))
     ];
+}
+
+// These values become promoted or demoted into whatever def type they are in
+// These values corrispond with tinygltf::TINYGLTF_COMPONENT_TYPE
+double readPrimitive(const Accessor accessor, const BufferOffset readFrom) {
+    switch(accessor.componentType) {
+        case (5120): {
+            return rawReadPrimitive!byte(readFrom);
+        }
+        case (5121): {
+            return rawReadPrimitive!ubyte(readFrom);
+        }
+        case (5122): {
+            return rawReadPrimitive!short(readFrom);
+        }
+        case (5123): {
+            return rawReadPrimitive!ushort(readFrom);
+        }
+        case (5124): {
+            return rawReadPrimitive!int(readFrom);
+        }
+        case (5125): {
+            return rawReadPrimitive!uint(readFrom);
+        }
+        case (5126): {
+            return rawReadPrimitive!float(readFrom);
+        }
+        case (5130): {
+            return rawReadPrimitive!double(readFrom);
+        }
+        default: return 0;
+    }
 }
