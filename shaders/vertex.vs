@@ -14,6 +14,6 @@ void main() {
 
     gl_Position = cameraMatrix * objectMatrix * vec4(position, 1.0);
     outputTextureCoordinate = textureCoordinate;
-    // outputColor = color;
+    
 
 }
