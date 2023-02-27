@@ -32,6 +32,7 @@ void main()
     shader.createUniform("cameraMatrix");
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
+    shader.createUniform("animationProgress");
  
 
     Camera.createShaderContext(shader);
@@ -69,12 +70,30 @@ void main()
 
     float rotation = 180.0;
 
+    float brightness = 0.0;
+    float brightUp = true;
+
     while (!window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
             rotation = rotation - 360.0;
         }
+
+        if(brightUp) {
+            brightness += 0.01;
+            if (brightness >= 1){
+                brightness = 1;
+                brightUp = false;
+            }
+        } else {
+            brightness -= 0.01;
+            if (brightness <= 0) {
+                brightness = 0;
+                brightUp = true;
+            }
+        }
+        shader.setUniformF("animationProgress", cast(GLfloat) brightness);
         
         writeln(rotation);
         
