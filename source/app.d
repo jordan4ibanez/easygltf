@@ -73,7 +73,7 @@ void main()
     float brightness = 0.0;
     float brightUp = true;
 
-    while (!window.shouldClose()) {
+    while (window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
