@@ -87,8 +87,8 @@ class EasyGLTF {
         for (int i = 0; i < accessor.count; i++) {
             float[2] textureCoordinate = readVector2f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
             
-            foreach (xz; textureCoordinate) {
-                thisMesh.textureCoordinates ~= xz;
+            foreach (xy; textureCoordinate) {
+                thisMesh.textureCoordinates ~= xy;
             }
         }
     }
