@@ -93,13 +93,14 @@ void main()
                 brightUp = true;
             }
         }
-        shader.setUniformF("animationProgress", cast(GLfloat) brightness);
         
         writeln(rotation);
         
         window.pollEvents();
 
         glUseProgram(shader.getShaderProgram);
+
+        shader.setUniformF("animationProgress", cast(GLfloat) brightness);
 
         window.clear(1);
         camera.clearDepthBuffer();
