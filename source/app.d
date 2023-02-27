@@ -80,19 +80,19 @@ void main()
             rotation = rotation - 360.0;
         }
 
-        if(brightUp) {
-            brightness += 0.01;
-            if (brightness >= 1){
-                brightness = 1;
-                brightUp = false;
-            }
-        } else {
-            brightness -= 0.01;
-            if (brightness <= 0) {
-                brightness = 0;
-                brightUp = true;
-            }
-        }
+        // if(brightUp) {
+        //     brightness += 0.01;
+        //     if (brightness >= 1){
+        //         brightness = 1;
+        //         brightUp = false;
+        //     }
+        // } else {
+        //     brightness -= 0.01;
+        //     if (brightness <= 0) {
+        //         brightness = 0;
+        //         brightUp = true;
+        //     }
+        // }
         
         writeln(rotation);
         
