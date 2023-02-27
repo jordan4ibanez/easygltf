@@ -100,7 +100,7 @@ void main()
 
         glUseProgram(shader.getShaderProgram);
 
-        shader.setUniformF("animationProgress", cast(GLfloat) brightness);
+        // shader.setUniformF("animationProgress", cast(GLfloat) brightness);
 
         window.clear(1);
         camera.clearDepthBuffer();
