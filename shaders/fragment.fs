@@ -7,7 +7,8 @@ in vec2 outputTextureCoordinate;
 out vec4 fragColor;
 
 uniform sampler2D textureSampler;
-// Just shoveling this into the frag shader for a test.
+
+// Just shoveling this into the frag shader for a test. Default is 1.0;
 uniform float animationProgress = 1;
 
 void main() {
