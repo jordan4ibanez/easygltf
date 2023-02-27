@@ -61,11 +61,11 @@ void main()
     //     0.0f, 0.5f, 0.5f,
     // ];
 
-    EasyGLTF gltf = new EasyGLTF("models/cube.gltf");
+    EasyGLTF gltf = new EasyGLTF("models/debug_character.gltf");
 
     const GLMesh meshData = gltf.glMeshes[0];
 
-    Mesh debugMesh = new Mesh(meshData.getVertexPositions(), meshData.getIndices(), meshData.getTextureCoordinates(), "textures/debug.png");
+    Mesh debugMesh = new Mesh(meshData.getVertexPositions(), meshData.getIndices(), meshData.getTextureCoordinates(), "textures/debug_character.png");
 
     float rotation = 180.0;
 
@@ -88,9 +88,9 @@ void main()
         camera.updateCameraMatrix();
 
         debugMesh.render(
-            Vector3d(0,0,-4), // Translation
+            Vector3d(0,-2,-4), // Translation
             Vector3d(0,rotation,0), // Rotation
-            Vector3d(1), // Scale
+            Vector3d(0.25), // Scale
         1);
 
         window.swapBuffers();
