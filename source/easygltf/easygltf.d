@@ -66,10 +66,15 @@ class EasyGLTF {
                 this.extractVertexPositions(model, thisMesh, primitive);
                 this.extractIndices(model, thisMesh, primitive);
                 this.extractTextureCoordinates(model, thisMesh, primitive);
+                this.extractBones(model, thisMesh, primitive);
             }
 
             glMeshes ~= thisMesh;
         }
+    }
+
+    void extractBones(Model model, GLMesh thisMesh, Primitive primitive) {
+        writeln("hi");
     }
 
     void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
