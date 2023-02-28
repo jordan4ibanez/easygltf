@@ -67,8 +67,9 @@ class EasyGLTF {
         }
 
         // Now automatically decode the decoded model. Turns it into raw OpenGL data that you can easily utilize.
-        foreach (mesh; model.meshes) {
+        foreach (integerKey, mesh; model.meshes) {
 
+            // We are assembling this OpenGL Mesh object
             GLMesh thisMesh =  new GLMesh(mesh.name);
 
             foreach (primitive; mesh.primitives) {
@@ -77,15 +78,27 @@ class EasyGLTF {
                 this.extractTextureCoordinates(model, thisMesh, primitive);
             }
 
-
-            this.extractBones(model, thisMesh);
-
+            //! Skins NEED to exist to animate. This GLMesh becomes a static model if no skin is specified.
+            if (model.skins.length > integerKey) {
+                this.extractInverseBindMatrices(model, thisMesh);
+                this.extractBones(model, thisMesh);
+            }
             glMeshes ~= thisMesh;
         }
     }
 
 private:
     void extractInverseBindMatrices(Model model, GLMesh thisMesh) {
+
+        /*
+            ! Important Implementation note:
+            ! Due to the EXTREME complexities of GLTF's spec,
+            ! here, we will be assuming that the model only has 1 skin for now.
+            ! This skin is skin[0].
+            ! If the model has no skins, then crash out.
+        */
+
+        Skin skin = model.skins[0];
 
     }
 
