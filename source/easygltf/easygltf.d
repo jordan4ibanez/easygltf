@@ -281,6 +281,24 @@ private float[3] readVector3f(const BufferOffset readFrom) {
     ];
 }
 
+// Agnostic matrix4x4 type (mat4)
+private float[16] readMatrix4f(const BufferOffset readFrom) {
+    // S stands for storage, you can probably see why I made it one letter
+    float[16] s;
+    for (int i = 0; i < 16; i++) {
+        s[i] = rawReadPrimitive!float(BufferOffset(readFrom, i * cast(int)float.sizeof));
+    }
+    return s;
+    /*
+    return core::matrix4(
+        s[0], s[1], s[2], s[3],
+        s[4], s[5], s[6], s[7],
+        s[8], s[9], s[10],s[11],
+        s[12],s[13],s[14],s[15]
+    );
+    */
+}
+
 // These values become promoted or demoted into whatever def type they are in
 // These values corrispond with tinygltf::TINYGLTF_COMPONENT_TYPE
 private double readPrimitive(const Accessor accessor, const BufferOffset readFrom) {
