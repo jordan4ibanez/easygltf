@@ -82,17 +82,25 @@ private:
 
         // Iterate the joint chain
         foreach (key, value; skin.joints) {
-            this.iterateParentChildHierarchy(boneTracker, cast(int)key, value);
+            this.iterateParentChildHierarchy(boneTracker, value);
         }
     }
 
-    void iterateParentChildHierarchy(bool[int] boneTracker, int flatIndex, int gltfIndex) {
+    void iterateParentChildHierarchy(ref bool[int] boneTracker, int gltfIndex) {
+
         Node jointNode = model.nodes[gltfIndex];
 
-        writeln("iterating: ", gltfIndex);
+        if (gltfIndex in boneTracker && boneTracker[gltfIndex]) {
+            writeln("already iterated ", gltfIndex);
+            return;
+        } else {
+            writeln("iterating: ", gltfIndex);
+            boneTracker[gltfIndex] = true;
+        }
 
         foreach (int gltfChild; jointNode.children) {
             writeln("child: ", gltfChild);
+            iterateParentChildHierarchy(boneTracker, gltfChild);
         }
     }
 
