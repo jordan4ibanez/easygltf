@@ -98,6 +98,12 @@ private:
             boneTracker[gltfIndex] = true;
         }
 
+        // Do things here and stuff
+
+
+
+
+
         foreach (int gltfChild; jointNode.children) {
             writeln("child: ", gltfChild);
             iterateParentChildHierarchy(boneTracker, gltfChild);
