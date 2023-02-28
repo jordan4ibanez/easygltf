@@ -112,10 +112,15 @@ private:
         Matrix4d globalMatrix = Matrix4d();
         
         // Bone supplies matrix
-        if (boneNode.matrix.length > 0) {
-
-            writeln("Bone supplies TRS matrix!");
-
+        if (boneNode.matrix.length == 16) {
+            // M is short for matrix, you can probably see why
+            double[16] m = boneNode.matrix;
+            localMatrix = Matrix4d(
+                m[0],  m[1],  m[2],  m[3],
+                m[4],  m[5],  m[6],  m[7],
+                m[8],  m[9],  m[10], m[11],
+                m[12], m[13], m[14], m[15]
+            );
         }
         // Bone supplies TRS
         else {
