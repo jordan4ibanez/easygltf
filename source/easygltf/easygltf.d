@@ -162,6 +162,10 @@ private:
         //! This might need to be inverted
         Matrix4d globalMatrix = parentMatrix.mul(localMatrix);
 
+        Matrix4d inverseBindMatrix = thisMesh.inverseBindMatrices[gltfIndex];
+
+        writeln(inverseBindMatrix);
+
         
 
 
