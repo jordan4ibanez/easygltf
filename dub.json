@@ -9,7 +9,7 @@
 		"bindbc-opengl": "~>1.0.4",
 		"delta_time": "~>1.0.5",
 		"doml": "~>0.0.5",
-		"tinygltf": "~>1.0.10"
+		"tinygltf": "~>1.1.0"
 	},
 	"description": "A D library that makes working with GLTF easier.",
 	"license": "MIT",
