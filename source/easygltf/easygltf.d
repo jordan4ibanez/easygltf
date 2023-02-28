@@ -103,15 +103,21 @@ private:
 
         Node jointNode = model.nodes[gltfIndex];
         
-        
+        // Bone supplies matrix
+        if (jointNode.matrix.length == 0) {
 
+        }
+        // Bone supplies TRS
+        else {
+
+        }
 
 
 
 
         foreach (int gltfChild; jointNode.children) {
             writeln("child: ", gltfChild);
-            iterateParentChildHierarchy(boneTracker, gltfChild);
+            iterateParentChildHierarchy(boneTracker, model, gltfChild);
         }
     }
 
