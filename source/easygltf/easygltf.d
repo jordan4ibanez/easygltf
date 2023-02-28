@@ -106,9 +106,13 @@ private:
         // Bone supplies matrix
         if (jointNode.matrix.length == 0) {
 
+            writeln("joint supplies TRS matrix!");
+
         }
         // Bone supplies TRS
         else {
+
+            writeln("bone supplies Translation, Rotation, Scale!");
 
         }
 
