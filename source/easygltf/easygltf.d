@@ -4,6 +4,7 @@ import std.stdio;
 import tinygltf;
 import vector_3d;
 import matrix_4d;
+import quaternion_d;
 
 /**
 //Todo: Implementation note:
@@ -124,8 +125,22 @@ private:
         }
         // Bone supplies TRS
         else {
+            // T R S - Translation Rotation Scale
+            double[] t = boneNode.translation;
+            double[] r = boneNode.rotation;
+            double[] s = boneNode.scale;
 
-            writeln("Bone supplies Translation, Rotation, Scale!");
+            Vector3d translation = t.length == 3 ? Vector3d(t[0], t[1], t[2]) : Vector3d(0,0,0);
+            Vector3d rotation = Vector3d(0,0,0);
+            if (r.length == 4) {
+                Quaterniond(r[0], r[1], r[2], r[3]).getEulerAnglesXYZ(rotation);
+            }
+            Vector3d scale = s.length == 3 ? Vector3d(s[0], s[1], s[2]) : Vector3d(1,1,1);
+            
+            localMatrix
+                .setTranslation(translation)
+                .setRotationXYZ(rotation.x, rotation.y, rotation.z)
+                .scale(scale);
 
         }
 
