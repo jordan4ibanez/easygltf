@@ -93,6 +93,7 @@ class EasyGLTF {
             if (model.skins.length > integerKey) {
                 this.extractInverseBindMatrices(model, thisMesh, model.skins[integerKey]);
                 this.extractBones(model, thisMesh);
+                this.extractBoneWeights(model, thisMesh);
 
                 thisMesh.animated = true;
             }
@@ -103,6 +104,9 @@ class EasyGLTF {
 
 private:
     
+    void extractBoneWeights(Model model, GLMesh thisMesh) {
+        
+    }
 
     void extractBones(Model model, GLMesh thisMesh) {
         const Skin skin = model.skins[0];
