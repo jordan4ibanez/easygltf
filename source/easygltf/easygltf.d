@@ -100,10 +100,10 @@ private:
     void iterateParentChildHierarchy(ref bool[int] boneTracker, GLMesh thisMesh, Model model, int gltfIndex, Matrix4d parentMatrix) {
 
         if (gltfIndex in boneTracker && boneTracker[gltfIndex]) {
-            writeln("already iterated ", gltfIndex);
+            // writeln("already iterated ", gltfIndex);
             return;
         } else {
-            writeln("iterating: ", gltfIndex);
+            // writeln("iterating: ", gltfIndex);
             boneTracker[gltfIndex] = true;
         }
 
@@ -141,14 +141,13 @@ private:
                 .setTranslation(translation)
                 .setRotationXYZ(rotation.x, rotation.y, rotation.z)
                 .scale(scale);
-
         }
 
 
 
 
         foreach (int gltfChild; boneNode.children) {
-            writeln("child: ", gltfChild);
+            // writeln("child: ", gltfChild);
             iterateParentChildHierarchy(boneTracker, thisMesh, model, gltfChild, globalMatrix);
         }
     }
