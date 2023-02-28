@@ -87,13 +87,16 @@ private:
         
         bool[int] boneTracker;
 
+        // Automatically is identity
+        Matrix4d rootIdentity = Matrix4d();
+
         // Iterate the joint (bone) chain
         foreach (key, value; skin.joints) {
-            this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value);
+            this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value, rootIdentity);
         }
     }
 
-    void iterateParentChildHierarchy(ref bool[int] boneTracker, GLMesh thisMesh, Model model, int gltfIndex) {
+    void iterateParentChildHierarchy(ref bool[int] boneTracker, GLMesh thisMesh, Model model, int gltfIndex, Matrix4d parentMatrix) {
 
         if (gltfIndex in boneTracker && boneTracker[gltfIndex]) {
             writeln("already iterated ", gltfIndex);
@@ -104,6 +107,9 @@ private:
         }
 
         Node boneNode = model.nodes[gltfIndex];
+
+        Matrix4d localMatrix = Matrix4d();
+        Matrix4d globalMatrix = Matrix4d();
         
         // Bone supplies matrix
         if (boneNode.matrix.length > 0) {
@@ -123,7 +129,7 @@ private:
 
         foreach (int gltfChild; boneNode.children) {
             writeln("child: ", gltfChild);
-            iterateParentChildHierarchy(boneTracker, thisMesh, model, gltfChild);
+            iterateParentChildHierarchy(boneTracker, thisMesh, model, gltfChild, globalMatrix);
         }
     }
 
