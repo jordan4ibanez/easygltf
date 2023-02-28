@@ -24,7 +24,7 @@ class GLMesh {
     private float[] vertexPositions;
     private int[] indices;
     private float[] textureCoordinates;
-    private Matrix4d[] inverseBindMatrices;
+    private Matrix4d[int] inverseBindMatrices;
     private Bone[] bones;
 
     this(string name) {
@@ -75,16 +75,21 @@ class EasyGLTF {
                 this.extractVertexPositions(model, thisMesh, primitive);
                 this.extractIndices(model, thisMesh, primitive);
                 this.extractTextureCoordinates(model, thisMesh, primitive);
-                this.extractBones(model, thisMesh, primitive);
             }
+
+
+            this.extractBones(model, thisMesh);
 
             glMeshes ~= thisMesh;
         }
     }
 
 private:
+    void extractInverseBindMatrices(Model model, GLMesh thisMesh) {
 
-    void extractBones(Model model, GLMesh thisMesh, Primitive primitive) {
+    }
+
+    void extractBones(Model model, GLMesh thisMesh) {
         const Skin skin = model.skins[0];
         
         bool[int] boneTracker;
