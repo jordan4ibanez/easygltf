@@ -21,6 +21,8 @@ class GLMesh {
 
     string name;
 
+    private bool animated = false;
+
     private float[] vertexPositions;
     private int[] indices;
     private float[] textureCoordinates;
@@ -83,6 +85,7 @@ class EasyGLTF {
                 this.extractInverseBindMatrices(model, thisMesh);
                 this.extractBones(model, thisMesh);
             }
+
             glMeshes ~= thisMesh;
         }
     }
