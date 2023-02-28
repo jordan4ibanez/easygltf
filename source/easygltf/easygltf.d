@@ -24,6 +24,7 @@ class GLMesh {
     private float[] vertexPositions;
     private int[] indices;
     private float[] textureCoordinates;
+    private Matrix4d[] inverseBindMatrices;
     private Bone[] bones;
 
     this(string name) {
