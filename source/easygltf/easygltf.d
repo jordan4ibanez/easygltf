@@ -82,12 +82,16 @@ private:
 
         // Iterate the joint chain
         foreach (key, value; skin.joints) {
-            this.iterateParentChildHierarchy(boneTracker, key, value);
+            this.iterateParentChildHierarchy(boneTracker, cast(int)key, value);
         }
     }
 
     void iterateParentChildHierarchy(bool[int] boneTracker, int flatIndex, int gltfIndex) {
+        Node jointNode = model.nodes[gltfIndex];
 
+        foreach (int gltfChild; jointNode.children) {
+            writeln(gltfChild);
+        }
     }
 
     void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
