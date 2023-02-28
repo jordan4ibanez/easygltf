@@ -89,11 +89,11 @@ private:
         bool[int] boneTracker;
 
         // Automatically is identity
-        Matrix4d rootIdentity = Matrix4d();
+        Matrix4d parentMatrix = Matrix4d();
 
         // Iterate the joint (bone) chain
         foreach (key, value; skin.joints) {
-            this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value, rootIdentity);
+            this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value, parentMatrix);
         }
     }
 
@@ -110,7 +110,6 @@ private:
         Node boneNode = model.nodes[gltfIndex];
 
         Matrix4d localMatrix = Matrix4d();
-        Matrix4d globalMatrix = Matrix4d();
         
         // Bone supplies matrix
         if (boneNode.matrix.length == 16) {
@@ -142,6 +141,13 @@ private:
                 .setRotationXYZ(rotation.x, rotation.y, rotation.z)
                 .scale(scale);
         }
+
+        //! This might need to be inverted
+        Matrix4d globalMatrix = parentMatrix.mul(localMatrix);
+
+        
+
+
 
 
 
