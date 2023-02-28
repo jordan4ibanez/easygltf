@@ -9,6 +9,10 @@ import tinygltf;
 //Todo: Doubles can be demoted, but initial value as float cannot regain precision.
 */
 
+class Bone {
+
+}
+
 /// Stores all OpenGL raw data.
 class GLMesh {
 
@@ -17,6 +21,7 @@ class GLMesh {
     private float[] vertexPositions;
     private int[] indices;
     private float[] textureCoordinates;
+    private Bone[] bones;
 
     this(string name) {
         this.name = name;
@@ -82,11 +87,11 @@ private:
 
         // Iterate the joint chain
         foreach (key, value; skin.joints) {
-            this.iterateParentChildHierarchy(boneTracker, value);
+            this.iterateParentChildHierarchy(boneTracker, model, value);
         }
     }
 
-    void iterateParentChildHierarchy(ref bool[int] boneTracker, int gltfIndex) {
+    void iterateParentChildHierarchy(ref bool[int] boneTracker, Model model, int gltfIndex) {
 
         Node jointNode = model.nodes[gltfIndex];
 
@@ -99,6 +104,7 @@ private:
         }
 
         // Do things here and stuff
+        
 
 
 
