@@ -73,11 +73,20 @@ class EasyGLTF {
         }
     }
 
+private:
+
     void extractBones(Model model, GLMesh thisMesh, Primitive primitive) {
         const Skin skin = model.skins[0];
-
         
+        bool[int] boneTracker;
+
+        // Iterate the joint chain
+        foreach (key, value; skin.joints) {
+            writeln(key, " ", value);
+        }
     }
+
+    pria
 
     void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
         // Run the chain
