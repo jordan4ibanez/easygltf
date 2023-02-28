@@ -13,7 +13,11 @@ import quaternion_d;
 */
 
 class Bone {
-
+    Matrix4d localMatrix;
+    
+    this(Matrix4d localMatrix) {
+        this.localMatrix = localMatrix;
+    }
 }
 
 /// Stores all OpenGL raw data.
@@ -164,14 +168,10 @@ private:
 
         Matrix4d inverseBindMatrix = thisMesh.inverseBindMatrices[gltfIndex];
 
-        writeln(inverseBindMatrix);
-
+        Matrix4d jointMatrix = globalMatrix
+            .mul(inverseBindMatrix);
         
-
-
-
-
-
+        thisMesh.bones[gltfIndex] = new Bone(jointMatrix);
 
         foreach (int gltfChild; boneNode.children) {
             // writeln("child: ", gltfChild);
