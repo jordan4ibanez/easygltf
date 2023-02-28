@@ -110,7 +110,11 @@ private:
         // Calculate the byte stride
         const int byteStride = accessor.byteStride(bufferView);
 
+        // Hold the order of the skin nodes
+        int[] skinBones = skin.joints;
+
         for (int i = 0; i < accessor.count; i++) {
+
             // M stands for Inverse Bind Matrix
             float[16] m = readMatrix4f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
 
@@ -133,6 +137,9 @@ private:
                     m[12], m[13], m[14], m[15]
                 );
             }
+
+            // Needs to stay in sync, this is why it's an AA
+            thisMesh.inverseBindMatrices[skinBones[i]] = inverseBindMatrix;
         }
     }
 
