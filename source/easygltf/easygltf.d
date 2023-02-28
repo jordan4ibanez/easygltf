@@ -25,7 +25,7 @@ class GLMesh {
     private int[] indices;
     private float[] textureCoordinates;
     private Matrix4d[int] inverseBindMatrices;
-    private Bone[] bones;
+    private Bone[int] bones;
 
     this(string name) {
         this.name = name;
