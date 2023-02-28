@@ -2,6 +2,8 @@ module easygltf.easygltf;
 
 import std.stdio;
 import tinygltf;
+import vector_3d;
+import matrix_4d;
 
 /**
 //Todo: Implementation note:
