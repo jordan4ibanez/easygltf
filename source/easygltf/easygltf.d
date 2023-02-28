@@ -104,7 +104,7 @@ private:
         Node boneNode = model.nodes[gltfIndex];
         
         // Bone supplies matrix
-        if (boneNode.matrix.length == 0) {
+        if (boneNode.matrix.length > 0) {
 
             writeln("Bone supplies TRS matrix!");
 
