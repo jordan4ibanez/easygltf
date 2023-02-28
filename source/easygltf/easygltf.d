@@ -114,50 +114,6 @@ private:
         }
     }
 
-    void extractInverseBindMatrices(Model model, GLMesh thisMesh, Skin skin) {
-        // Run the chain
-        Accessor accessor = model.accessors[skin.inverseBindMatrices];
-        BufferView bufferView = model.bufferViews[accessor.bufferView];
-        Buffer buffer = model.buffers[bufferView.buffer];
-
-        // Calculate the byte offset.
-        const int byteOffset = getByteOffset(accessor, bufferView);
-        // Calculate the byte stride
-        const int byteStride = accessor.byteStride(bufferView);
-
-        // Hold the order of the skin nodes
-        int[] skinBones = skin.joints;
-
-        for (int i = 0; i < accessor.count; i++) {
-
-            // M stands for Inverse Bind Matrix
-            float[16] m = readMatrix4f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
-
-            Matrix4d inverseBindMatrix;
-
-            //* A debugging tool
-            bool transpose = false;
-            if (transpose) {
-                inverseBindMatrix = Matrix4d(
-                    m[0], m[4], m[8],  m[12],
-                    m[1], m[5], m[9],  m[13],
-                    m[2], m[6], m[10], m[14],
-                    m[3], m[7], m[11], m[15]
-                );
-            } else {
-                inverseBindMatrix = Matrix4d(
-                    m[0],  m[1],  m[2],  m[3],
-                    m[4],  m[5],  m[6],  m[7],
-                    m[8],  m[9],  m[10], m[11],
-                    m[12], m[13], m[14], m[15]
-                );
-            }
-
-            // Needs to stay in sync, this is why it's an AA
-            thisMesh.inverseBindMatrices[skinBones[i]] = inverseBindMatrix;
-        }
-    }
-
     void iterateParentChildHierarchy(ref bool[int] boneTracker, GLMesh thisMesh, Model model, int gltfIndex, Matrix4d parentMatrix) {
 
         if (gltfIndex in boneTracker && boneTracker[gltfIndex]) {
@@ -216,6 +172,50 @@ private:
         foreach (int gltfChild; boneNode.children) {
             // writeln("child: ", gltfChild);
             iterateParentChildHierarchy(boneTracker, thisMesh, model, gltfChild, globalMatrix);
+        }
+    }
+
+    void extractInverseBindMatrices(Model model, GLMesh thisMesh, Skin skin) {
+        // Run the chain
+        Accessor accessor = model.accessors[skin.inverseBindMatrices];
+        BufferView bufferView = model.bufferViews[accessor.bufferView];
+        Buffer buffer = model.buffers[bufferView.buffer];
+
+        // Calculate the byte offset.
+        const int byteOffset = getByteOffset(accessor, bufferView);
+        // Calculate the byte stride
+        const int byteStride = accessor.byteStride(bufferView);
+
+        // Hold the order of the skin nodes
+        int[] skinBones = skin.joints;
+
+        for (int i = 0; i < accessor.count; i++) {
+
+            // M stands for Inverse Bind Matrix
+            float[16] m = readMatrix4f(BufferOffset(buffer.data, byteOffset + (byteStride * i)));
+
+            Matrix4d inverseBindMatrix;
+
+            //* A debugging tool
+            bool transpose = false;
+            if (transpose) {
+                inverseBindMatrix = Matrix4d(
+                    m[0], m[4], m[8],  m[12],
+                    m[1], m[5], m[9],  m[13],
+                    m[2], m[6], m[10], m[14],
+                    m[3], m[7], m[11], m[15]
+                );
+            } else {
+                inverseBindMatrix = Matrix4d(
+                    m[0],  m[1],  m[2],  m[3],
+                    m[4],  m[5],  m[6],  m[7],
+                    m[8],  m[9],  m[10], m[11],
+                    m[12], m[13], m[14], m[15]
+                );
+            }
+
+            // Needs to stay in sync, this is why it's an AA
+            thisMesh.inverseBindMatrices[skinBones[i]] = inverseBindMatrix;
         }
     }
 
