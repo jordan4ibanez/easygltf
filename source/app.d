@@ -38,30 +38,6 @@ void main()
     Camera.createShaderContext(shader);
     Mesh.createShaderContext(shader);
 
-    // Debug model
-    // float[] vertices = [
-    //     0.5f,  0.5f, 0.0f,
-    //     0.5f, -0.5f, 0.0f,
-    //     -0.5f, -0.5f, 0.0f,
-    //     -0.5f,  0.5f, 0.0f,
-    // ];
-    // int[] indices = [
-    //     0, 1, 3, 3, 1, 2,
-    // ];
-    // float[] textureCoordinates = [
-    //     0, 0,
-    //     0, 1,
-    //     1, 1,
-    //     1, 0
-    // ];
-    // Very fancy
-    // float[] colors = [
-    //     0.5f, 0.0f, 0.0f,
-    //     0.0f, 0.5f, 0.0f,
-    //     0.0f, 0.0f, 0.5f,
-    //     0.0f, 0.5f, 0.5f,
-    // ];
-
     EasyGLTF gltf = new EasyGLTF("models/debug_character.gltf");
 
     const GLMesh meshData = gltf.glMeshes[0];
