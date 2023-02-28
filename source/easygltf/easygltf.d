@@ -74,7 +74,9 @@ class EasyGLTF {
     }
 
     void extractBones(Model model, GLMesh thisMesh, Primitive primitive) {
-        writeln("hi");
+        const Skin skin = model.skins[0];
+
+        
     }
 
     void extractTextureCoordinates(Model model, GLMesh thisMesh, Primitive primitive) {
