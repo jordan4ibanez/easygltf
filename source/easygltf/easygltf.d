@@ -98,6 +98,21 @@ class EasyGLTF {
     }
 
 private:
+    
+
+    void extractBones(Model model, GLMesh thisMesh) {
+        const Skin skin = model.skins[0];
+        
+        bool[int] boneTracker;
+
+        // Automatically is identity
+        Matrix4d parentMatrix = Matrix4d();
+
+        // Iterate the joint (bone) chain
+        foreach (key, value; skin.joints) {
+            this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value, parentMatrix);
+        }
+    }
 
     void extractInverseBindMatrices(Model model, GLMesh thisMesh, Skin skin) {
         // Run the chain
@@ -140,20 +155,6 @@ private:
 
             // Needs to stay in sync, this is why it's an AA
             thisMesh.inverseBindMatrices[skinBones[i]] = inverseBindMatrix;
-        }
-    }
-
-    void extractBones(Model model, GLMesh thisMesh) {
-        const Skin skin = model.skins[0];
-        
-        bool[int] boneTracker;
-
-        // Automatically is identity
-        Matrix4d parentMatrix = Matrix4d();
-
-        // Iterate the joint (bone) chain
-        foreach (key, value; skin.joints) {
-            this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value, parentMatrix);
         }
     }
 
