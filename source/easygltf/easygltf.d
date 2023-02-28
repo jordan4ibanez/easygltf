@@ -89,8 +89,10 @@ private:
     void iterateParentChildHierarchy(bool[int] boneTracker, int flatIndex, int gltfIndex) {
         Node jointNode = model.nodes[gltfIndex];
 
+        writeln("iterating: ", gltfIndex);
+
         foreach (int gltfChild; jointNode.children) {
-            writeln(gltfChild);
+            writeln("child: ", gltfChild);
         }
     }
 
