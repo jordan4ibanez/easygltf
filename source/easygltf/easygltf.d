@@ -85,7 +85,7 @@ private:
         
         bool[int] boneTracker;
 
-        // Iterate the joint chain
+        // Iterate the joint (bone) chain
         foreach (key, value; skin.joints) {
             this.iterateParentChildHierarchy(boneTracker, thisMesh, model, value);
         }
@@ -101,25 +101,25 @@ private:
             boneTracker[gltfIndex] = true;
         }
 
-        Node jointNode = model.nodes[gltfIndex];
+        Node boneNode = model.nodes[gltfIndex];
         
         // Bone supplies matrix
-        if (jointNode.matrix.length == 0) {
+        if (boneNode.matrix.length == 0) {
 
-            writeln("joint supplies TRS matrix!");
+            writeln("Bone supplies TRS matrix!");
 
         }
         // Bone supplies TRS
         else {
 
-            writeln("bone supplies Translation, Rotation, Scale!");
+            writeln("Bone supplies Translation, Rotation, Scale!");
 
         }
 
 
 
 
-        foreach (int gltfChild; jointNode.children) {
+        foreach (int gltfChild; boneNode.children) {
             writeln("child: ", gltfChild);
             iterateParentChildHierarchy(boneTracker, thisMesh, model, gltfChild);
         }
