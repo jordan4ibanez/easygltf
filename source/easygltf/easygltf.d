@@ -93,8 +93,6 @@ private:
 
     void iterateParentChildHierarchy(ref bool[int] boneTracker, Model model, int gltfIndex) {
 
-        Node jointNode = model.nodes[gltfIndex];
-
         if (gltfIndex in boneTracker && boneTracker[gltfIndex]) {
             writeln("already iterated ", gltfIndex);
             return;
@@ -103,7 +101,8 @@ private:
             boneTracker[gltfIndex] = true;
         }
 
-        // Do things here and stuff
+        Node jointNode = model.nodes[gltfIndex];
+        
         
 
 
