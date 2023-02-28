@@ -33,6 +33,11 @@ class GLMesh {
         this.name = name;
     }
 
+    // Get if the model has animation data
+    bool isAnimated() {
+        return this.animated;
+    }
+
     // Convert these into a hard slice so no garbage data gets included.
 
     /// Gets the vertex positions as a hard array.
@@ -84,6 +89,8 @@ class EasyGLTF {
             if (model.skins.length > integerKey) {
                 this.extractInverseBindMatrices(model, thisMesh);
                 this.extractBones(model, thisMesh);
+
+                thisMesh.animated = true;
             }
 
             glMeshes ~= thisMesh;
