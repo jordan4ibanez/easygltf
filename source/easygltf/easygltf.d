@@ -87,7 +87,7 @@ class EasyGLTF {
 
             //! Skins NEED to exist to animate. This GLMesh becomes a static model if no skin is specified.
             if (model.skins.length > integerKey) {
-                this.extractInverseBindMatrices(model, thisMesh);
+                this.extractInverseBindMatrices(model, thisMesh, model.skins[integerKey]);
                 this.extractBones(model, thisMesh);
 
                 thisMesh.animated = true;
@@ -98,18 +98,21 @@ class EasyGLTF {
     }
 
 private:
-    void extractInverseBindMatrices(Model model, GLMesh thisMesh) {
 
-        /*
-            ! Important Implementation note:
-            ! Due to the EXTREME complexities of GLTF's spec,
-            ! here, we will be assuming that the model only has 1 skin for now.
-            ! This skin is skin[0].
-            ! If the model has no skins, then crash out.
-        */
+    void extractInverseBindMatrices(Model model, GLMesh thisMesh, Skin skin) {
+        // Run the chain
+        Accessor accessor = model.accessors[skin.inverseBindMatrices];
+        BufferView bufferView = model.bufferViews[accessor.bufferView];
+        Buffer buffer = model.buffers[bufferView.buffer];
 
-        Skin skin = model.skins[0];
+        // Calculate the byte offset.
+        const int byteOffset = getByteOffset(accessor, bufferView);
+        // Calculate the byte stride
+        const int byteStride = accessor.byteStride(bufferView);
 
+        for (int i = 0; i < accessor.count; i++) {
+
+        }
     }
 
     void extractBones(Model model, GLMesh thisMesh) {
