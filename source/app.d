@@ -36,6 +36,7 @@ void main()
     shader.createUniform("textureSampler");
     // shader.createUniform("animationProgress");
     shader.createUniform("boneTRS");
+    shader.createUniform("inverseBindMatrix");
  
 
     Camera.createShaderContext(shader);
@@ -56,9 +57,6 @@ void main()
 
     float rotation = 180.0;
 
-    float brightness = 0.0;
-    float brightUp = true;
-
     while (!window.shouldClose()) {
 
         rotation += 1;
@@ -70,8 +68,6 @@ void main()
         window.pollEvents();
 
         glUseProgram(shader.getShaderProgram);
-
-        // shader.setUniformF("animationProgress", cast(GLfloat) brightness);
 
         window.clear(1);
         camera.clearDepthBuffer();
