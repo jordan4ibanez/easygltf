@@ -9,12 +9,11 @@ layout (location = 2) in vec4 joint;
 layout (location = 3) in vec4 weight;
 
 out vec2 outputTextureCoordinate;
-out vec3 outputColor;
 
 uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
 
-//! This is identity
+//! This is identity, this allows freely modifying the bone
 uniform mat4 boneTRS = mat4(
         1,0,0,0,
         0,1,0,0,
@@ -22,47 +21,23 @@ uniform mat4 boneTRS = mat4(
         0,0,0,1
 );
 
-//! This is the Inverse Bind Matrix
-uniform mat4 inverseBindMatrix;
+uniform mat4[256] boneMatrix;
 
 void main() {
     
-
-    int jointArray[4] = int[4](int(joint.x), int(joint.y), int(joint.z), int(joint.w));
-    double weightArray[4] = double[4](weight.x, weight.y, weight.z, weight.w);
     
-    mat4 newBoneTRS = mat4(
-        1,0,0,0,
-        0,1,0,0,
-        0,0,1,0,
-        0,0,0,1
-    );
 
-    vec4 outputCoordinate;
+    mat4 skinMat = 
+        weight.x * boneMatrix[int(joint.x)] +
+        weight.y * boneMatrix[int(joint.y)] +
+        weight.z * boneMatrix[int(joint.z)] +
+        weight.w * boneMatrix[int(joint.w)];
 
-    
-    bool found = false;
-    for (int i = 0; i < 4; i++) {
-        // Iterating the arm
-        if (jointArray[i] == 3) {
-            if (weightArray[i] != 0.0) {
-                found = true;
-                outputCoordinate =  
-                    cameraMatrix *
-                    objectMatrix *
-                    inverseBindMatrix *
-                    vec4(position, 1.0);
-            }
-        }
-    }
-    if (!found) {
-        outputCoordinate =
-            cameraMatrix *
-            objectMatrix *
-            vec4(position, 1.0)
-        ;
-    }
+    vec4 worldPosition = skinMat * vec4(position,1.0);
 
-    gl_Position = outputCoordinate;
+    vec4 cameraPosition = objectMatrix * worldPosition;
+
+    gl_Position = cameraMatrix * cameraPosition;
+
     outputTextureCoordinate = textureCoordinate;
 }
