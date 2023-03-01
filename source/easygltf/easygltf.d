@@ -114,6 +114,8 @@ private:
     void extractBoneWeights(Model model, GLMesh thisMesh) {
 
         /*
+            If you want to understand what is happening in this function, read this.
+
             This part of the GLTF spec is an absolute mess.
             By default, each indice of the model is limited to 4 joints affecting it.
             So it's stored as a Vec4. Not a quaternion.
@@ -146,6 +148,8 @@ private:
             Iterate WEIGHT_0's XYZW component as a linear array
             ->
             If the WEIGHTS_0[]'s Vec4 X,Y,Z,W component is not equal to 0.0 THEN
+            ->
+            if the JOINTS_0[]'s Vec4 X,Y,Z,W component is equal to the current bone THEN
             ->
             Bone[Indice] = weight;
 
