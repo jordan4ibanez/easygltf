@@ -46,8 +46,8 @@ class Mesh {
     this(const float[] vertices, 
         const int[] indices, 
         const float[] textureCoordinates, 
-        const Vector4i[] joints,
-        const Vector4d[] weights,
+        const int[] joints,
+        const double[] weights,
         const string textureLocation ) {
 
         this.texture = new Texture(textureLocation);
@@ -109,27 +109,29 @@ class Mesh {
         );
         glEnableVertexAttribArray(1); 
 
-        // Colors VBO
 
-        // glGenBuffers(1, &this.cbo);
-        // glBindBuffer(GL_ARRAY_BUFFER, this.cbo);
+        // Joints VBO
 
-        // glBufferData(
-        //     GL_ARRAY_BUFFER,
-        //     colors.length * float.sizeof,
-        //     colors.ptr,
-        //     GL_STATIC_DRAW
-        // );
+        glGenBuffers(1, &this.tbo);
+        glBindBuffer(GL_ARRAY_BUFFER, this.tbo);
 
-        // glVertexAttribPointer(
-        //     2,
-        //     3,
-        //     GL_FLOAT,
-        //     GL_FALSE,
-        //     0,
-        //     cast(const(void)*)0
-        // );
-        // glEnableVertexAttribArray(2); 
+        glBufferData(
+            GL_ARRAY_BUFFER,
+            textureCoordinates.length * float.sizeof,
+            textureCoordinates.ptr,
+            GL_STATIC_DRAW
+        );
+
+        glVertexAttribPointer(
+            1,
+            2,
+            GL_FLOAT,
+            GL_FALSE,
+            0,
+            cast(const(void)*)0
+        );
+        glEnableVertexAttribArray(1); 
+
 
 
         // Indices VBO
