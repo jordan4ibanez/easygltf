@@ -22,6 +22,8 @@ uniform mat4 boneTRS = mat4(
         0,0,0,1
 );
 
+//! This is the Inverse Bind Matrix
+uniform mat4 inverseBindMatrix;
 
 void main() {
     
@@ -46,7 +48,14 @@ void main() {
         }
     }
 
-    vec4 outputCoordinate = cameraMatrix * objectMatrix * newBoneTRS * vec4(position, 1.0);
+    vec4 outputCoordinate =
+        cameraMatrix *
+        objectMatrix *
+        inverseBindMatrix *
+        newBoneTRS *
+        vec4(position, 1.0)
+        * inverseBindMatrix
+    ;
 
     gl_Position = outputCoordinate;
     outputTextureCoordinate = textureCoordinate;
