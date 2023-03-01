@@ -157,24 +157,30 @@ private:
         Amazing.
         */
 
+        // Being too dramatic here
+        writeln("\nbegin the trials\n");
+
         // I'm limiting this thing to 1000 JOINTS_X components because if you need more than that you probably done goofed.
         foreach (i; 0..1000) {
-            if (!("JOINTS_" ~ to!string(i) in primitive.attributes)) {
-                writeln("JOINTS_" ~ to!string(i), " was not found!");
+
+            const string jointKey  = "JOINTS_" ~ to!string(i);
+            const string weightKey = "WEIGHTS_" ~ to!string(i);
+
+            if (!(jointKey in primitive.attributes)) {
+                writeln(jointKey, " was not found!");
                 break;
             }
-            if (!("WEIGHTS_" ~ to!string(i) in primitive.attributes)) {
-                writeln("WEIGHTS_" ~ to!string(i), " was not found!");
+            if (!(weightKey in primitive.attributes)) {
+                writeln(weightKey, " was not found!");
                 break;
             }
+
+            // This is where it starts getting weird.
+            Accessor jointAccessor  = model.accessors[primitive.attributes[jointKey]];
+            Accessor weightAccessor = model.accessors[primitive.attributes[weightKey]];
 
 
         }
-
-
-
-
-
     }
 
     void extractBones(Model model, GLMesh thisMesh) {
