@@ -21,7 +21,7 @@ class Mesh {
     // Camera context pointer;
     private static Camera camera = null;
 
-    private static bool debugEnabled = true;
+    private static bool debugEnabled = false;
 
     private bool exists = false;
 
