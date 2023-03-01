@@ -26,9 +26,11 @@ void main() {
     double weightArray[4] = double[4](weight.x, weight.y, weight.z, weight.w);
 
     for (int i = 0; i < 4; i++) {
-        if (jointArray[i] == 2)
-            if (weightArray[i] != 0.0)
+        if (jointArray[i] == 3)
+            if (weightArray[i] != 0.0) {
                 outputCoordinate.y += 1;
+                outputCoordinate.x += 1;
+            }
     }
 
     gl_Position = outputCoordinate;
