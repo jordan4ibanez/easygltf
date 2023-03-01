@@ -38,24 +38,30 @@ void main() {
         0,0,0,1
     );
 
+    vec4 outputCoordinate;
 
+    
+    bool found = false;
     for (int i = 0; i < 4; i++) {
+        // Iterating the arm
         if (jointArray[i] == 3) {
             if (weightArray[i] != 0.0) {
-                newBoneTRS = boneTRS;
-                // outputCoordinate += vec4(bonePosition, 0);
+                found = true;
+                outputCoordinate =  
+                    cameraMatrix *
+                    objectMatrix *
+                    inverseBindMatrix *
+                    vec4(position, 1.0);
             }
         }
     }
-
-    vec4 outputCoordinate =
-        cameraMatrix *
-        objectMatrix *
-        inverseBindMatrix *
-        newBoneTRS *
-        vec4(position, 1.0)
-        * inverseBindMatrix
-    ;
+    if (!found) {
+        outputCoordinate =
+            cameraMatrix *
+            objectMatrix *
+            vec4(position, 1.0)
+        ;
+    }
 
     gl_Position = outputCoordinate;
     outputTextureCoordinate = textureCoordinate;
