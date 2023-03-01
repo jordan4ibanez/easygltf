@@ -171,7 +171,18 @@ private:
             }
             
             // Now construct and dump the vectors into the containers
-            thisMesh.weights ~= Vector3d(weightArray[0], weightArray[1], weightArray[2])
+            thisMesh.joints  ~= Vector4i(
+                cast(int)jointArray[0],
+                cast(int)jointArray[1],
+                cast(int)jointArray[2],
+                cast(int)jointArray[3]
+            );
+            thisMesh.weights ~= Vector4d(
+                weightArray[0],
+                weightArray[1],
+                weightArray[2],
+                weightArray[3]
+            );
         }
     
     }
