@@ -4,6 +4,8 @@ import std.stdio;
 import std.conv;
 import tinygltf;
 import vector_3d;
+import vector_4d;
+import vector_4i;
 import matrix_4d;
 import quaternion_d;
 
@@ -37,8 +39,8 @@ class GLMesh {
     private Bone[int] bones;
     
     // These are synced
-    private Vector3d[] weights;
-    private Vector3d[] joints;
+    private Vector4d[] weights;
+    private Vector4i[] joints;
 
     this(string name) {
         this.name = name;
@@ -167,18 +169,9 @@ private:
                     weightArray[l] = (max - weightArray[l]) / (max - min);
                 }
             }
-
-            // Now iterate XYZW component
-            foreach (l; 0..weightArray.length) {
-
-                // Discard if no weigh applied
-                if (weightArray[l] == 0.0) {
-                    continue;
-                }
-                const int boneIndex = cast(int)jointArray[l];
-                // Now assign the bone weight data at the indice
-                thisMesh.bones[boneIndex].weights[currentIndice] = weightArray[l];
-            }
+            
+            // Now construct and dump the vectors into the containers
+            thisMesh.weights ~= Vector3d(weightArray[0], weightArray[1], weightArray[2])
         }
     
     }
