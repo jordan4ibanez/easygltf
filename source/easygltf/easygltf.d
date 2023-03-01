@@ -176,8 +176,21 @@ private:
             }
 
             // This is where it starts getting weird.
+
+            // Run the chains
             Accessor jointAccessor  = model.accessors[primitive.attributes[jointKey]];
             Accessor weightAccessor = model.accessors[primitive.attributes[weightKey]];
+
+            BufferView jointBufferView  = model.bufferViews[jointAccessor.bufferView];
+            BufferView weightBufferView = model.bufferViews[weightAccessor.bufferView];
+
+            Buffer jointBuffer  = model.buffers[jointBufferView.buffer];
+            Buffer weightBuffer = model.buffers[weightBufferView.buffer];
+
+            // We have to assume that these are synced
+            foreach (i; 0..jointAccessor.count) {
+                
+            }
 
 
         }
