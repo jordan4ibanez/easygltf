@@ -69,12 +69,12 @@ class GLMesh {
     }
 
     /// Gets the indices joints as a hard array
-    auto getJoints() {
+    auto getJoints() const {
         return joints[0..joints.length];
     }
 
     /// Gets the indices weights as a hard array
-    auto getWeights() {
+    auto getWeights() const {
         return weights[0..weights.length];
     }
 }
