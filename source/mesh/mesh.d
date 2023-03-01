@@ -252,7 +252,7 @@ class Mesh {
             return;
         }
 
-        shader.setUniformI("textureSampler", 0);
+        shader.setUniformInt("textureSampler", 0);
         //! getShader("main").setUniformF("light", light);
 
         glActiveTexture(GL_TEXTURE0);
