@@ -106,13 +106,6 @@ class EasyGLTF {
                 }
             }
 
-            foreach (thisBone; thisMesh.bones) {
-                writeln("----------------------");
-                foreach (key,value; thisBone.weights) {
-                    writeln(key, ": ", value);
-                }
-            }
-
             glMeshes ~= thisMesh;
         }
     }
