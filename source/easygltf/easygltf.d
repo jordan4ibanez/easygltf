@@ -78,9 +78,9 @@ class GLMesh {
         return weights[0..weights.length];
     }
 
-    /// Gets the IBMs as a hard array
+    /// Gets the IBMs as an associative array
     auto getInverseBindMatrices() const {
-        return inverseBindMatrices[0..inverseBindMatrices.length];
+        return inverseBindMatrices;
     }
 }
 
