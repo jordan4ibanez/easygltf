@@ -74,10 +74,20 @@ void main()
         camera.setRotation(Vector3d(0,0,0));
         camera.updateCameraMatrix();
         
+        Vector3d position = Vector3d(0,0,0);
         Matrix4d boneMatrixTest = Matrix4d()
+            .translate(position)
             .rotateXYZ((rotation / 360.0) * PI2 * 4,0,0);
-
+        
         shader.setUniformMatrix4f("boneTRS", boneMatrixTest.getFloatArray());
+
+        /// 3 is the right arm! :)
+        Matrix4d inverseBindMatrix = meshData.getInverseBindMatrices[3];
+
+        shader.setUniformMatrix4f("inverseBindMatrix", inverseBindMatrix.getFloatArray());
+
+
+
 
         debugMesh.render(
             Vector3d(0,-2,-4), // Translation
