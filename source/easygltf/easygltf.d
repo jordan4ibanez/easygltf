@@ -1,6 +1,7 @@
 module easygltf.easygltf;
 
 import std.stdio;
+import std.algorithm.sorting;
 import std.conv;
 import tinygltf;
 import vector_3d;
@@ -86,6 +87,40 @@ class GLMesh {
     /// Gets the Bones as an associative array
     auto getBones() const {
         return cast(Bone[int])bones;
+    }
+
+    /// Gets the bones matrix as a hard array of Matrix4d
+    auto getBonesArrayMatrix4d() const {
+
+        // Needs to sort linearly
+        int[] keys;                
+        foreach (key; this.bones.byKey) {
+            keys ~= key;
+        }
+        keys.sort!("a < b");
+
+        Matrix4d[] bonesFlatArray;
+        foreach (int key; keys) {
+            bonesFlatArray ~= bones[key].localMatrix;
+        }
+
+        return bonesFlatArray[0..bonesFlatArray.length];
+    }
+
+    /// Gets the bones matrix as a hard array of floats
+    auto getBonesArray() const {
+        Matrix4d[] bonesFlatArray = getBonesArrayMatrix4d();
+        
+        float[] rawArray;
+        foreach (k, thisMatrix; bonesFlatArray) {
+            foreach (value; thisMatrix.getFloatArray) {
+                rawArray ~= value;
+            }
+        }
+
+        writeln(rawArray);
+
+        return true;
     }
 }
 
