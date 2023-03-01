@@ -194,8 +194,20 @@ private:
             const int weightByteStride = weightAccessor.byteStride(weightBufferView);
 
             // We have to assume that these are synced
-            foreach (jointIndex; 0..jointAccessor.count) {
-                writeln(jointIndex);
+            // Iterating the indice in the mesh
+            foreach (currentIndice; 0..jointAccessor.count) {
+                float[4] jointArray  = readVector4f(jointAccessor,  BufferOffset( jointBuffer.data,  jointByteOffset +  (currentIndice * jointByteStride)));
+                float[4] weightArray = readVector4f(weightAccessor, BufferOffset( weightBuffer.data, weightByteOffset + (currentIndice * weightByteStride)));
+
+                // If weights are stored in 5121 (ubyte) or 5123 (ushort) they are normalized
+                if (weightAccessor.componentType == 5121 || weightAccessor.componentType == 5123) {
+                    
+                    // Need the values of the data's min and max, or denormalization is not possible
+                    if (weightAccessor.minValues.length <= 0 || weightAccessor.maxValues.length <= 0) {
+                        throw new Exception("GLTF model has normalized weight component with no min or max!");
+                    }
+
+                }
             }
 
 
