@@ -36,7 +36,11 @@ void main()
     shader.createUniform("textureSampler");
     // shader.createUniform("animationProgress");
     shader.createUniform("boneTRS");
-    shader.createUniform("inverseBindMatrix");
+
+    bool ibm = false;
+    if (ibm) {
+        shader.createUniform("inverseBindMatrix");
+    }
  
 
     Camera.createShaderContext(shader);
@@ -74,17 +78,22 @@ void main()
         camera.setRotation(Vector3d(0,0,0));
         camera.updateCameraMatrix();
         
-        Vector3d position = Vector3d(0,0,0);
-        Matrix4d boneMatrixTest = Matrix4d()
-            .translate(position)
-            .rotateXYZ((rotation / 360.0) * PI2 * 4,0,0);
+        
+        // Matrix4d boneMatrixTest = Matrix4d()
+        //     .identity()
+        //     .translation(0,0,0)
+        //     .rotateXYZ((rotation / 360.0) * PI2 * 4,0,0);
+
+        Matrix4d boneMatrixTest = meshData.getBones[3].localMatrix;
         
         shader.setUniformMatrix4f("boneTRS", boneMatrixTest.getFloatArray());
 
         /// 3 is the right arm! :)
         Matrix4d inverseBindMatrix = meshData.getInverseBindMatrices[3];
 
-        shader.setUniformMatrix4f("inverseBindMatrix", inverseBindMatrix.getFloatArray());
+        if (ibm) {
+            shader.setUniformMatrix4f("inverseBindMatrix", inverseBindMatrix.getFloatArray());
+        }
 
 
 
