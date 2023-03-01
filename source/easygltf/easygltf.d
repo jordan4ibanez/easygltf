@@ -77,6 +77,11 @@ class GLMesh {
     auto getWeights() const {
         return weights[0..weights.length];
     }
+
+    /// Gets the IBMs as a hard array
+    auto getInverseBindMatrices() const {
+        return inverseBindMatrices[0..inverseBindMatrices.length];
+    }
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
