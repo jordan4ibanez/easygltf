@@ -46,7 +46,8 @@ void main()
         meshData.getVertexPositions(),
         meshData.getIndices(),
         meshData.getTextureCoordinates(),
-        
+        meshData.getJoints(),
+        meshData.getWeights(),
         "textures/debug_character.png"
     );
 
