@@ -113,49 +113,6 @@ private:
     
     void extractBoneWeights(Model model, GLMesh thisMesh, Primitive primitive) {
 
-        /*
-        If you want to understand what is happening in this function, read this.
-
-        This part of the GLTF spec is an absolute mess.
-        By default, each indice of the model is limited to 4 joints affecting it.
-        So it's stored as a Vec4. Not a quaternion.
-        But wait it gets better.
-        So if the model has more than 4 joints affecting an indice, it needs MORE
-        than JOINTS_0, via JOINTS_1, JOINTS_2 etc. It's very interesting.
-        BUT WAIT! There's more
-        So JOINTS_0 is a synced list with WEIGHTS_0.
-        So that means if you go into JOINTS_1 you also have to make sure WEIGHTS_1
-        exists otherwise this can randomly crash.
-        Also, I couldn't find a section of the GLTF spec that limits how many additional
-        primitive attributes JOINTS_X can have, so you just have to keep iterating the
-        attributes until you find one that doesn't exist in the associative array
-        and then check that WEIGHTS_X also exists.
-        Also, GUESS WHAT! In this we're iterating the INDICES of the model!
-        So that means the synced containers are FLIPPED upside down.
-        ALSO, we're using the XYZW component of the Vec4 as an array!
-        So X,Y,Z,W is actually [0,1,2,3].
-        You can't make this up.
-
-        So to visualize this:
-        Indice 0
-        ->
-        (this part is synced)
-        Iterate JOINTS_0 Buffer.
-        Iterate WEIGHTS_0 Buffer.
-        ->
-        Iterate the Vec4s because they're synced
-        ->
-        Iterate WEIGHT_0's XYZW component as a linear array
-        ->
-        If the WEIGHTS_0[]'s Vec4 X,Y,Z,W component is not equal to 0.0 THEN
-        ->
-        if the JOINTS_0[]'s Vec4 X,Y,Z,W component is equal to the current bone THEN
-        ->
-        Bone[Indice] = weight;
-
-        Amazing.
-        */
-
         // I'm limiting this thing to 1000 JOINTS_X components because if you need more than that you probably done goofed.
         foreach (i; 0..1000) {
 
