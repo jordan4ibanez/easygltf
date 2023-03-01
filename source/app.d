@@ -80,7 +80,7 @@ void main()
         //     }
         // }
         
-        writeln(rotation);
+        // writeln(rotation);
         
         window.pollEvents();
 
