@@ -84,7 +84,7 @@ class Shader {
     }
 
     // Set the uniform's int value in GPU memory (integer)
-    void setUniformI(string uniformName, GLuint value) {
+    void setUniformInt(string uniformName, GLuint value) {
         glUniform1i(uniforms[uniformName], value);
         
         GLenum glErrorInfo = window.getAndClearGLErrors();
@@ -97,7 +97,7 @@ class Shader {
         }
     }
 
-    void setUniformF(string uniformName, GLfloat value) {
+    void setUniformFloat(string uniformName, GLfloat value) {
         glUniform1f(uniforms[uniformName], value);
         
         GLenum glErrorInfo = window.getAndClearGLErrors();
