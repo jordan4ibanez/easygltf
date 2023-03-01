@@ -164,9 +164,6 @@ private:
         Amazing.
         */
 
-        // Being too dramatic here
-        writeln("\nbegin the trials\n");
-
         // I'm limiting this thing to 1000 JOINTS_X components because if you need more than that you probably done goofed.
         foreach (i; 0..1000) {
 
