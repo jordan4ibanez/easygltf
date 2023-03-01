@@ -106,6 +106,13 @@ class EasyGLTF {
                 }
             }
 
+            foreach (thisBone; thisMesh.bones) {
+                writeln("----------------------");
+                foreach (key,value; thisBone.weights) {
+                    writeln(key, ": ", value);
+                }
+            }
+
             glMeshes ~= thisMesh;
         }
     }
@@ -196,6 +203,7 @@ private:
             // We have to assume that these are synced
             // Iterating the indice in the mesh
             foreach (currentIndice; 0..jointAccessor.count) {
+
                 float[4] jointArray  = readVector4f(jointAccessor,  BufferOffset( jointBuffer.data,  jointByteOffset +  (currentIndice * jointByteStride)));
                 float[4] weightArray = readVector4f(weightAccessor, BufferOffset( weightBuffer.data, weightByteOffset + (currentIndice * weightByteStride)));
 
@@ -207,10 +215,24 @@ private:
                         throw new Exception("GLTF model has normalized weight component with no min or max!");
                     }
 
+                    const float min = weightAccessor.minValues[0];
+                    const float max = weightAccessor.maxValues[0];
+
+                    foreach (l; 0..weightArray.length) {
+                        weightArray[l] = (max - weightArray[l]) / (max - min);
+                    }
+                }
+
+                foreach (l; 0..weightArray.length) {
+
+                    if (weightArray[l] == 0.0) {
+                        continue;
+                    }
+                    const int boneIndex = cast(int)jointArray[l];
+
+                    thisMesh.bones[boneIndex].weights[currentIndice] = weightArray[l];
                 }
             }
-
-
         }
     }
 
