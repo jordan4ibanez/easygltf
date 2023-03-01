@@ -33,8 +33,11 @@ class Mesh {
     GLuint tbo = 0;
     // Indices vertex buffer object
     GLuint ibo = 0;
-    // Colors vertex buffer object
-    // GLuint cbo = 0;
+    // Joints vertex buffer object
+    GLuint jbo = 0;
+    // Weights vertex buffer object
+    GLuint wbo = 0;
+
     // Indices count, not sure why this is stored in this class?
     // Todo: Figure out why this is.
     GLuint indexCount = 0;
@@ -112,26 +115,25 @@ class Mesh {
 
         // Joints VBO
 
-        glGenBuffers(1, &this.tbo);
-        glBindBuffer(GL_ARRAY_BUFFER, this.tbo);
+        glGenBuffers(1, &this.jbo);
+        glBindBuffer(GL_ARRAY_BUFFER, this.jbo);
 
         glBufferData(
-            GL_ARRAY_BUFFER,
-            textureCoordinates.length * float.sizeof,
-            textureCoordinates.ptr,
-            GL_STATIC_DRAW
+            GL_ARRAY_BUFFER,                // Target object
+            joints.length * float.sizeof, // How big the object is
+            joints.ptr,                   // The pointer to the data for the object
+            GL_STATIC_DRAW                  // Which draw mode OpenGL will use
         );
 
         glVertexAttribPointer(
-            1,
-            2,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            cast(const(void)*)0
+            2,           // Attribute 0 (matches the attribute in the glsl shader)
+            4,           // Size (literal like 3 points)  
+            GL_INT,    // Type
+            GL_FALSE,    // Normalized?
+            0,           // Stride
+            cast(void*)0 // Array buffer offset
         );
-        glEnableVertexAttribArray(1); 
-
+        glEnableVertexAttribArray(2);
 
 
         // Indices VBO
