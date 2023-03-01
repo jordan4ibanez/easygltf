@@ -82,6 +82,11 @@ class GLMesh {
     auto getInverseBindMatrices() const {
         return inverseBindMatrices;
     }
+
+    /// Gets the Bones as an associative array
+    auto getBones() const {
+        return cast(Bone[int])bones;
+    }
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
