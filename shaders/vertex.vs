@@ -5,7 +5,8 @@
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 textureCoordinate;
-layout (location = 2) in vec3 color;
+layout (location = 2) in vec4 weight;
+layout (location = 3) in vec4 joint;
 
 out vec2 outputTextureCoordinate;
 out vec3 outputColor;
@@ -13,28 +14,21 @@ out vec3 outputColor;
 uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
 
-float random (vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
-}
+
 
 void main() {
     
 
     vec4 outputCoordinate = cameraMatrix * objectMatrix * vec4(position, 1.0);
 
-    float test = random(vec2(outputCoordinate.x, outputCoordinate.z));
+    if (gl_VertexID == 1) {
 
-    
+        outputCoordinate.y += 10;
+
+    }
 
     vec2 weird = textureCoordinate;
-    weird.x += test / 10.0;
-    weird.y += test / 10.0;
-    
 
     gl_Position = outputCoordinate;
     outputTextureCoordinate = weird;
-    
-
 }
