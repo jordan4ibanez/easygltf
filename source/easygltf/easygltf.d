@@ -15,13 +15,6 @@ import quaternion_d;
 
 class Bone {
     Matrix4d localMatrix;
-
-    /*
-        So to find the weight of the current indice, say 1.
-        You would simply do weight[1].
-        This is why it's stored as an AA. Ease of use. Iterator friendly too.
-    */
-    double[int] weights;
     
     this(Matrix4d localMatrix) {
         this.localMatrix = localMatrix;
@@ -38,8 +31,14 @@ class GLMesh {
     private float[] vertexPositions;
     private int[] indices;
     private float[] textureCoordinates;
+
     private Matrix4d[int] inverseBindMatrices;
+
     private Bone[int] bones;
+    
+    // These are synced
+    private Vector3d[] weights;
+    private Vector3d[] joints;
 
     this(string name) {
         this.name = name;
