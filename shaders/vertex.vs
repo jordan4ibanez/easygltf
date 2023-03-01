@@ -22,8 +22,13 @@ void main() {
 
     vec4 outputCoordinate = cameraMatrix * objectMatrix * vec4(position, 1.0);
 
-    if (gl_VertexID == 1) {
-        outputCoordinate.y += 10;
+    int jointArray[4] = int[4](int(joint.x), int(joint.y), int(joint.z), int(joint.w));
+    double weightArray[4] = double[4](weight.x, weight.y, weight.z, weight.w);
+
+    for (int i = 0; i < 4; i++) {
+        if (jointArray[i] == 2)
+            if (weightArray[i] != 0.0)
+                outputCoordinate.y += 1;
     }
 
     gl_Position = outputCoordinate;
