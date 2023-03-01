@@ -21,7 +21,7 @@ void main()
     Texture.createWindowContext(window);
     Shader.createWindowContext(window);
 
-    // Camera controls view point and mathematical
+    // Camera controls view point and mathematical OpenGL calculations
     Camera camera = new Camera();
 
     //* Allow direct message passing through reference pointers. Reduces verbosity.
