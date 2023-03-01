@@ -46,7 +46,7 @@ void main() {
         }
     }
 
-    vec4 outputCoordinate = cameraMatrix * objectMatrix * vec4(position, 1.0) * newBoneTRS;
+    vec4 outputCoordinate = cameraMatrix * objectMatrix * newBoneTRS * vec4(position, 1.0);
 
     gl_Position = outputCoordinate;
     outputTextureCoordinate = textureCoordinate;
