@@ -113,75 +113,74 @@ private:
     
     void extractBoneWeights(Model model, GLMesh thisMesh, Primitive primitive) {
 
-        // I'm limiting this thing to 1000 JOINTS_X components because if you need more than that you probably done goofed.
-        foreach (i; 0..1000) {
+        const int i = 0;
 
-            const string jointKey  = "JOINTS_" ~ to!string(i);
-            const string weightKey = "WEIGHTS_" ~ to!string(i);
+        const string jointKey  = "JOINTS_" ~ to!string(i);
+        const string weightKey = "WEIGHTS_" ~ to!string(i);
 
-            if (!(jointKey in primitive.attributes)) {
-                writeln(jointKey, " was not found!");
-                break;
-            }
-            if (!(weightKey in primitive.attributes)) {
-                writeln(weightKey, " was not found!");
-                break;
-            }
+        if (!(jointKey in primitive.attributes)) {
+            writeln(jointKey, " was not found!");
+            return;
+        }
+        if (!(weightKey in primitive.attributes)) {
+            writeln(weightKey, " was not found!");
+            return;
+        }
 
-            // This is where it starts getting weird.
+        // This is where it starts getting weird.
 
-            // Run the chains
-            Accessor jointAccessor  = model.accessors[primitive.attributes[jointKey]];
-            Accessor weightAccessor = model.accessors[primitive.attributes[weightKey]];
+        // Run the chains
+        Accessor jointAccessor  = model.accessors[primitive.attributes[jointKey]];
+        Accessor weightAccessor = model.accessors[primitive.attributes[weightKey]];
 
-            BufferView jointBufferView  = model.bufferViews[jointAccessor.bufferView];
-            BufferView weightBufferView = model.bufferViews[weightAccessor.bufferView];
+        BufferView jointBufferView  = model.bufferViews[jointAccessor.bufferView];
+        BufferView weightBufferView = model.bufferViews[weightAccessor.bufferView];
 
-            Buffer jointBuffer  = model.buffers[jointBufferView.buffer];
-            Buffer weightBuffer = model.buffers[weightBufferView.buffer];
-            
-            const int jointByteOffset = getByteOffset(jointAccessor, jointBufferView);
-            const int weightByteOffset = getByteOffset(weightAccessor, weightBufferView);
+        Buffer jointBuffer  = model.buffers[jointBufferView.buffer];
+        Buffer weightBuffer = model.buffers[weightBufferView.buffer];
+        
+        const int jointByteOffset = getByteOffset(jointAccessor, jointBufferView);
+        const int weightByteOffset = getByteOffset(weightAccessor, weightBufferView);
 
-            const int jointByteStride = jointAccessor.byteStride(jointBufferView);
-            const int weightByteStride = weightAccessor.byteStride(weightBufferView);
+        const int jointByteStride = jointAccessor.byteStride(jointBufferView);
+        const int weightByteStride = weightAccessor.byteStride(weightBufferView);
 
-            // We have to assume that these are synced
-            // Iterating the indice in the mesh
-            foreach (currentIndice; 0..jointAccessor.count) {
+        // We have to assume that these are synced
+        // Iterating the indice in the mesh
+        foreach (currentIndice; 0..jointAccessor.count) {
 
-                float[4] jointArray  = readVector4f(jointAccessor,  BufferOffset( jointBuffer.data,  jointByteOffset +  (currentIndice * jointByteStride)));
-                float[4] weightArray = readVector4f(weightAccessor, BufferOffset( weightBuffer.data, weightByteOffset + (currentIndice * weightByteStride)));
+            float[4] jointArray  = readVector4f(jointAccessor,  BufferOffset( jointBuffer.data,  jointByteOffset +  (currentIndice * jointByteStride)));
+            float[4] weightArray = readVector4f(weightAccessor, BufferOffset( weightBuffer.data, weightByteOffset + (currentIndice * weightByteStride)));
 
-                // If weights are stored in 5121 (ubyte) or 5123 (ushort) they are normalized
-                if (weightAccessor.componentType == 5121 || weightAccessor.componentType == 5123) {
-                    
-                    // Need the values of the data's min and max, or denormalization is not possible
-                    if (weightAccessor.minValues.length <= 0 || weightAccessor.maxValues.length <= 0) {
-                        throw new Exception("GLTF model has normalized weight component with no min or max!");
-                    }
-
-                    const float min = weightAccessor.minValues[0];
-                    const float max = weightAccessor.maxValues[0];
-
-                    foreach (l; 0..weightArray.length) {
-                        weightArray[l] = (max - weightArray[l]) / (max - min);
-                    }
+            // If weights are stored in 5121 (ubyte) or 5123 (ushort) they are normalized
+            if (weightAccessor.componentType == 5121 || weightAccessor.componentType == 5123) {
+                
+                // Need the values of the data's min and max, or denormalization is not possible
+                if (weightAccessor.minValues.length <= 0 || weightAccessor.maxValues.length <= 0) {
+                    throw new Exception("GLTF model has normalized weight component with no min or max!");
                 }
 
-                // Now iterate XYZW component
+                const float min = weightAccessor.minValues[0];
+                const float max = weightAccessor.maxValues[0];
+
                 foreach (l; 0..weightArray.length) {
-
-                    // Discard if no weigh applied
-                    if (weightArray[l] == 0.0) {
-                        continue;
-                    }
-                    const int boneIndex = cast(int)jointArray[l];
-                    // Now assign the bone weight data at the indice
-                    thisMesh.bones[boneIndex].weights[currentIndice] = weightArray[l];
+                    weightArray[l] = (max - weightArray[l]) / (max - min);
                 }
+            }
+
+            // Now iterate XYZW component
+            foreach (l; 0..weightArray.length) {
+
+                // Discard if no weigh applied
+                if (weightArray[l] == 0.0) {
+                    continue;
+                }
+                const int boneIndex = cast(int)jointArray[l];
+                // Now assign the bone weight data at the indice
+                thisMesh.bones[boneIndex].weights[currentIndice] = weightArray[l];
             }
         }
+    
     }
 
     void extractBones(Model model, GLMesh thisMesh) {
