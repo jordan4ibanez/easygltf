@@ -14,6 +14,13 @@ import quaternion_d;
 
 class Bone {
     Matrix4d localMatrix;
+
+    /*
+        So to find the weight of the current indice, say 1.
+        You would simply do weight[1].
+        This is why it's stored as an AA. Ease of use. Iterator friendly too.
+    */
+    double[int] weights;
     
     this(Matrix4d localMatrix) {
         this.localMatrix = localMatrix;
@@ -105,7 +112,7 @@ class EasyGLTF {
 private:
     
     void extractBoneWeights(Model model, GLMesh thisMesh) {
-        
+
     }
 
     void extractBones(Model model, GLMesh thisMesh) {
