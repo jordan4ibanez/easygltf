@@ -32,7 +32,8 @@ void main()
     shader.createUniform("cameraMatrix");
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
-    shader.createUniform("animationProgress");
+    // shader.createUniform("animationProgress");
+    shader.createUniform("boneTRS");
  
 
     Camera.createShaderContext(shader);
@@ -56,7 +57,7 @@ void main()
     float brightness = 0.0;
     float brightUp = true;
 
-    while (!window.shouldClose()) {
+    while (window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
