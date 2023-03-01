@@ -7,6 +7,8 @@ import shader.shader;
 import texture.texture;
 import window.window;
 import vector_3d;
+import vector_4d;
+import vector_4i;
 
 class Mesh {
 
@@ -44,7 +46,8 @@ class Mesh {
     this(const float[] vertices, 
         const int[] indices, 
         const float[] textureCoordinates, 
-        // const float[] colors, 
+        const Vector4i[] joints,
+        const Vector4d[] weights,
         const string textureLocation ) {
 
         this.texture = new Texture(textureLocation);
