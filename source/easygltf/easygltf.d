@@ -186,10 +186,16 @@ private:
 
             Buffer jointBuffer  = model.buffers[jointBufferView.buffer];
             Buffer weightBuffer = model.buffers[weightBufferView.buffer];
+            
+            const int jointByteOffset = getByteOffset(jointAccessor, jointBufferView);
+            const int weightByteOffset = getByteOffset(weightAccessor, weightBufferView);
+
+            const int jointByteStride = jointAccessor.byteStride(jointBufferView);
+            const int weightByteStride = weightAccessor.byteStride(weightBufferView);
 
             // We have to assume that these are synced
-            foreach (i; 0..jointAccessor.count) {
-                
+            foreach (jointIndex; 0..jointAccessor.count) {
+                writeln(jointIndex);
             }
 
 
@@ -434,6 +440,15 @@ private float[3] readVector3f(const BufferOffset readFrom) {
 		rawReadPrimitive!float(readFrom),
 		rawReadPrimitive!float(BufferOffset(readFrom, float.sizeof)),
 		rawReadPrimitive!float(BufferOffset(readFrom, 2 * float.sizeof))
+    ];
+}
+
+private float[4] readVector4f(Accessor accessor, const BufferOffset readFrom) {
+    return[
+		readPrimitive(accessor, readFrom),
+		readPrimitive(accessor, BufferOffset(readFrom, float.sizeof)),
+		readPrimitive(accessor, BufferOffset(readFrom, 2 * float.sizeof)),
+        readPrimitive(accessor, BufferOffset(readFrom, 3 * float.sizeof))
     ];
 }
 
