@@ -120,7 +120,7 @@ class Mesh {
 
         glBufferData(
             GL_ARRAY_BUFFER,                // Target object
-            joints.length * float.sizeof, // How big the object is
+            joints.length * int.sizeof, // How big the object is
             joints.ptr,                   // The pointer to the data for the object
             GL_STATIC_DRAW                  // Which draw mode OpenGL will use
         );
@@ -142,15 +142,15 @@ class Mesh {
 
         glBufferData(
             GL_ARRAY_BUFFER,                // Target object
-            joints.length * float.sizeof, // How big the object is
-            joints.ptr,                   // The pointer to the data for the object
+            weights.length * double.sizeof, // How big the object is
+            weights.ptr,                   // The pointer to the data for the object
             GL_STATIC_DRAW                  // Which draw mode OpenGL will use
         );
 
         glVertexAttribPointer(
             3,           // Attribute 0 (matches the attribute in the glsl shader)
             4,           // Size (literal like 3 points)  
-            GL_FLOAT,    // Type
+            GL_DOUBLE,    // Type
             GL_FALSE,    // Normalized?
             0,           // Stride
             cast(void*)0 // Array buffer offset
