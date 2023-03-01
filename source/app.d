@@ -7,6 +7,8 @@ import texture.texture;
 import window.window;
 import vector_3d;
 import easygltf.easygltf;
+import matrix_4d;
+import math;
 
 void main()
 {
@@ -57,7 +59,7 @@ void main()
     float brightness = 0.0;
     float brightUp = true;
 
-    while (window.shouldClose()) {
+    while (!window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
@@ -90,6 +92,11 @@ void main()
         camera.clearDepthBuffer();
         camera.setRotation(Vector3d(0,0,0));
         camera.updateCameraMatrix();
+        
+        Matrix4d boneMatrixTest = Matrix4d()
+            .rotateXYZ((rotation / 360.0) * PI2 * 4,0,0);
+
+        shader.setUniformMatrix4f("boneTRS", boneMatrixTest.getFloatArray());
 
         debugMesh.render(
             Vector3d(0,-2,-4), // Translation
