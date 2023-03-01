@@ -14,6 +14,7 @@ out vec3 outputColor;
 uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
 
+uniform vec3 bonePosition;
 
 
 void main() {
@@ -22,13 +23,9 @@ void main() {
     vec4 outputCoordinate = cameraMatrix * objectMatrix * vec4(position, 1.0);
 
     if (gl_VertexID == 1) {
-
         outputCoordinate.y += 10;
-
     }
 
-    vec2 weird = textureCoordinate;
-
     gl_Position = outputCoordinate;
-    outputTextureCoordinate = weird;
+    outputTextureCoordinate = textureCoordinate;
 }
