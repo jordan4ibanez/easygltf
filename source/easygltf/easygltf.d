@@ -1,6 +1,7 @@
 module easygltf.easygltf;
 
 import std.stdio;
+import std.conv;
 import tinygltf;
 import vector_3d;
 import matrix_4d;
@@ -94,15 +95,15 @@ class EasyGLTF {
                 this.extractVertexPositions(model, thisMesh, primitive);
                 this.extractIndices(model, thisMesh, primitive);
                 this.extractTextureCoordinates(model, thisMesh, primitive);
-            }
 
-            //! Skins NEED to exist to animate. This GLMesh becomes a static model if no skin is specified.
-            if (model.skins.length > integerKey) {
-                this.extractInverseBindMatrices(model, thisMesh, model.skins[integerKey]);
-                this.extractBones(model, thisMesh);
-                this.extractBoneWeights(model, thisMesh);
+                //! Skins NEED to exist to animate. This GLMesh becomes a static model if no skin is specified.
+                if (model.skins.length > integerKey) {
+                    this.extractInverseBindMatrices(model, thisMesh, model.skins[integerKey]);
+                    this.extractBones(model, thisMesh);
+                    this.extractBoneWeights(model, thisMesh, primitive);
 
-                thisMesh.animated = true;
+                    thisMesh.animated = true;
+                }
             }
 
             glMeshes ~= thisMesh;
@@ -111,7 +112,7 @@ class EasyGLTF {
 
 private:
     
-    void extractBoneWeights(Model model, GLMesh thisMesh) {
+    void extractBoneWeights(Model model, GLMesh thisMesh, Primitive primitive) {
 
         /*
         If you want to understand what is happening in this function, read this.
@@ -155,6 +156,22 @@ private:
 
         Amazing.
         */
+
+        // I'm limiting this thing to 1000 JOINTS_X components because if you need more than that you probably done goofed.
+        foreach (i; 0..1000) {
+            if (!("JOINTS_" ~ to!string(i) in primitive.attributes)) {
+                writeln("JOINTS_" ~ to!string(i), " was not found!");
+                break;
+            }
+            if (!("WEIGHTS_" ~ to!string(i) in primitive.attributes)) {
+                writeln("WEIGHTS_" ~ to!string(i), " was not found!");
+                break;
+            }
+
+
+        }
+
+
 
 
 
