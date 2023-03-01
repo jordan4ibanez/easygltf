@@ -125,6 +125,23 @@ class Shader {
         }
     }
 
+    void setUniformMatrix4d(string uniformName, double[16] matrix) {
+
+        glUniformMatrix4dv(
+            uniforms[uniformName], // Location
+            1, // Count
+            GL_FALSE,// Transpose
+            matrix.ptr// Pointer
+        );
+        
+        GLenum glErrorInfo = window.getAndClearGLErrors();
+        if (glErrorInfo != GL_NO_ERROR) {
+            writeln("GL ERROR: ", glErrorInfo);
+            // This needs to crash too! Game needs shaders!
+            throw new Exception("Error setting shader uniform: " ~ uniformName);
+        }
+    }
+
     uint getUniform(string uniformName) {
         return uniforms[uniformName];
     }
