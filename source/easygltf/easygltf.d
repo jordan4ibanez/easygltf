@@ -67,6 +67,16 @@ class GLMesh {
     auto getTextureCoordinates() const {
         return textureCoordinates[0..textureCoordinates.length];
     }
+
+    /// Gets the indices joints as a hard array
+    auto getJoints() {
+        return joints[0..joints.length];
+    }
+
+    /// Gets the indices weights as a hard array
+    auto getWeights() {
+        return weights[0..weights.length];
+    }
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
