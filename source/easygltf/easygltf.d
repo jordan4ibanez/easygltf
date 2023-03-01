@@ -223,13 +223,15 @@ private:
                     }
                 }
 
+                // Now iterate XYZW component
                 foreach (l; 0..weightArray.length) {
 
+                    // Discard if no weigh applied
                     if (weightArray[l] == 0.0) {
                         continue;
                     }
                     const int boneIndex = cast(int)jointArray[l];
-
+                    // Now assign the bone weight data at the indice
                     thisMesh.bones[boneIndex].weights[currentIndice] = weightArray[l];
                 }
             }
