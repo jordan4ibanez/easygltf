@@ -1,7 +1,7 @@
 #version 410 core
 
 // This can always be made bigger in the future
-#define MAX_BONES = 30;
+#define MAX_BONES = 256;
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 textureCoordinate;
@@ -21,7 +21,8 @@ uniform mat4 boneTRS = mat4(
         0,0,0,1
 );
 
-uniform mat4[256] boneMatrix;
+
+uniform mat4[MAX_BONES] boneMatrix;
 
 void main() {
     
