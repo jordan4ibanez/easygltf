@@ -35,12 +35,7 @@ void main()
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
     shader.createUniform("boneMatrices");
-
-
-    bool ibm = false;
-    if (ibm) {
-        shader.createUniform("inverseBindMatrix");
-    }
+    
  
 
     Camera.createShaderContext(shader);
@@ -80,16 +75,6 @@ void main()
         camera.clearDepthBuffer();
         camera.setRotation(Vector3d(0,0,0));
         camera.updateCameraMatrix();
-
-        /// 3 is the right arm! :)
-        Matrix4d inverseBindMatrix = meshData.getInverseBindMatrices[3];
-
-        if (ibm) {
-            shader.setUniformMatrix4f("inverseBindMatrix", inverseBindMatrix.getFloatArray());
-        }
-
-
-
 
         debugMesh.render(
             Vector3d(0,-2,-4), // Translation
