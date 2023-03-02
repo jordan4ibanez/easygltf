@@ -1,7 +1,7 @@
 #version 410 core
 
 // This can always be made bigger in the future
-#define MAX_BONES = 256;
+const int MAX_BONES = 256;
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 textureCoordinate;
@@ -22,17 +22,17 @@ uniform mat4 boneTRS = mat4(
 );
 
 
-uniform mat4[MAX_BONES] boneMatrix;
+uniform mat4 boneMatrices[MAX_BONES];
 
 void main() {
     
     
 
     mat4 skinMat = 
-        weight.x * boneMatrix[int(joint.x)] +
-        weight.y * boneMatrix[int(joint.y)] +
-        weight.z * boneMatrix[int(joint.z)] +
-        weight.w * boneMatrix[int(joint.w)];
+        weight.x * boneMatrices[int(joint.x)] +
+        weight.y * boneMatrices[int(joint.y)] +
+        weight.z * boneMatrices[int(joint.z)] +
+        weight.w * boneMatrices[int(joint.w)];
 
     vec4 worldPosition = skinMat * vec4(position,1.0);
 
