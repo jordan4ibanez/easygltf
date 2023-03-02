@@ -89,6 +89,31 @@ class GLMesh {
         return cast(Bone[int])bones;
     }
 
+    /// Returns unordered matrix array as raw float arry
+    auto getRawBonesInverseBindMatricesArrayFloat() const {
+        float[] rawArray;
+        foreach (k,thisMatrix; inverseBindMatrices) {
+            Matrix4d temp = thisMatrix;
+            foreach (value; temp.getFloatArray()) {
+                rawArray ~= value;
+            }
+        }
+        return rawArray[0..rawArray.length];
+    }
+
+    /// Returns unordered matrix array as raw float arry
+    auto getRawBonesInverseBindMatricesArrayDouble() const {
+        double[] rawArray;
+        foreach (k,thisMatrix; inverseBindMatrices) {
+            Matrix4d temp = thisMatrix;
+            writeln(temp);
+            foreach (value; temp.getFloatArray()) {
+                rawArray ~= value;
+            }
+        }
+        return rawArray[0..rawArray.length];
+    }
+
     /// Gets the bones matrix as a hard array of Matrix4d
     auto getBonesMatrixArray() const {
 
@@ -132,6 +157,24 @@ class GLMesh {
             }
         }
         
+        return rawArray[0..rawArray.length];
+    }
+
+    auto getBonesArrayProccessedFloat() const {
+        float[] rawArray;
+
+        foreach (k,thisBone; bones) {
+
+            Matrix4d matrix = thisBone.localMatrix;
+            Matrix4d IBM    = inverseBindMatrices[k];
+
+            Matrix4d processed = matrix.mul(IBM);
+
+            foreach (value; processed.getFloatArray) {
+                rawArray ~= value;
+            }
+        }
+
         return rawArray[0..rawArray.length];
     }
 
