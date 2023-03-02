@@ -34,8 +34,8 @@ void main()
     shader.createUniform("cameraMatrix");
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
-    // shader.createUniform("animationProgress");
-    shader.createUniform("boneTRS");
+    shader.createUniform("boneMatrices");
+
 
     bool ibm = false;
     if (ibm) {
@@ -59,9 +59,12 @@ void main()
         "textures/debug_character.png"
     );
 
+    // Initialize shader program early to dump in uniforms
+    glUseProgram(shader.getShaderProgram);
+
     float rotation = 180.0;
 
-    while (!window.shouldClose()) {
+    while (window.shouldClose()) {
 
         rotation += 1;
         if (rotation > 360.0) {
@@ -77,16 +80,6 @@ void main()
         camera.clearDepthBuffer();
         camera.setRotation(Vector3d(0,0,0));
         camera.updateCameraMatrix();
-        
-        
-        // Matrix4d boneMatrixTest = Matrix4d()
-        //     .identity()
-        //     .translation(0,0,0)
-        //     .rotateXYZ((rotation / 360.0) * PI2 * 4,0,0);
-
-        Matrix4d boneMatrixTest = meshData.getBones[3].localMatrix;
-        
-        shader.setUniformMatrix4f("boneTRS", boneMatrixTest.getFloatArray());
 
         /// 3 is the right arm! :)
         Matrix4d inverseBindMatrix = meshData.getInverseBindMatrices[3];
