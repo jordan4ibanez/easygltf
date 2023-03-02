@@ -35,6 +35,7 @@ void main()
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
     shader.createUniform("boneMatrices");
+    // shader.createUniform("inverseBindMatrices");
 
     Camera.createShaderContext(shader);
     Mesh.createShaderContext(shader);
@@ -55,7 +56,11 @@ void main()
     // Initialize shader program early to dump in uniforms
     glUseProgram(shader.getShaderProgram);
 
-    shader.setUniformMatrix4f("boneMatrices", meshData.getRawBonesArrayFloat, meshData.getBoneCount);
+    shader.setUniformMatrix4f("boneMatrices", meshData.getBonesArrayProccessedFloat, meshData.getBoneCount);
+
+    writeln(meshData.getBoneCount);
+
+    // shader.setUniformMatrix4d("inverseBindMatrices", meshData.getRawBonesInverseBindMatricesArrayDouble, meshData.getBoneCount);
 
     float rotation = 180.0;
 
