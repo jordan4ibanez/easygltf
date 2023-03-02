@@ -362,7 +362,7 @@ private:
 
             Matrix4d inverseBindMatrix;
 
-            //* A debugging tool
+            //* A debugging tool - row column switch
             bool transpose = false;
             if (transpose) {
                 inverseBindMatrix = Matrix4d(
