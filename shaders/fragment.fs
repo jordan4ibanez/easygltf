@@ -1,5 +1,6 @@
-
 #version 410 core
+
+// Frag is for tri colors and whatnot
 
 in vec2 outputTextureCoordinate;
 // in float animationProgress;

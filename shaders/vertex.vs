@@ -1,5 +1,7 @@
 #version 410 core
 
+// Frag is for tri positions and whatnot
+
 // This can always be made bigger in the future
 const int MAX_BONES = 256;
 
