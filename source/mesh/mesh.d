@@ -37,8 +37,6 @@ class Mesh {
     GLuint jbo = 0;
     // Weights vertex buffer object
     GLuint wbo = 0;
-    // Bone matrices vertex buffer object
-    GLuint bbo = 0;
 
     // Indices count, not sure why this is stored in this class?
     // Todo: Figure out why this is.
@@ -53,7 +51,6 @@ class Mesh {
         const float[] textureCoordinates, 
         const int[] joints,
         const double[] weights,
-        const float[] boneMatrices,
         const string textureLocation ) {
 
         this.texture = new Texture(textureLocation);
@@ -159,28 +156,6 @@ class Mesh {
             cast(void*)0 // Array buffer offset
         );
         glEnableVertexAttribArray(3);
-
-        // Bone Matrices VBO
-
-        glGenBuffers(1, &this.bbo);
-        glBindBuffer(GL_ARRAY_BUFFER, this.bbo);
-
-        glBufferData(
-            GL_ARRAY_BUFFER,                // Target object
-            boneMatrices.length * double.sizeof, // How big the object is
-            boneMatrices.ptr,                   // The pointer to the data for the object
-            GL_STATIC_DRAW                  // Which draw mode OpenGL will use
-        );
-
-        glVertexAttribPointer(
-            4,           // Attribute 0 (matches the attribute in the glsl shader)
-            16,           // Size (literal like 3 points)  
-            GL_DOUBLE,    // Type
-            GL_FALSE,    // Normalized?
-            0,           // Stride
-            cast(void*)0 // Array buffer offset
-        );
-        glEnableVertexAttribArray(4);
 
 
         // Indices VBO
