@@ -107,6 +107,20 @@ class GLMesh {
         return bonesFlatArray[0..bonesFlatArray.length];
     }
 
+    /// Returns unordered matrix array as raw float arry
+    auto getRawBonesArrayFloat() const {
+        float[] rawArray;
+        foreach (k,thisBone; bones) {
+            writeln(k);
+
+            Matrix4d thisMatrix = thisBone.localMatrix;
+            foreach (value; thisMatrix.getFloatArray()) {
+                rawArray ~= value;
+            }
+        }
+        return rawArray[0..rawArray.length];
+    }
+
     /// Gets the bones matrix as a hard array of floats
     auto getBonesArrayFloat() const {
         Matrix4d[] bonesFlatArray = getBonesMatrixArray();
