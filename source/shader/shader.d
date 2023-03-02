@@ -119,11 +119,11 @@ class Shader {
         }
     }
 
-    void setUniformMatrix4f(string uniformName, float[16] matrix) {
+    void setUniformMatrix4f(string uniformName, float[] matrix, GLint count = 1) {
 
         glUniformMatrix4fv(
             uniforms[uniformName], // Location
-            1, // Count
+            count, // Count
             GL_FALSE,// Transpose
             matrix.ptr// Pointer
         );
@@ -136,11 +136,11 @@ class Shader {
         }
     }
 
-    void setUniformMatrix4d(string uniformName, double[16] matrix) {
+    void setUniformMatrix4d(string uniformName, double[] matrix, GLint count = 1) {
 
         glUniformMatrix4dv(
             uniforms[uniformName], // Location
-            1, // Count
+            count, // Count
             GL_FALSE,// Transpose
             matrix.ptr// Pointer
         );
