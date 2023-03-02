@@ -15,7 +15,7 @@ out vec2 outputTextureCoordinate;
 uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
 uniform mat4 boneMatrices[MAX_BONES];
-//* Maybe the inverse bind matrices go here?
+uniform mat4 inverseBindMatrices[MAX_BONES];
 
 void main() {
     
