@@ -9,12 +9,12 @@ layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 textureCoordinate;
 layout (location = 2) in vec4 joint;
 layout (location = 3) in vec4 weight;
-layout (location = 4) in mat4 boneMatrices[MAX_BONES];
 
 out vec2 outputTextureCoordinate;
 
 uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
+uniform mat4 boneMatrices[MAX_BONES];
 //* Maybe the inverse bind matrices go here?
 
 void main() {
