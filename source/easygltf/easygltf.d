@@ -120,6 +120,11 @@ class GLMesh {
         
         return rawArray[0..rawArray.length];
     }
+
+    /// Gets how many bones are in the array as GLint
+    int getBoneCount() const {
+        return cast(int)bones.length;
+    }
 }
 
 /// GLTF context to get OpenGL data. Automatically loads and decodes JSON data.
