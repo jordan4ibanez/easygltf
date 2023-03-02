@@ -35,7 +35,7 @@ void main()
     shader.createUniform("objectMatrix");
     shader.createUniform("textureSampler");
     shader.createUniform("boneMatrices");
-    // shader.createUniform("inverseBindMatrices");
+    shader.createUniform("testMatrix");
 
     Camera.createShaderContext(shader);
     Mesh.createShaderContext(shader);

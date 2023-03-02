@@ -17,6 +17,8 @@ uniform mat4 objectMatrix;
 
 uniform mat4 boneMatrices[MAX_BONES];
 
+uniform mat4 testMatrix;
+
 void main() {
 
     mat4 skinMat = 
@@ -25,7 +27,7 @@ void main() {
         weight.z * boneMatrices[int(joint.z)] +
         weight.w * boneMatrices[int(joint.w)];
 
-    vec4 worldPosition = skinMat * vec4(position,1.0);
+    vec4 worldPosition = skinMat * testMatrix * vec4(position,1.0);
 
     vec4 cameraPosition = objectMatrix * worldPosition;
 
