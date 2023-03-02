@@ -16,12 +16,12 @@ uniform mat4 cameraMatrix;
 uniform mat4 objectMatrix;
 
 //! This is identity, this allows freely modifying the bone
-uniform mat4 boneTRS = mat4(
-        1,0,0,0,
-        0,1,0,0,
-        0,0,1,0,
-        0,0,0,1
-);
+// uniform mat4 boneTRS = mat4(
+//         1,0,0,0,
+//         0,1,0,0,
+//         0,0,1,0,
+//         0,0,0,1
+// );
 
 
 uniform mat4 boneMatrices[MAX_BONES];
