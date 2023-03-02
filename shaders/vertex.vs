@@ -18,6 +18,7 @@ uniform mat4 objectMatrix;
 uniform mat4 boneMatrices[MAX_BONES];
 
 uniform mat4 testMatrix;
+uniform mat4 ibm;
 
 void main() {
 
@@ -27,7 +28,24 @@ void main() {
         weight.z * boneMatrices[int(joint.z)] +
         weight.w * boneMatrices[int(joint.w)];
 
-    vec4 worldPosition = skinMat * testMatrix * vec4(position,1.0);
+    int[4] jointArray = int[4](int(joint.x), int(joint.y), int(joint.z), int(joint.w));
+
+    float[4] floatArray = float[4](weight.x, weight.y, weight.z, weight.w);
+
+    bool found = false;
+    for (int i = 0; i < 4; i++) {
+        if (jointArray[i] == 3 && floatArray[i] != 0.0) {
+            found = true;
+        }
+    }
+
+    vec4 worldPosition;
+
+    if (found) {
+        worldPosition = skinMat * testMatrix * ibm * vec4(position,1.0);
+    } else {
+        worldPosition = vec4(position,1.0);
+    }
 
     vec4 cameraPosition = objectMatrix * worldPosition;
 

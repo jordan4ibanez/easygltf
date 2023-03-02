@@ -36,6 +36,7 @@ void main()
     shader.createUniform("textureSampler");
     shader.createUniform("boneMatrices");
     shader.createUniform("testMatrix");
+    shader.createUniform("ibm");
 
     Camera.createShaderContext(shader);
     Mesh.createShaderContext(shader);
@@ -58,9 +59,8 @@ void main()
 
     shader.setUniformMatrix4f("boneMatrices", meshData.getBonesArrayProccessedFloat, meshData.getBoneCount);
 
-    writeln(meshData.getBoneCount);
-
-    // shader.setUniformMatrix4d("inverseBindMatrices", meshData.getRawBonesInverseBindMatricesArrayDouble, meshData.getBoneCount);
+    Matrix4d ibmTest = meshData.getInverseBindMatrices[3];
+    shader.setUniformMatrix4f("ibm", ibmTest.getFloatArray);
 
     float rotation = 180.0;
 
@@ -80,6 +80,15 @@ void main()
         camera.clearDepthBuffer();
         camera.setRotation(Vector3d(0,0,0));
         camera.updateCameraMatrix();
+
+        Matrix4d test = Matrix4d()
+            .identity()
+            .translation(0,10,0)
+            // .mul(meshData.getInverseBindMatrices[3])
+                        
+            .setRotationXYZ((rotation / 360.0) * PI2,0,0);
+
+        shader.setUniformMatrix4f("testMatrix", test.getFloatArray);
 
         debugMesh.render(
             Vector3d(0,-2,-4), // Translation

@@ -420,7 +420,7 @@ private:
             Matrix4d inverseBindMatrix;
 
             //* A debugging tool - row column switch
-            bool transpose = false;
+            bool transpose = true;
             if (transpose) {
                 inverseBindMatrix = Matrix4d(
                     m[0], m[4], m[8],  m[12],
