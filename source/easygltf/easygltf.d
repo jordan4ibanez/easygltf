@@ -90,7 +90,7 @@ class GLMesh {
     }
 
     /// Gets the bones matrix as a hard array of Matrix4d
-    auto getBonesArrayMatrix4d() const {
+    auto getBonesMatrixArray() const {
 
         // Needs to sort linearly
         int[] keys;                
@@ -109,18 +109,16 @@ class GLMesh {
 
     /// Gets the bones matrix as a hard array of floats
     auto getBonesArray() const {
-        Matrix4d[] bonesFlatArray = getBonesArrayMatrix4d();
+        Matrix4d[] bonesFlatArray = getBonesMatrixArray();
         
         float[] rawArray;
-        foreach (k, thisMatrix; bonesFlatArray) {
+        foreach (thisMatrix; bonesFlatArray) {
             foreach (value; thisMatrix.getFloatArray) {
                 rawArray ~= value;
             }
         }
-
-        writeln(rawArray);
-
-        return true;
+        
+        return rawArray[0..rawArray.length];
     }
 }
 
